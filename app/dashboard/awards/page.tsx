@@ -1,176 +1,163 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Link from 'next/link'
-
-const AWARD_DATA = [
-  { name: 'Alexander Miller', init: 'AM', classGroup: 'Kelas A', phase: 'Fase Wacana', score: 98 },
-  { name: 'Sophia Chen', init: 'SC', classGroup: 'Kelas A', phase: 'Fase Wacana', score: 95 },
-  { name: 'Liam Rodriguez', init: 'LR', classGroup: 'Kelas B', phase: 'Fase Komunikasi', score: 92 },
-  { name: 'Emma Thompson', init: 'ET', classGroup: 'Kelas C', phase: 'Fase Wacana', score: 94 },
-  { name: 'Jordan King', init: 'JK', classGroup: 'Kelas A', phase: 'Fase Komunikasi', score: 91 },
-  { name: 'Olivia Adams', init: 'OA', classGroup: 'Kelas D', phase: 'Fase Wacana', score: 99 },
-  { name: 'Ethan Park', init: 'EP', classGroup: 'Kelas B', phase: 'Fase Wacana', score: 88 },
-  { name: 'Ava Nguyen', init: 'AN', classGroup: 'Kelas C', phase: 'Fase Komunikasi', score: 85 },
-  { name: 'Noah Williams', init: 'NW', classGroup: 'Kelas D', phase: 'Fase Wacana', score: 96 },
-]
+import Navbar from '@/components/Navbar'
+import { Award, Download, Printer, Medal, Sparkles, ChevronLeft } from 'lucide-react'
 
 export default function AwardsPage() {
-  const [activeClass, setActiveClass] = useState('Semua Kelas')
+  const [selectedStudent, setSelectedStudent] = useState<any>(null)
+  const certificateRef = useRef<HTMLDivElement>(null)
 
-  const filtered = activeClass === 'Semua Kelas'
-    ? AWARD_DATA
-    : AWARD_DATA.filter(s => s.classGroup === activeClass)
+  // Dummy data, idealnya ini dari get() di Supabase
+  const awardedStudents = [
+    { id: '2024001', name: 'Ahmad Rizky Pratama', grade: '4', score: 85, phase: 'Fase Wacana', date: '14 April 2026' },
+    { id: '2024004', name: 'Emma Thompson', grade: '4', score: 94, phase: 'Fase Komunikasi', date: '10 April 2026' },
+    { id: '2024012', name: 'Dewi Anggraini', grade: '5', score: 88, phase: 'Fase Wacana', date: '02 April 2026' }
+  ]
 
-  const phaseColor = (phase: string) => {
-    if (phase === 'Fase Wacana') return 'bg-primary-fixed text-primary'
-    if (phase === 'Fase Komunikasi') return 'bg-[#ffbf12]/15 text-[#7a5900]'
-    return 'bg-secondary-fixed text-secondary'
+  const printCertificate = () => {
+    window.print()
   }
 
   return (
-    <div className="bg-surface font-body text-on-surface antialiased min-h-screen">
-      <main className="max-w-7xl mx-auto px-6 py-10 pb-32">
-        {/* Header */}
-        <section className="mb-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div>
-              <span className="font-label text-[11px] font-semibold uppercase tracking-wider text-primary mb-2 block">Siklus Sertifikasi: Kuartal Ganjil</span>
-              <h2 className="font-headline text-4xl md:text-5xl font-extrabold tracking-tight text-on-surface">Eksibisi Pencapaian Literasi.</h2>
-              <p className="text-on-surface-variant text-lg mt-4 max-w-2xl">Institusi Anda mencatat eskalasi performa luar biasa. Tinjau rekapitulasi peserta didik terpilih yang diotentikasi oleh Mesin Sentral Inkata. untuk Sertifikat Ekselensi Literasi.</p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <button 
-                onClick={() => alert('Batch Sertifikat PDF sedang diproses oleh Mesin Inkata...')}
-                className="bg-gradient-to-r from-[#2333e7] to-[#4353ff] text-white px-8 py-4 rounded-xl font-bold flex items-center gap-3 shadow-lg hover:scale-[1.02] active:scale-95 transition-all"
-              >
-                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
-                Otorisasi Sertifikat Otomatis
-              </button>
-            </div>
+    <div className="bg-[#F8FAFC]/50 min-h-screen font-manrope selection:bg-[#1D4ED8]/10 text-slate-800 flex flex-col print:bg-white print:overflow-hidden">
+      <main className="max-w-[1440px] mx-auto px-6 lg:px-12 pt-12 pb-24 w-full flex-grow print:p-0 print:border-none print:shadow-none print:max-w-none">
+        
+        {/* Header App Print Hidden */}
+        <div className="flex justify-between items-end mb-12 print:hidden">
+          <div>
+            <Link href="/dashboard" className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-400 hover:text-[#1D4ED8] flex items-center gap-1 mb-4 transition-colors">
+              <ChevronLeft className="w-3 h-3" /> Beranda Dasbor
+            </Link>
+            <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight flex items-center gap-4">
+              Brankas Penghargaan <Medal className="w-8 h-8 text-amber-500 fill-amber-500/20" />
+            </h1>
+            <p className="text-slate-500 mt-2 font-medium">Otomatisasi pembuatan sertifikat untuk peserta didik dengan fase literasi memadai.</p>
           </div>
-        </section>
+        </div>
 
-        {/* Class Filter Tabs */}
-        <section className="mb-8">
-          <div className="flex flex-wrap gap-2">
-            {['Semua Kelas', 'Kelas A', 'Kelas B', 'Kelas C', 'Kelas D'].map(cls => (
-              <button
-                key={cls}
-                onClick={() => setActiveClass(cls)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${activeClass === cls ? 'bg-primary text-white shadow-sm' : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high'}`}
-              >
-                {cls === 'Semua Kelas' ? 'Seluruh Institusi' : `Grup ${cls}`}
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          {/* Left: Stats Summary */}
-          <div className="md:col-span-4 bg-surface-container-low rounded-3xl p-8 flex flex-col justify-between">
-            <div>
-              <h3 className="font-headline text-xl font-bold mb-6">Distribusi Kelayakan</h3>
-              <div className="space-y-8">
-                <div>
-                  <p className="font-label text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant opacity-60">Rasio Ketuntasan Akumulatif</p>
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-headline text-5xl font-extrabold text-primary">94%</span>
-                    <span className="text-on-surface-variant font-medium">Terevaluasi</span>
+        {/* Layout Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 print:block">
+           
+           {/* Sidebar List (Browser View Only) */}
+           <div className="lg:col-span-4 space-y-4 print:hidden">
+             
+             <div className="bg-white p-6 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-slate-50 mb-6">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-500">
+                     <Award className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-slate-900 text-lg">Portofolio Lulus</h3>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Ambang Batas Dinilai &gt; 80</p>
                   </div>
                 </div>
-                <div>
-                  <p className="font-label text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant opacity-60">Klasifikasi Puncak Kelas</p>
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-headline text-5xl font-extrabold text-secondary">A+</span>
-                    <span className="text-on-surface-variant font-medium">Predikat Paripurna</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-12 p-6 bg-surface-container-lowest rounded-2xl outline outline-1 outline-[#c5c5d9]/15">
-              <p className="text-sm italic text-on-surface-variant">"Peningkatan signifikansi terekam secara konkret pada analisis leksikal dan sintaksis integratif di keseluruhan grup evaluasi."</p>
-              <p className="text-xs font-bold mt-3 uppercase text-primary">— Laporan Diagnostik Sentral Inkata.</p>
-            </div>
-          </div>
 
-          {/* Right: Certificate Preview */}
-          <div className="md:col-span-8 bg-surface-container rounded-3xl p-1 overflow-hidden relative min-h-[400px] flex items-center justify-center">
-            <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, #2333e7 1px, transparent 0)", backgroundSize: "24px 24px" }}></div>
-            <div className="relative z-10 w-full max-w-2xl bg-white aspect-[1.414/1] shadow-2xl rounded-sm p-12 flex flex-col items-center text-center border-[12px] border-surface-container-high m-4">
-              <div className="w-20 h-20 mb-6 flex items-center justify-center rounded-full bg-secondary-fixed">
-                <span className="material-symbols-outlined text-secondary text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>military_tech</span>
-              </div>
-              <h4 className="font-headline text-3xl font-bold tracking-tight text-on-surface uppercase mb-2">Sertifikasi Kehormatan</h4>
-              <p className="font-label text-sm text-on-surface-variant tracking-[0.2em] uppercase mb-10">Eksekusi Literasi Lanjutan</p>
-              <div className="w-full h-px bg-outline-variant/30 mb-8"></div>
-              <p className="text-on-surface-variant italic mb-1">Dianugerahkan secara eksklusif kepada</p>
-              <p className="font-headline text-4xl font-extrabold text-primary mb-10">{filtered[0]?.name || 'Peserta Didik'}</p>
-              <div className="flex justify-between w-full mt-auto pt-8">
-                <div className="text-left">
-                  <p className="text-[10px] uppercase font-bold text-on-surface-variant">Tanggal Ekstraksi</p>
-                  <p className="text-sm font-semibold">17 Agustus 2024</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-[10px] uppercase font-bold text-on-surface-variant">Otentikasi Oleh</p>
-                  <p className="text-sm font-semibold">Sistem Sentral Inkata.</p>
-                </div>
-              </div>
-            </div>
-            <div className="absolute bottom-6 right-6 flex gap-3">
-              <button 
-                onClick={() => alert('PDF Generator Service diinisiasi...')} 
-                className="bg-white/90 backdrop-blur-xl px-5 py-2.5 rounded-full text-xs font-bold text-primary shadow-sm hover:shadow-md outline outline-1 outline-primary/20 hover:bg-primary/5 transition-all flex items-center gap-2"
-              >
-                <span className="material-symbols-outlined text-[16px]">picture_as_pdf</span> Ekstrak PDF
-              </button>
-              <button 
-                onClick={() => window.open(`https://wa.me/?text=Halo%20Bapak%2FIbu%2C%20berikut%20adalah%20Sertifikat%20Ekselensi%20Literasi%20dari%20Sistem%20Sentral%20Inkata%20untuk%20ananda.%20Link%3A%20%5BPDF_URL%5D`, '_blank')} 
-                className="bg-[#25D366]/10 backdrop-blur-xl px-5 py-2.5 rounded-full text-xs font-bold text-[#1DA851] shadow-sm hover:shadow-md outline outline-1 outline-[#25D366]/30 hover:bg-[#25D366]/20 transition-all flex items-center gap-2"
-              >
-                <span className="material-symbols-outlined text-[16px]">share</span> Transmisi WA
-              </button>
-            </div>
-          </div>
-
-          {/* Bottom: Grid Buffet of All Awards */}
-          <div className="md:col-span-12 bg-surface-container-lowest rounded-3xl p-8 mt-4">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-4">
-              <h3 className="font-headline text-2xl font-bold">Bufet Prestasi {activeClass === 'Semua Kelas' ? 'Seluruh Institusi' : `Grup ${activeClass}`}</h3>
-              <span className="bg-primary-fixed text-on-primary-fixed px-4 py-1 rounded-full text-xs font-bold">{filtered.length} Profil Tervalidasi</span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map(s => (
-                <div key={s.name} className="flex items-center gap-4 p-5 rounded-2xl bg-surface-container-low/50 hover:bg-white border border-transparent hover:border-[#c5c5d9]/20 hover:shadow-sm transition-all group cursor-pointer">
-                  <div className="w-14 h-14 rounded-2xl bg-surface-container flex items-center justify-center font-bold text-primary text-lg transition-transform group-hover:scale-110 shrink-0">
-                    {s.init}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-headline font-bold text-on-surface truncate">{s.name}</p>
-                    <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${phaseColor(s.phase)}`}>
-                        {s.phase}
-                      </span>
-                      <span className="text-[10px] text-on-surface-variant font-medium">{s.classGroup}</span>
-                    </div>
-                    <div className="mt-2.5 flex items-center gap-2.5">
-                      <div className="flex-1 h-1.5 bg-[#e2e2e5] rounded-full overflow-hidden">
-                        <div className="h-full bg-primary rounded-full" style={{ width: `${s.score}%` }}></div>
+                <div className="space-y-3">
+                  {awardedStudents.map((student, idx) => (
+                    <div 
+                      key={idx}
+                      onClick={() => setSelectedStudent(student)}
+                      className={`p-4 rounded-2xl cursor-pointer transition-all border ${selectedStudent?.id === student.id ? 'bg-[#F0F5FF] border-[#1D4ED8]/20 shadow-sm' : 'bg-slate-50 border-transparent hover:bg-slate-100 hover:border-slate-200'}`}
+                    >
+                      <div className="flex justify-between items-center mb-1">
+                         <h4 className={`font-extrabold text-sm ${selectedStudent?.id === student.id ? 'text-[#1D4ED8]' : 'text-slate-800'}`}>{student.name}</h4>
+                         <span className="text-xs font-black text-amber-500">{student.score}</span>
                       </div>
-                      <span className="text-xs font-extrabold text-on-surface">{s.score}%</span>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{student.date} • {student.phase}</p>
                     </div>
-                  </div>
-                  <span className="material-symbols-outlined text-secondary shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <div className="mt-12 flex justify-center">
-              <button className="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
-                Ekspansi Keseluruhan Profil Penghargaan
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </button>
-            </div>
-          </div>
+             </div>
+
+           </div>
+
+           {/* Canvas Sertifikat (Print View / Preview) */}
+           <div className="lg:col-span-8">
+              {selectedStudent ? (
+                <div className="flex flex-col items-center">
+                  <div className="w-full flex justify-end gap-3 mb-6 print:hidden">
+                    <button onClick={printCertificate} className="bg-[#1D4ED8] text-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all font-extrabold text-[10px] uppercase tracking-widest flex items-center gap-2 active:scale-95">
+                       <Printer className="w-4 h-4" /> Export & Cetak
+                    </button>
+                  </div>
+
+                  {/* Canvas Sertifikat Real A4 Horizontal Frame */}
+                  <div ref={certificateRef} className="w-full xl:w-[1050px] aspect-[1.414/1] bg-white rounded-[2rem] shadow-[0_30px_80px_rgba(0,0,0,0.1)] print:shadow-none print:w-[1050px] print:h-[742px] print:rounded-none relative overflow-hidden flex flex-col justify-center items-center text-center p-16 print:border-none print:p-16 border border-slate-100">
+                     
+                     {/* Decorative Borders Modern Abstract */}
+                     <div className="absolute top-0 left-0 w-full h-4 bg-[#1D4ED8] z-0"></div>
+                     <div className="absolute top-0 right-0 w-4 h-full bg-[#1D4ED8] z-0"></div>
+                     <div className="absolute bottom-0 right-0 w-full h-4 bg-amber-500 z-0"></div>
+                     <div className="absolute bottom-0 left-0 w-4 h-full bg-amber-500 z-0"></div>
+
+                     {/* Subtle Watermark Drop */}
+                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border-[40px] border-[#F0F5FF]/50 rounded-full z-0 flex items-center justify-center opacity-70">
+                       <div className="w-[450px] h-[450px] border-[20px] border-[#F0F5FF]/60 rounded-full"></div>
+                     </div>
+                     <Sparkles className="absolute top-20 right-20 w-32 h-32 text-amber-50 opacity-50 z-0 rotate-12" />
+
+                     {/* Content Foreground */}
+                     <div className="relative z-10 w-full max-w-3xl flex flex-col items-center">
+                       
+                       <div className="flex items-center gap-4 mb-4">
+                         <div className="w-10 h-10 rounded-xl bg-[#1D4ED8] flex items-center justify-center text-white scale-150 transform">
+                           <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>school</span>
+                         </div>
+                       </div>
+                       
+                       <h2 className="text-xl font-extrabold tracking-tighter text-[#1D4ED8] mt-6 mb-16">
+                          Inkata<span className="text-slate-900 align-super">.</span>
+                       </h2>
+
+                       <h1 className="text-[54px] font-black text-slate-900 tracking-tighter uppercase mb-6 drop-shadow-sm leading-none">
+                         Sertifikat Penghargaan
+                       </h1>
+                       <p className="text-[14px] font-bold uppercase tracking-[0.4em] text-amber-500 mb-12">Level Literasi Eksekutif</p>
+
+                       <p className="text-slate-500 font-medium text-lg mb-6">Diberikan secara resmi kepada:</p>
+                       <h2 className="text-[64px] font-extrabold text-[#1D4ED8] leading-none mb-10 tracking-tight drop-shadow-sm border-b-2 border-slate-200 pb-4 px-12">
+                         {selectedStudent.name}
+                       </h2>
+                       
+                       <p className="text-slate-500 text-lg max-w-2xl font-medium leading-relaxed mb-20">
+                         Telah berhasil melampaui ambang batas penilaian Algoritma Teks Eksekutif dan sukses menyelesaikan tes baca 
+                         dengan tingkat kompetensi membaca pada level <span className="font-extrabold text-slate-800">{selectedStudent.phase}</span>.
+                       </p>
+
+                       <div className="flex justify-between items-end w-full px-12 border-t border-slate-100 pt-8 mt-auto">
+                          <div className="text-left">
+                            <p className="text-sm font-extrabold text-slate-900 mb-1">{selectedStudent.date}</p>
+                            <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Tanggal Pengesahan Inkata.</p>
+                          </div>
+                          
+                          <div className="w-24 h-24 absolute right-1/4 bottom-14 opacity-90 overflow-hidden transform rotate-[-15deg]">
+                            <div className="w-full h-full border-4 border-red-500/80 rounded-full text-red-500/80 flex items-center justify-center flex-col shadow-inner">
+                               <p className="text-[8px] font-black uppercase tracking-widest">Validasi</p>
+                               <span className="material-symbols-outlined text-xl">verified</span>
+                            </div>
+                          </div>
+
+                          <div className="text-center w-48">
+                            <div className="h-10 border-b-2 border-slate-300 mb-2 content-end">
+                               <p className="text-xl text-slate-600 signature-font translate-y-3 font-semibold">System Diagnostics</p>
+                            </div>
+                            <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Lensa Intelijen Sistem</p>
+                          </div>
+                       </div>
+                     </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full h-[600px] bg-slate-50/50 rounded-[3rem] border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400 print:hidden">
+                   <Award className="w-16 h-16 text-slate-300 mb-4" />
+                   <p className="font-extrabold tracking-tight text-lg text-slate-500">Pilih Peserta Didik</p>
+                   <p className="text-sm">Pilih nama di sisi kiri untuk mencetak Sertifikat.</p>
+                </div>
+              )}
+           </div>
+
         </div>
       </main>
     </div>

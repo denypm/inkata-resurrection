@@ -40,7 +40,7 @@ export default function StudentReportPage() {
         <div className="w-full flex justify-between items-end mb-24 px-4">
            <div className="space-y-6">
               <p className="text-[10px] font-black uppercase text-[#1D4ED8] tracking-[0.4em] mb-4">LAPORAN PERKEMBANGAN SISWA</p>
-              <h1 className="text-[120px] font-black text-slate-900 leading-[0.85] tracking-tighter italic">
+              <h1 className="text-[120px] font-black text-slate-900 leading-[0.85] tracking-tighter">
                 Andi <br />
                 <span className="text-[#1D4ED8]">Pratama</span>
               </h1>
@@ -59,7 +59,7 @@ export default function StudentReportPage() {
                  </div>
               </div>
               <div className="space-y-4 max-w-xs">
-                 <h4 className="text-3xl font-black text-slate-900 italic tracking-tight">Sangat Baik</h4>
+                 <h4 className="text-3xl font-black text-slate-900 tracking-tight">Sangat Baik</h4>
                  <p className="text-slate-400 font-bold leading-relaxed">Andi menunjukkan kemajuan luar biasa dalam struktur kalimat dan artikulasi vokal.</p>
               </div>
            </div>
@@ -75,11 +75,11 @@ export default function StudentReportPage() {
                     <div className={cn("w-20 h-20 rounded-[2.5rem] flex items-center justify-center border-4 border-white shadow-xl transition-all duration-500 group-hover:rotate-6", m.bg, m.color)}>
                        <m.icon className="w-10 h-10" />
                     </div>
-                    <h4 className={cn("text-6xl font-black italic tracking-tighter opacity-70 group-hover:opacity-100 transition-opacity", m.color)}>{m.score}%</h4>
+                    <h4 className={cn("text-6xl font-black tracking-tighter opacity-70 group-hover:opacity-100 transition-opacity", m.color)}>{m.score}%</h4>
                  </div>
 
                  <div className="space-y-6">
-                    <h5 className="text-4xl font-black text-slate-900 tracking-tighter italic">{m.label}</h5>
+                    <h5 className="text-4xl font-black text-slate-900 tracking-tighter">{m.label}</h5>
                     <p className="text-slate-400 font-bold text-lg leading-relaxed">{m.desc}</p>
                     <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden shadow-inner">
                        <div className={cn("h-full rounded-full transition-all duration-1000", m.color.replace('text', 'bg'))} style={{width: `${m.score}%`}} />
@@ -97,8 +97,8 @@ export default function StudentReportPage() {
                  <Lightbulb className="w-10 h-10 animate-pulse" />
               </div>
               <div className="flex-1 space-y-4">
-                 <h4 className="text-3xl font-black text-white italic tracking-tighter">Fokus Bulan Depan</h4>
-                 <p className="text-white/80 font-bold text-xl leading-relaxed italic">"Peningkatan kompleksitas kalimat majemuk."</p>
+                 <h4 className="text-3xl font-black text-white tracking-tighter">Fokus Bulan Depan</h4>
+                 <p className="text-white/80 font-bold text-xl leading-relaxed">"Peningkatan kompleksitas kalimat majemuk."</p>
               </div>
            </div>
 
@@ -110,7 +110,7 @@ export default function StudentReportPage() {
                  </div>
                  <div className="space-y-1">
                     <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest">GURU PEMBIMBING</p>
-                    <p className="text-lg font-black text-slate-800 italic underline decoration-primary/20 decoration-4 underline-offset-4">Siti Aminah, M.Pd</p>
+                    <p className="text-lg font-black text-slate-800 underline decoration-primary/20 decoration-4 underline-offset-4">Siti Aminah, M.Pd</p>
                  </div>
               </div>
               <p className="text-[9px] font-black text-slate-300 uppercase tracking-[0.4em] self-end flex items-center gap-2">

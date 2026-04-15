@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function POST(req: Request) {
   try {
-    const { image } = await req.json();
+    const { image, student_id } = await req.json();
     if (!image) return NextResponse.json({ error: "Image data missing" }, { status: 400 });
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -86,19 +86,15 @@ export async function POST(req: Request) {
 
       // 2. Transmisi Data Hasil AI dan Image URL Keterkaitan
       await supabase.from('assessments').insert({
-        user_id: user?.id || null,
-        overall_score: parsedData.skor_keseluruhan,
-        literacy_phase: parsedData.fase_saat_ini, // Tergantung skema 'literacy_phase'
+        student_id: student_id || null,
+        score: parsedData.skor_keseluruhan,
+        literacy_phase: parsedData.fase_saat_ini, 
         vowels: parsedData.vokal,
         diction: parsedData.diksi,
         syntax: parsedData.sintaksis,
         logic: parsedData.logika,
         spelling: parsedData.ejaan,
-        word_count: parsedData.jumlah_kata,
-        spelling_errors: parsedData.error_ejaan,
-        capital_errors: parsedData.error_kapital,
-        image_url: uploadedImageUrl,
-        ai_raw_json: parsedData
+        image_url: uploadedImageUrl
       });
       
     } catch (dbError) {

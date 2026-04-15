@@ -33,11 +33,11 @@ export default function StudentReportPage() {
                  <img src="/logo.png" alt="Inkata Logo" className="w-full h-full object-contain" />
               </div>
               <div className="flex flex-col -gap-0.5">
-                 <h1 className="text-2xl font-black text-slate-900 tracking-tighter italic leading-none group-hover:text-primary transition-colors">inkata.</h1>
-                 <p className="font-black text-slate-300 uppercase text-[8px] tracking-[0.4em] italic leading-none pt-2">Laporan Analisis Siswa</p>
+                 <h1 className="text-2xl font-black text-slate-900 tracking-tighter leading-none group-hover:text-primary transition-colors">inkata.</h1>
+                 <p className="font-black text-slate-300 uppercase text-[8px] tracking-[0.4em] leading-none pt-2">Laporan Analisis Siswa</p>
               </div>
            </div>
-           <Button variant="outline" className="h-14 rounded-2xl bg-white border-2 border-slate-50 font-black text-slate-500 gap-4 hover:border-primary hover:text-primary transition-all uppercase tracking-[0.4em] text-[8px] px-12 italic shadow-sm group/btn">
+           <Button variant="outline" className="h-14 rounded-2xl bg-white border-2 border-slate-50 font-black text-slate-500 gap-4 hover:border-primary hover:text-primary transition-all uppercase tracking-[0.4em] text-[8px] px-12 shadow-sm group/btn">
               <X className="w-4 h-4 text-slate-300 group-hover/btn:rotate-90 transition-transform duration-500" /> TUTUP MODE PRESENTASI
            </Button>
         </div>
@@ -45,8 +45,8 @@ export default function StudentReportPage() {
         {/* Hero Report Header */}
         <div className="w-full flex justify-between items-end mb-24 px-4">
            <div className="space-y-8">
-              <p className="text-[10px] font-black uppercase text-[#1D4ED8] tracking-[0.6em] mb-6 px-1 italic">LAPORAN PERKEMBANGAN SISWA</p>
-              <h1 className="text-[140px] font-black text-slate-900 leading-[0.8] tracking-tighter italic">
+              <p className="text-[10px] font-black uppercase text-[#1D4ED8] tracking-[0.6em] mb-6 px-1">LAPORAN PERKEMBANGAN SISWA</p>
+              <h1 className="text-[140px] font-black text-slate-900 leading-[0.8] tracking-tighter">
                 Andi <br />
                 <span className="text-[#1D4ED8]">Pratama</span>
               </h1>
@@ -61,13 +61,13 @@ export default function StudentReportPage() {
                     <circle cx="96" cy="96" r="85" fill="none" stroke="#1D4ED8" strokeWidth="14" strokeDasharray="459 540" strokeLinecap="round" className="drop-shadow-2xl shadow-blue-500/20" />
                  </svg>
                  <div className="absolute inset-0 flex flex-col items-center justify-center rotate-[120deg]">
-                    <h3 className="text-6xl font-black text-slate-900 leading-none italic">85</h3>
-                    <p className="text-[10px] font-black uppercase text-slate-400 tracking-[0.5em] mt-3 italic">SKOR</p>
+                    <h3 className="text-6xl font-black text-slate-900 leading-none">85</h3>
+                    <p className="text-[10px] font-black uppercase text-slate-400 tracking-[0.5em] mt-3">SKOR</p>
                  </div>
               </div>
               <div className="space-y-6 max-w-xs pr-4">
-                 <h4 className="text-4xl font-black text-slate-900 italic tracking-tighter leading-none border-b-4 border-primary/10 pb-4">Sangat Baik</h4>
-                 <p className="text-slate-400 font-bold leading-relaxed text-lg italic">Andi menunjukkan kemajuan luar biasa dalam struktur kalimat dan artikulasi vokal.</p>
+                 <h4 className="text-4xl font-black text-slate-900 tracking-tighter leading-none border-b-4 border-primary/10 pb-4">Sangat Baik</h4>
+                 <p className="text-slate-400 font-bold leading-relaxed text-lg">Andi menunjukkan kemajuan luar biasa dalam struktur kalimat dan artikulasi vokal.</p>
               </div>
            </div>
         </div>
@@ -82,12 +82,12 @@ export default function StudentReportPage() {
                     <div className={cn("w-24 h-24 rounded-[2.5rem] flex items-center justify-center border-4 border-white shadow-2xl transition-all duration-700 group-hover:rotate-12 group-hover:scale-110", m.bg, m.color)}>
                        <m.icon size={42} strokeWidth={2.5} />
                     </div>
-                    <h4 className={cn("text-7xl font-black italic tracking-tighter opacity-70 group-hover:opacity-100 transition-opacity drop-shadow-sm", m.color)}>{m.score}%</h4>
+                    <h4 className={cn("text-7xl font-black tracking-tighter opacity-70 group-hover:opacity-100 transition-opacity drop-shadow-sm", m.color)}>{m.score}%</h4>
                  </div>
 
                  <div className="space-y-8 px-2">
-                    <h5 className="text-5xl font-black text-slate-900 tracking-tighter italic leading-none">{m.label}</h5>
-                    <p className="text-slate-400 font-bold text-xl leading-relaxed italic pr-4">{m.desc}</p>
+                    <h5 className="text-5xl font-black text-slate-900 tracking-tighter leading-none">{m.label}</h5>
+                    <p className="text-slate-400 font-bold text-xl leading-relaxed pr-4">{m.desc}</p>
                     <div className="h-3 w-full bg-slate-50 rounded-full overflow-hidden shadow-inner ring-8 ring-slate-100/10">
                        <div className={cn("h-full rounded-full transition-all duration-1000 shadow-lg", m.color.replace('text', 'bg'))} style={{width: `${m.score}%`}} />
                     </div>
@@ -104,25 +104,25 @@ export default function StudentReportPage() {
                  <Lightbulb className="w-12 h-12 animate-pulse text-yellow-300" />
               </div>
               <div className="flex-1 space-y-6 pt-2">
-                 <h4 className="text-4xl font-black text-white italic tracking-tighter">Fokus Bulan Depan</h4>
-                 <p className="text-white/80 font-extrabold text-2xl leading-relaxed italic underline decoration-white/20 decoration-4 underline-offset-8">"Peningkatan kompleksitas kalimat majemuk."</p>
+                 <h4 className="text-4xl font-black text-white tracking-tighter">Fokus Bulan Depan</h4>
+                 <p className="text-white/80 font-extrabold text-2xl leading-relaxed underline decoration-white/20 decoration-4 underline-offset-8">"Peningkatan kompleksitas kalimat majemuk."</p>
               </div>
            </div>
 
            <div className="lumina-card p-12 bg-white flex flex-col justify-between border-none shadow-2xl shadow-black/5 rounded-[4rem]">
               <div className="space-y-10">
                  <div className="space-y-3">
-                    <p className="text-[11px] font-black uppercase text-slate-200 tracking-[0.5em] italic leading-none">TANGGAL EVALUASI</p>
-                    <p className="text-2xl font-black text-slate-900 tracking-tight italic">24 Oktober 2023</p>
+                    <p className="text-[11px] font-black uppercase text-slate-200 tracking-[0.5em] leading-none">TANGGAL EVALUASI</p>
+                    <p className="text-2xl font-black text-slate-900 tracking-tight">24 Oktober 2023</p>
                  </div>
                  <div className="space-y-3">
-                    <p className="text-[11px] font-black uppercase text-slate-200 tracking-[0.5em] italic leading-none">GURU PEMBIMBING</p>
-                    <p className="text-2xl font-black text-slate-900 italic underline decoration-primary/20 decoration-4 underline-offset-8 tracking-tight">Siti Aminah, M.Pd</p>
+                    <p className="text-[11px] font-black uppercase text-slate-200 tracking-[0.5em] leading-none">GURU PEMBIMBING</p>
+                    <p className="text-2xl font-black text-slate-900 underline decoration-primary/20 decoration-4 underline-offset-8 tracking-tight">Siti Aminah, M.Pd</p>
                  </div>
               </div>
               <div className="flex items-center gap-4 pt-10 border-t border-slate-50 mt-12 px-2">
                  <div className="w-3 h-3 bg-primary rounded-full animate-pulse shadow-lg shadow-blue-500/40" />
-                 <p className="text-[11px] font-black text-slate-300 uppercase tracking-[0.6em] italic">HALAMAN 1 DARI 4</p>
+                 <p className="text-[11px] font-black text-slate-300 uppercase tracking-[0.6em]">HALAMAN 1 DARI 4</p>
               </div>
            </div>
         </div>

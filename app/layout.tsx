@@ -13,8 +13,26 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Inkata. | Aplikasi Evaluasi Literasi Nasional",
-  description: "Platform Infrastruktur Asesmen Literasi Cerdas Berbasis AI",
+  title: "Inkata. | Infrastruktur Evaluasi Literasi Nasional",
+  description: "Platform Infrastruktur Asesmen Literasi Cerdas Berbasis Komputasi Awan untuk Transformasi Pendidikan Indonesia.",
+  keywords: ["literasi", "asesmen nasional", "pendidikan cerdas", "intelijen edukasi", "inkata"],
+  authors: [{ name: "Inkata Team" }],
+  openGraph: {
+    title: "Inkata. | Aplikasi Evaluasi Literasi Nasional",
+    description: "Infrastruktur asesmen cerdas pelopor transformasi data literasi sekolah.",
+    url: "https://inkata.id",
+    siteName: "Inkata.",
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Inkata. | Aplikasi Evaluasi Literasi Nasional",
+    description: "Infrastruktur asesmen cerdas pelopor transformasi data literasi sekolah.",
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

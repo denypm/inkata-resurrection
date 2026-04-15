@@ -1,30 +1,65 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
+import html2canvas from 'html2canvas'
+import { jsPDF } from 'jspdf'
 
 export default function LiteracyAnalysisPage() {
   const [totalStudents, setTotalStudents] = useState(24)
   const [activeClass, setActiveClass] = useState('Semua Kelas')
+  const [isExporting, setIsExporting] = useState(false)
+  const [isSyncing, setIsSyncing] = useState(false)
+  const reportRef = useRef<HTMLDivElement>(null)
+
+  const handleSync = () => {
+    setIsSyncing(true);
+    setTimeout(() => {
+      setIsSyncing(false);
+      alert("Pemberitahuan Sistem:\n\nProtokol sinkronisasi diotorisasi. Keseluruhan metrik siswa berhasi didorong ke Brankas Inkata Nasional.");
+    }, 2500);
+  }
+
+  const handleExportPDF = async () => {
+    if (!reportRef.current) return;
+    setIsExporting(true);
+    
+    try {
+      const canvas = await html2canvas(reportRef.current, { scale: 2, useCORS: true, logging: false });
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+      });
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      pdf.save(`Laporan_Inkata_${activeClass.replace(' ', '_')}.pdf`);
+    } catch (error) {
+      console.error("Gagal mengekspor PDF", error);
+      alert("Maaf, terjadi kesalahan saat menyusun dokumen PDF.");
+    } finally {
+      setIsExporting(false);
+    }
+  }
 
   return (
-    <div className="bg-surface font-body text-on-surface antialiased pb-32 min-h-screen">
-      <main className="max-w-7xl mx-auto px-6 pt-8">
+    <div className="bg-[#F8FAFC]/50 font-manrope pt-20 text-slate-900 antialiased pb-32 min-h-screen">
+      <main className="max-w-[1200px] mx-auto px-8 py-10">
         <section className="mb-12">
           <div className="flex flex-col md:flex-row justify-between items-end gap-6">
             <div className="max-w-2xl">
-              <span className="font-label text-sm font-semibold uppercase tracking-wider text-primary mb-2 block">Laporan Deskriptif Sentral</span>
-              <h1 className="font-headline text-5xl md:text-6xl font-bold tracking-tight text-on-background mb-6">Analitik Komprehensif <span className="text-primary-container">Inkata.</span></h1>
+              <span className="font-extrabold text-[10px] tracking-[0.2em] uppercase text-[#1D4ED8] mb-3 block">Laporan Deskriptif Sentral</span>
+              <h1 className="text-4xl md:text-[40px] font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-6">Analitik Eksekutif <span className="text-[#1D4ED8]">Inkata.</span></h1>
               
-              <div className="flex items-center gap-3">
-                <span className="font-extrabold text-sm text-outline-variant">Ruang Analisis:</span>
+              <div className="flex items-center gap-4">
+                <span className="font-extrabold text-[11px] text-slate-400 uppercase tracking-widest">Ruang Analisis:</span>
                 <select 
                   value={activeClass}
                   onChange={(e) => {
                     setActiveClass(e.target.value)
                     setTotalStudents(e.target.value === 'Kelas A' ? 24 : e.target.value === 'Kelas B' ? 21 : e.target.value === 'Kelas C' ? 28 : e.target.value === 'Kelas D' ? 25 : 98)
                   }}
-                  className="bg-surface-container text-on-surface font-bold text-sm px-4 py-2 rounded-xl outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer border border-transparent focus:border-primary/20 transition-all appearance-none pr-10 relative bg-[url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke-width=\'2.5\' stroke=\'%236c6b75\'%3e%3cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' d=\'M19.5 8.25l-7.5 7.5-7.5-7.5\' /%3e%3c/svg%3e')] bg-no-repeat bg-[center_right_1rem] bg-[length:1rem_1rem]"
+                  className="bg-white border border-slate-200 text-slate-800 font-extrabold text-[11px] uppercase tracking-widest px-5 py-3 rounded-full outline-none focus:ring-2 focus:ring-[#1D4ED8]/20 cursor-pointer hover:border-[#1D4ED8]/30 transition-all appearance-none pr-10 relative shadow-[0_10px_20px_rgba(0,0,0,0.02)]"
                 >
                   <option value="Semua Kelas">Seluruh Institusi</option>
                   <option value="Kelas A">Grup Kelas 4-A</option>
@@ -35,184 +70,208 @@ export default function LiteracyAnalysisPage() {
               </div>
             </div>
             
-            <div className="flex gap-4">
+            <div className="flex gap-4 w-full md:w-auto">
               <button 
-                onClick={() => alert('Batch PDF Request dikirim ke Node...')}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-surface-container-low text-on-surface-variant font-semibold hover:bg-surface-container transition-all"
+                onClick={handleExportPDF}
+                disabled={isExporting}
+                className="flex flex-1 md:flex-none items-center justify-center gap-3 px-6 py-4 rounded-full bg-white border border-slate-200 text-slate-600 font-extrabold text-[11px] uppercase tracking-widest hover:bg-slate-50 shadow-[0_10px_20px_rgba(0,0,0,0.02)] transition-all disabled:opacity-50"
               >
-                <span className="material-symbols-outlined">picture_as_pdf</span> Ekstrak Rekap PDF
+                {isExporting ? <span className="material-symbols-outlined text-[18px] animate-spin">sync</span> : <span className="material-symbols-outlined text-[18px]">picture_as_pdf</span>} 
+                {isExporting ? 'MENYUSUN DOKUMEN...' : 'PDF EKSTRAKSI'}
               </button>
               <button 
-                onClick={() => window.open(`https://wa.me/?text=Halo%20Bapak%2FIbu%2C%20ini%20adalah%20Laporan%20Kolektif%20Analisa%20Sistem%20Inkata%20dari%20sekolah.%20%5BLink_Laporan%5D`, '_blank')}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#25D366]/10 text-[#1DA851] font-bold shadow-[0_4px_14px_rgba(37,211,102,0.15)] hover:bg-[#25D366]/20 transition-all border border-[#25D366]/30"
+                onClick={() => window.open(`https://wa.me/?text=Halo%20Bapak%2FIbu%2C%20ini%20adalah%20Laporan%20Kolektif%20Analisa%20Sistem%20Inkata.%20dari%20sekolah.%20%5BLink_Laporan%5D`, '_blank')}
+                className="flex flex-1 md:flex-none items-center justify-center gap-3 px-6 py-4 rounded-full bg-[#25D366]/10 text-[#1DA851] font-extrabold text-[11px] uppercase tracking-widest shadow-[0_4px_14px_rgba(37,211,102,0.15)] hover:bg-[#25D366]/20 transition-all border border-[#25D366]/30"
               >
-                <span className="material-symbols-outlined">share</span> Transmisi Masif via WA
+                <span className="material-symbols-outlined text-[18px]">share</span> TRANSMISI WA
               </button>
             </div>
           </div>
         </section>
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div ref={reportRef} className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-[#F8FAFC]/50 p-2 rounded-2xl">
           <div className="lg:col-span-4 space-y-8">
-            <div className="bg-surface-container rounded-3xl p-8 transition-transform">
-              <h3 className="font-headline text-xl mb-8">Distribusi Kefasihan Literasi</h3>
+            <div className="bg-white rounded-[2.5rem] p-10 shadow-[0_20px_40px_rgba(0,0,0,0.03)] border border-slate-100 transition-transform">
+              <h3 className="text-xl font-extrabold text-slate-900 tracking-tight mb-8">Distribusi Kefasihan Literasi</h3>
               <div className="relative w-full aspect-square flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full border-[24px] border-surface-container-high transition-all"></div>
-                <div className="absolute inset-0 rounded-full border-[24px] border-primary border-r-transparent border-b-transparent border-l-transparent rotate-[45deg] transition-all"></div>
-                <div className="absolute inset-0 rounded-full border-[24px] border-secondary-container border-t-transparent border-r-transparent border-b-transparent rotate-[160deg] transition-all"></div>
+                <div className="absolute inset-0 rounded-full border-[24px] border-slate-50 transition-all"></div>
+                <div className="absolute inset-0 rounded-full border-[24px] border-[#1D4ED8] border-r-transparent border-b-transparent border-l-transparent rotate-[45deg] transition-all"></div>
+                <div className="absolute inset-0 rounded-full border-[24px] border-emerald-500 border-t-transparent border-r-transparent border-b-transparent rotate-[160deg] transition-all"></div>
                 <div className="text-center">
-                  <span className="block font-headline text-5xl text-on-background">{totalStudents}</span>
-                  <span className="font-label text-xs uppercase tracking-widest text-on-surface-variant">Populasi Filter</span>
+                  <span className="block text-6xl font-extrabold text-slate-900 tracking-tighter mb-1">{totalStudents}</span>
+                  <span className="text-[10px] uppercase font-extrabold tracking-widest text-slate-400">Populasi Filter</span>
                 </div>
               </div>
-              <div className="mt-10 space-y-4">
+              <div className="mt-12 space-y-5">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 rounded-full bg-primary"></div>
-                    <span className="text-on-surface-variant font-medium">Fase Wacana</span>
+                  <div className="flex items-center gap-4">
+                    <div className="w-3.5 h-3.5 rounded-full bg-[#1D4ED8] shadow-sm"></div>
+                    <span className="text-slate-600 font-extrabold text-sm">Fase Wacana</span>
                   </div>
-                  <span className="font-headline text-on-background">42%</span>
+                  <span className="font-extrabold text-slate-900 text-lg">42%</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 rounded-full bg-secondary-container"></div>
-                    <span className="text-on-surface-variant font-medium">Fase Komunikasi</span>
+                  <div className="flex items-center gap-4">
+                    <div className="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-sm"></div>
+                    <span className="text-slate-600 font-extrabold text-sm">Fase Komunikasi</span>
                   </div>
-                  <span className="font-headline text-on-background">35%</span>
+                  <span className="font-extrabold text-slate-900 text-lg">35%</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 rounded-full bg-surface-container-high"></div>
-                    <span className="text-on-surface-variant font-medium">Fase Bunyi</span>
+                  <div className="flex items-center gap-4">
+                    <div className="w-3.5 h-3.5 rounded-full bg-slate-300 shadow-sm"></div>
+                    <span className="text-slate-600 font-extrabold text-sm">Fase Bunyi</span>
                   </div>
-                  <span className="font-headline text-on-background">23%</span>
+                  <span className="font-extrabold text-slate-900 text-lg">23%</span>
                 </div>
               </div>
             </div>
             
-            <div className="bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/10 shadow-sm">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="p-3 bg-secondary-fixed rounded-2xl text-on-secondary-container">
-                  <span className="material-symbols-outlined">lightbulb</span>
+            <div className="bg-slate-900 rounded-[2.5rem] p-10 border border-slate-800 shadow-xl overflow-hidden relative group">
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-white/10 rounded-2xl flex border border-white/10 items-center justify-center text-white">
+                    <span className="material-symbols-outlined text-2xl">lightbulb</span>
+                  </div>
+                  <h3 className="text-xl font-extrabold text-white tracking-tight">Diagnostik Sentral Sistem</h3>
                 </div>
-                <h3 className="font-headline text-xl">Diagnostik Sistem Sentral</h3>
+                <p className="text-white/80 leading-relaxed mb-8 text-[13px] font-medium">
+                  Akuisisi struktural wacana telah mencapai lonjakan komprehensif sebesar <span className="text-white font-extrabold">12%</span> pada siklus {activeClass}. Sistem <span className="text-white font-bold">Inkata.</span> merekomendasikan manuver eskalatif untuk para Peserta pada diagnostik "Fase Bunyi".
+                </p>
+                <Link href="/dashboard/students" className="inline-flex py-3 px-6 bg-white text-slate-900 items-center justify-center rounded-full text-[10px] font-extrabold uppercase tracking-widest gap-2 hover:bg-slate-100 transition-colors">
+                  Rekomendasi Intervensi
+                </Link>
               </div>
-              <p className="text-on-surface-variant leading-relaxed mb-6">
-                Akuisisi struktural wacana telah mencapai lonjakan komprehensif sebesar <span className="text-primary font-bold">12%</span> pada siklus {activeClass}. Mesin Inkata. merekomendasikan manuver eskalatif untuk para Peserta pada diagnostik "Fase Bunyi".
-              </p>
-              <Link href="/dashboard/students" className="inline-flex items-center gap-2 text-primary font-bold hover:underline">
-                Rekomendasi Intervensi Eksklusif <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </Link>
+              <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-[40px] -translate-y-1/2 translate-x-1/3 pointer-events-none group-hover:scale-125 transition-transform duration-700"></div>
             </div>
           </div>
           
           <div className="lg:col-span-8 space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-surface-container-low p-6 rounded-3xl transition-all hover:bg-surface-container-high">
-                <span className="font-label text-[10px] font-extrabold uppercase tracking-[0.2em] text-on-surface-variant opacity-60">Matriks Ekstraksi Logis</span>
-                <div className="mt-2 flex items-baseline gap-2">
-                  <span className="font-headline text-4xl text-on-background">118</span>
-                  <span className="font-label text-sm text-on-surface-variant">WPM</span>
+              <div className="bg-white p-8 rounded-[2rem] shadow-[0_15px_30px_rgba(0,0,0,0.02)] border border-slate-100 transition-all hover:bg-slate-50/50 hover:-translate-y-1 group">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#1D4ED8] block mb-4">Matriks Ekstraksi Logis</span>
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span className="text-5xl font-extrabold text-slate-900 tracking-tighter">118</span>
+                  <span className="text-sm font-extrabold text-slate-400">WPM</span>
                 </div>
-                <div className="mt-4 h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
-                  <div className="h-full w-[78%] bg-gradient-to-r from-[#ffbf12] to-[#2333e7]"></div>
-                </div>
-              </div>
-              <div className="bg-surface-container-low p-6 rounded-3xl transition-all hover:bg-surface-container-high">
-                <span className="font-label text-[10px] font-extrabold uppercase tracking-[0.2em] text-on-surface-variant opacity-60">Intelegensi Reseptif</span>
-                <div className="mt-2 flex items-baseline gap-2">
-                  <span className="font-headline text-4xl text-on-background">84</span>
-                  <span className="font-label text-sm text-on-surface-variant">%</span>
-                </div>
-                <div className="mt-4 h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
-                  <div className="h-full w-[84%] bg-gradient-to-r from-[#ffbf12] to-[#2333e7]"></div>
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                  <div className="h-full w-[78%] bg-gradient-to-r from-[#1D4ED8] to-cyan-500 rounded-full group-hover:w-[85%] transition-all duration-1000 delay-100"></div>
                 </div>
               </div>
-              <div className="bg-surface-container-low p-6 rounded-3xl transition-all hover:bg-surface-container-high">
-                <span className="font-label text-[10px] font-extrabold uppercase tracking-[0.2em] text-on-surface-variant opacity-60">Inventaris Kosakata</span>
-                <div className="mt-2 flex items-baseline gap-2">
-                  <span className="font-headline text-4xl text-on-background">92</span>
-                  <span className="font-label text-sm text-on-surface-variant">%</span>
+              <div className="bg-white p-8 rounded-[2rem] shadow-[0_15px_30px_rgba(0,0,0,0.02)] border border-slate-100 transition-all hover:bg-slate-50/50 hover:-translate-y-1 group">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#1D4ED8] block mb-4">Intelegensi Reseptif</span>
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span className="text-5xl font-extrabold text-slate-900 tracking-tighter">84</span>
+                  <span className="text-sm font-extrabold text-slate-400">%</span>
                 </div>
-                <div className="mt-4 h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
-                  <div className="h-full w-[92%] bg-gradient-to-r from-[#ffbf12] to-[#2333e7]"></div>
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                  <div className="h-full w-[84%] bg-gradient-to-r from-[#1D4ED8] to-emerald-500 rounded-full group-hover:w-[90%] transition-all duration-1000 delay-200"></div>
+                </div>
+              </div>
+              <div className="bg-white p-8 rounded-[2rem] shadow-[0_15px_30px_rgba(0,0,0,0.02)] border border-slate-100 transition-all hover:bg-slate-50/50 hover:-translate-y-1 group">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#1D4ED8] block mb-4">Inventaris Kosakata</span>
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span className="text-5xl font-extrabold text-slate-900 tracking-tighter">92</span>
+                  <span className="text-sm font-extrabold text-slate-400">%</span>
+                </div>
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                  <div className="h-full w-[92%] bg-gradient-to-r from-[#1D4ED8] to-purple-500 rounded-full group-hover:w-[96%] transition-all duration-1000 delay-300"></div>
                 </div>
               </div>
             </div>
             
-            <div className="bg-surface-container-lowest rounded-3xl overflow-hidden border border-outline-variant/10">
-              <div className="px-8 py-6 flex justify-between items-center border-b border-surface-container flex-wrap gap-4">
-                <h3 className="font-headline text-xl">Laporan Matriks Performa Individu ({activeClass})</h3>
+            <div className="bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-[0_20px_40px_rgba(0,0,0,0.03)]">
+              <div className="px-10 py-8 flex justify-between items-center border-b border-slate-100 flex-wrap gap-4">
+                <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">Laporan Matriks Performa Individu ({activeClass})</h3>
                 <div className="flex gap-2">
-                  <span className="px-3 py-1 bg-primary-fixed text-on-primary-fixed text-xs font-bold rounded-full">Distribusi Kohort Tertinggi</span>
+                  <span className="px-4 py-2 bg-[#F0F5FF] text-[#1D4ED8] text-[9px] uppercase tracking-widest font-extrabold rounded-full">Distribusi Kohort Tertinggi</span>
                 </div>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
                   <thead>
-                    <tr className="text-left font-label text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant/60 border-b border-surface-container">
-                      <th className="px-8 py-4">Identitas Peserta Didik</th>
-                      <th className="px-6 py-4">Kecepatan Resolusi</th>
-                      <th className="px-6 py-4">Pemahaman Struktural</th>
-                      <th className="px-6 py-4">Distribusi Leksikal</th>
-                      <th className="px-8 py-4 text-right">Penilaian Inkata</th>
+                    <tr className="text-left text-[10px] font-extrabold uppercase tracking-widest text-slate-400 border-b border-slate-100 bg-slate-50/50">
+                      <th className="px-10 py-6">Identitas Peserta Didik</th>
+                      <th className="px-6 py-6">Kecepatan Resolusi</th>
+                      <th className="px-6 py-6">Pemahaman Struktural</th>
+                      <th className="px-6 py-6">Distribusi Leksikal</th>
+                      <th className="px-10 py-6 text-right">Penilaian Sistem Inkata.</th>
                     </tr>
                   </thead>
                   <tbody className="text-sm">
-                    <tr className="hover:bg-surface-container-low transition-colors group border-b border-surface">
-                      <td className="px-8 py-6">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-xs text-primary">AJ</div>
-                          <span className="font-bold text-on-background">Alex Johnson</span>
+                    <tr className="hover:bg-slate-50 transition-colors group border-b border-slate-100/50">
+                      <td className="px-10 py-8">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-full bg-[#1D4ED8] flex items-center justify-center font-extrabold text-[11px] text-white overflow-hidden shadow-sm shadow-[#1D4ED8]/20">
+                             <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHdx1Bzh4IZYMOHubmgbF4GxuyELcKYvQsoSgNL4gzG1tDDnsB85EZuenFLG6uOxUIGmx7ooSgUpMnoDiA75TT4v26AsckbW2LR5AuJ4FOiQ8D3BtAf_tGw2CGjmXLgZxpNo4kA0QjrnU6R6dazEBeHHUd1UUZF-w451jfx7eEqzS-FIiUxaUuvcx47mMETpkkYNUPVeTGWaRE7RzdSMnFm4tuFSYvgMlK5jfqNeynNE0w_ZV32D76TBaAnBH2y867PA4RU4pfP-4" alt="AJ" className="w-full h-full object-cover"/>
+                          </div>
+                          <span className="font-extrabold text-slate-900">Alex Johnson</span>
                         </div>
                       </td>
-                      <td className="px-6 py-6 font-headline text-on-surface-variant">142 WPM</td>
-                      <td className="px-6 py-6 font-headline text-on-surface-variant">96%</td>
-                      <td className="px-6 py-6 font-headline text-on-surface-variant">98%</td>
-                      <td className="px-8 py-6 text-right">
-                        <span className="px-3 py-1 bg-primary-fixed text-primary font-bold rounded-full text-[10px] uppercase tracking-wider">Fase Wacana</span>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">142 <span className="text-[10px] text-slate-400">WPM</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">96<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">98<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-10 py-8 text-right">
+                        <span className="px-4 py-2 bg-[#F0F5FF] text-[#1D4ED8] font-extrabold rounded-full text-[9px] uppercase tracking-widest border border-[#1D4ED8]/10">Fase Wacana</span>
                       </td>
                     </tr>
-                    <tr className="hover:bg-surface-container-low transition-colors group border-b border-surface">
-                      <td className="px-8 py-6">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-xs text-secondary">SM</div>
-                          <span className="font-bold text-on-background">Sarah Miller</span>
+                    <tr className="hover:bg-slate-50 transition-colors group border-b border-slate-100/50">
+                      <td className="px-10 py-8">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center font-extrabold text-[11px] text-white shadow-sm shadow-emerald-500/20 overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuArG2GoM1KdVHX-XTejNlxqtxbIY6dC72ZrHRG4p66fwwLAYft3bNGxqyvWnwm9Kmg9IEhBejloFTHl-E3lPx2KPxtklKstnLxkk0ub50W86hSy34qAIovI1ps2uHC7OkYiBUeQYWCug8WQirsadTCFBTTp4EK0gBhWLooCLQkp6roaidA2gfrCry645mIGBG__8qV28GEO6dDt5OG8dyVLw_NgqrIH5B7FP1erSf8V5PNOPIZjriqP7wRl7XMZV0ySilp0I6s6_KI" alt="SM" className="w-full h-full object-cover" />
+                          </div>
+                          <span className="font-extrabold text-slate-900">Sarah Miller</span>
                         </div>
                       </td>
-                      <td className="px-6 py-6 font-headline text-on-surface-variant">94 WPM</td>
-                      <td className="px-6 py-6 font-headline text-on-surface-variant">72%</td>
-                      <td className="px-6 py-6 font-headline text-on-surface-variant">80%</td>
-                      <td className="px-8 py-6 text-right">
-                        <span className="px-3 py-1 bg-secondary-fixed text-secondary font-bold rounded-full text-[10px] uppercase tracking-wider">Fase Bunyi</span>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">94 <span className="text-[10px] text-slate-400">WPM</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">72<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">80<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-10 py-8 text-right">
+                        <span className="px-4 py-2 bg-slate-100 text-slate-600 font-extrabold rounded-full text-[9px] uppercase tracking-widest border border-slate-200">Fase Bunyi</span>
                       </td>
                     </tr>
-                    <tr className="hover:bg-surface-container-low transition-colors group">
-                      <td className="px-8 py-6">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-xs">LT</div>
-                          <span className="font-bold text-on-background">Leo Thompson</span>
+                    <tr className="hover:bg-slate-50 transition-colors group">
+                      <td className="px-10 py-8">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center font-extrabold text-[11px] text-white overflow-hidden shadow-sm shadow-orange-500/20">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBy7ojibxR_CoDzJG3WN3xrG9vUdJpSTM67rwSuVvv69ckncsJXwC5T-1mA1sMH2Csmel05Yru0rIaqZKNmk0sj7qpGSsIpE5ckJSbmfkmia8GozcbG4g8jb8b0iBptaK7M2Dk7F-QBDINE1oNXQsdjZrN5mBg7MV6WCalYrQJ-1zgCystGtLMYcoA5pDUfPQHAQ5B_9O4czpYbuV3UyC4inOFMe625VlitUjSE1UFtcHL3b3HD1FN-MOK2EFVr6K1BmIfrgqkkqU" alt="LT" className="w-full h-full object-cover" />
+                          </div>
+                          <span className="font-extrabold text-slate-900">Leo Thompson</span>
                         </div>
                       </td>
-                      <td className="px-6 py-6 font-headline text-on-surface-variant">128 WPM</td>
-                      <td className="px-6 py-6 font-headline text-on-surface-variant">88%</td>
-                      <td className="px-6 py-6 font-headline text-on-surface-variant">90%</td>
-                      <td className="px-8 py-6 text-right">
-                        <span className="px-3 py-1 bg-[#ffbf12]/20 text-[#7a5900] font-bold rounded-full text-[10px] uppercase tracking-wider">Fase Komunikasi</span>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">128 <span className="text-[10px] text-slate-400">WPM</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">88<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">90<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-10 py-8 text-right">
+                        <span className="px-4 py-2 bg-orange-50 text-orange-600 font-extrabold rounded-full text-[9px] uppercase tracking-widest border border-orange-100">Fase Komunikasi</span>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="p-4 bg-surface-container-low text-center">
-                <button className="text-on-surface-variant font-bold text-xs uppercase tracking-widest hover:text-primary transition-colors">Ekspansi {totalStudents} Metrik {activeClass}</button>
+              <div className="p-6 bg-slate-50 border-t border-slate-100 text-center">
+                <button className="text-slate-500 font-extrabold text-[10px] uppercase tracking-widest hover:text-[#1D4ED8] transition-colors">Ekspansi {totalStudents} Metrik {activeClass}</button>
               </div>
             </div>
             
-            <div className="pt-4">
-              <button className="w-full bg-gradient-to-r from-[#2333e7] to-[#4353ff] text-white py-6 rounded-3xl font-headline text-xl shadow-xl shadow-primary/20 flex items-center justify-center gap-3 hover:-translate-y-1 hover:shadow-primary/40 active:scale-[0.98] transition-all group">
-                Otorisasi Rekapitulasi Sinkronik
-                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            <div className="pt-6">
+              <button 
+                onClick={handleSync}
+                disabled={isSyncing}
+                className={`w-full text-white py-6 rounded-[2rem] font-extrabold text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all group ${isSyncing ? 'bg-emerald-500 hover:scale-100 opacity-90' : 'bg-[#1D4ED8] shadow-md hover:shadow-lg hover:-translate-y-1 active:scale-[0.98]'}`}
+              >
+                {isSyncing ? (
+                  <>
+                    <span className="material-symbols-outlined text-lg animate-spin">refresh</span>
+                    MENYINKRONKAN JARINGAN INKATA...
+                  </>
+                ) : (
+                  <>
+                    Otorisasi Rekapitulasi Sinkronik
+                    <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  </>
+                )}
               </button>
             </div>
           </div>

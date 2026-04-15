@@ -39,15 +39,15 @@ export default function OwnerDashboardPage() {
               <div className="flex items-center gap-6">
                  <span className="font-sans text-[11px] font-black uppercase tracking-[0.5em] text-[#2333e7]">INFRASTRUCTURE COMMANDER v5.0</span>
               </div>
-              <h2 className="font-display text-[120px] font-black leading-[0.82] tracking-[-0.04em] text-slate-900 italic">
+              <h2 className="font-display text-[120px] font-black leading-[0.82] tracking-[-0.04em] text-slate-900">
                  Sentral <br /> <span className="text-[#2333e7] relative px-4">Komando.<div className="absolute inset-0 bg-[#2333e7]/5 -skew-x-12 -z-10" /></span>
               </h2>
               <div className="flex items-center gap-16 pt-8">
-                 <p className="font-sans text-xl text-[#44474e] leading-relaxed italic max-w-2xl border-l-8 border-[#2333e7]/10 pl-16">
+                 <p className="font-sans text-xl text-[#44474e] leading-relaxed max-w-2xl border-l-8 border-[#2333e7]/10 pl-16">
                     "Visualisasi real-time dari penyerapan platform Inkata di seluruh wilayah kedaulatan digital Indonesia. Mengarahkan kordinat pertumbuhan institusi."
                  </p>
                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button className="h-32 px-20 rounded-2xl bg-[#2333e7] text-white text-3xl font-black shadow-[0_30px_60px_rgba(35,51,231,0.3)] group relative overflow-hidden italic border-none">
+                    <Button className="h-32 px-20 rounded-2xl bg-[#2333e7] text-white text-3xl font-black shadow-[0_30px_60px_rgba(35,51,231,0.3)] group relative overflow-hidden border-none">
                        <Plus size={40} className="mr-6 transition-transform group-hover:rotate-180 duration-1000" strokeWidth={3} />
                        REGISTRASI MITRA
                     </Button>
@@ -76,8 +76,8 @@ export default function OwnerDashboardPage() {
                        <st.icon size={44} strokeWidth={2.5} />
                     </div>
                     <div className="space-y-4">
-                       <p className="font-sans text-[11px] font-black uppercase tracking-[0.4em] text-slate-300 italic">{st.label}</p>
-                       <h3 className="font-display text-[72px] font-black leading-none text-slate-900 italic tracking-tighter">{st.val}</h3>
+                       <p className="font-sans text-[11px] font-black uppercase tracking-[0.4em] text-slate-300">{st.label}</p>
+                       <h3 className="font-display text-[72px] font-black leading-none text-slate-900 tracking-tighter">{st.val}</h3>
                     </div>
                     <div className="w-full h-1 bg-[#f3f3f6] rounded-full overflow-hidden">
                        <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 2, delay: 1 }} className="h-full" style={{ background: st.color }} />
@@ -97,10 +97,10 @@ export default function OwnerDashboardPage() {
                  <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2333e7]/[0.02] rounded-bl-[30rem] -z-10" />
                  <div className="flex justify-between items-start mb-16 px-8">
                     <div className="space-y-4">
-                       <h4 className="font-display text-5xl font-black italic text-slate-900 tracking-tight leading-none">Peta Adopsi Nasional.</h4>
+                       <h4 className="font-display text-5xl font-black text-slate-900 tracking-tight leading-none">Peta Adopsi Nasional.</h4>
                        <div className="flex items-center gap-4 text-[#2333e7]">
                           <Globe className="animate-spin-slow" size={24} />
-                          <span className="font-sans text-[10px] font-black uppercase tracking-[0.4em] italic opacity-40">NODAL AKTIF: 1,240 TITIK</span>
+                          <span className="font-sans text-[10px] font-black uppercase tracking-[0.4em] opacity-40">NODAL AKTIF: 1,240 TITIK</span>
                        </div>
                     </div>
                     <Activity className="text-[#2333e7] w-14 h-14 animate-pulse" strokeWidth={3} />
@@ -108,7 +108,7 @@ export default function OwnerDashboardPage() {
                  
                  <div className="flex-1 w-full bg-[#f3f3f6]/50 rounded-[4rem] flex items-center justify-center relative group-hover:bg-white transition-all shadow-inner border border-white/40 overflow-hidden">
                     <div className="absolute inset-0 bg-blue-500/[0.03] animate-pulse" />
-                    <div className="font-display font-black text-5xl text-slate-100 uppercase tracking-[0.6em] relative z-10 italic">
+                    <div className="font-display font-black text-5xl text-slate-100 uppercase tracking-[0.6em] relative z-10">
                        [INFRASTRUCTURE LENS ACTIVE]
                     </div>
                  </div>
@@ -122,9 +122,9 @@ export default function OwnerDashboardPage() {
                     <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-bl-[10rem] group-hover:scale-125 transition-transform duration-1000" />
                     <div className="flex items-center gap-4 border-b border-white/20 pb-8">
                        <Shield size={32} />
-                       <span className="font-sans text-[11px] font-black uppercase tracking-[0.4em] italic opacity-60">AI NEURAL REPORT v5.1</span>
+                       <span className="font-sans text-[11px] font-black uppercase tracking-[0.4em] opacity-60">AI NEURAL REPORT v5.1</span>
                     </div>
-                    <p className="font-sans text-2xl font-black italic leading-relaxed pr-6">
+                    <p className="font-sans text-2xl font-black leading-relaxed pr-6">
                        "Deteksi percepatan 24% di wilayah <span className="text-emerald-300 underline underline-offset-8">Sumatera Utara</span>."
                     </p>
                  </motion.div>
@@ -138,8 +138,8 @@ export default function OwnerDashboardPage() {
                        <Cpu size={56} strokeWidth={2.5} className="animate-pulse" />
                     </div>
                     <div className="space-y-2">
-                       <h5 className="font-display text-4xl font-black text-emerald-400 leading-none italic italic">AI CORE v5.9</h5>
-                       <p className="font-sans text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 italic">OPTIMAL STATUS</p>
+                       <h5 className="font-display text-4xl font-black text-emerald-400 leading-none">AI CORE v5.9</h5>
+                       <p className="font-sans text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">OPTIMAL STATUS</p>
                     </div>
                  </motion.div>
               </div>
@@ -148,7 +148,7 @@ export default function OwnerDashboardPage() {
         </div>
 
         {/* Global Floating Branding */}
-        <div className="fixed top-[50%] right-[-140px] -rotate-90 whitespace-nowrap opacity-[0.015] font-display text-[300px] font-black italic tracking-tighter pointer-events-none select-none">
+        <div className="fixed top-[50%] right-[-140px] -rotate-90 whitespace-nowrap opacity-[0.015] font-display text-[300px] font-black tracking-tighter pointer-events-none select-none">
            INKATA NATIONAL COMMAND
         </div>
       </main>

@@ -1,89 +1,137 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
-import { Sparkles, ArrowRight, BrainCircuit, ShieldCheck, Globe, Users } from 'lucide-react'
+import { ArrowRight, Sparkles, BrainCircuit, ShieldCheck, Users } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 export default function LandingPage() {
   return (
-    <div className="bg-[#FBFCFF] min-h-screen font-sans selection:bg-primary/10">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full p-8 px-16 flex justify-between items-center z-50 backdrop-blur-md bg-white/40 border-b border-slate-50">
-        <div className="flex items-center gap-4 group cursor-pointer transition-all hover:scale-110">
-          <img src="/logo.png" alt="Inkata Logo" className="w-16 h-16 object-contain shadow-2xl rounded-2xl bg-white border-2 border-white p-1" />
-          <div className="flex flex-col -gap-0.5">
-             <h1 className="text-2xl font-black text-[#1D4ED8] tracking-tighter leading-none italic">inkata.</h1>
-             <p className="text-[7.5px] font-black uppercase text-slate-300 tracking-[0.4em] leading-none">Aplikasi Evaluasi Literasi</p>
+    <div className="min-h-screen bg-[#F8FAFC]/50 font-manrope selection:bg-[#1D4ED8]/10 selection:text-[#1D4ED8] overflow-x-hidden">
+      {/* Navigation - Vercel Clean Style */}
+      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-transparent shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 h-[88px] flex items-center justify-between">
+          <div className="flex items-center gap-3 cursor-pointer">
+             <h1 className="text-[28px] font-extrabold tracking-tighter text-slate-900">
+              Inkata<span className="text-[#1D4ED8]">.</span>
+             </h1>
           </div>
-        </div>
-        <div className="flex gap-6 items-center">
-          <Link href="/auth">
-            <Button variant="ghost" className="font-black text-slate-400 hover:text-primary tracking-[0.4em] text-[9px] uppercase">LOGIN</Button>
-          </Link>
-          <div className="w-px h-6 bg-slate-100 mx-2" />
-          <Link href="/auth">
-             <Button className="bg-[#1D4ED8] hover:bg-[#1E40AF] h-14 rounded-full px-12 font-black uppercase tracking-widest text-[10px] shadow-[0_20px_40px_-10px_rgba(40,80,237,0.4)] transition-all active:scale-95">DAFTAR SEKARANG</Button>
-          </Link>
+          
+          <div className="flex items-center gap-8">
+            <Link href="/auth">
+              <span className="text-sm font-extrabold text-slate-900 hover:text-[#1D4ED8] transition-colors uppercase tracking-widest cursor-pointer">
+                Login
+              </span>
+            </Link>
+            <Link href="/auth">
+              <Button className="bg-[#1D4ED8] hover:bg-[#1E40AF] text-white font-extrabold px-8 py-6 rounded-full text-xs uppercase tracking-widest shadow-[0_8px_30px_rgba(29,78,216,0.3)] hover:shadow-[0_15px_40px_rgba(29,78,216,0.4)] transition-all active:scale-95">
+                Daftar Sekarang
+              </Button>
+            </Link>
+          </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <main className="pt-56 px-16 pb-32 max-w-7xl mx-auto flex flex-col items-center text-center">
-        <div className="flex items-center gap-4 mb-12 px-8 py-3 bg-white rounded-full border border-slate-100 shadow-xl shadow-black/5 animate-in slide-in-from-top-10 duration-1000">
-           <Sparkles className="w-5 h-5 text-[#1D4ED8] animate-pulse" />
-           <p className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-400">Transformasi Platform Literasi v2.2</p>
-        </div>
-        
-        <h1 className="text-[120px] font-black tracking-tighter text-slate-900 mb-14 leading-[0.8] max-w-6xl italic animate-in slide-in-from-bottom-20 duration-1000 drop-shadow-sm px-4">
-          Ubah <br /> <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#1D4ED8] via-[#1E40AF] to-emerald-500">Tulisan Tangan</span> <br /> menjadi Data.
-        </h1>
-        
-        <p className="text-2xl font-bold text-slate-400 max-w-3xl mb-20 leading-relaxed italic animate-in slide-in-from-bottom-24 duration-1000 delay-200">
-          Inkata. adalah penyedia infrastruktur asesmen literasi cerdas berbasis AI untuk institusi pendidikan modern di Indonesia. Deteksi hambatan belajar secara prediktif dalam hitungan detik.
-        </p>
-
-        <div className="flex gap-8 mb-40 animate-in slide-in-from-bottom-20 duration-1000 delay-500">
-           <Link href="/auth">
-              <Button className="h-24 px-16 rounded-full bg-[#1D4ED8] hover:bg-[#1E40AF] text-2xl font-black shadow-[0_40px_80px_-20px_rgba(40,80,237,0.5)] gap-6 group transition-all active:scale-95 italic tracking-tighter">
-                MULAI ASESMEN SEKARANG <ArrowRight className="w-8 h-8 transition-transform group-hover:translate-x-4 stroke-[3px]" />
+      {/* Hero Section - Elevated Borderless */}
+      <main className="max-w-[1440px] mx-auto px-6 md:px-12 pt-44 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-24 items-center">
+          
+          {/* Left Side: Content */}
+          <div className="flex flex-col items-start text-left">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#F0F5FF] rounded-full mb-8 shadow-sm">
+              <span className="text-[10px] font-extrabold text-[#1D4ED8] uppercase tracking-[0.2em]">Transformasi Platform Literasi v2.2</span>
+            </div>
+            
+            <h1 className="text-[64px] md:text-[88px] font-extrabold text-slate-900 leading-[1.05] tracking-tight mb-8">
+              Ubah <br />Tulisan Tangan, <br />
+              <span className="text-[#1D4ED8] font-extrabold">menjadi</span> Data.
+            </h1>
+            
+            <p className="text-[22px] text-slate-500 font-medium leading-relaxed max-w-[540px] mb-12">
+              Inkata. adalah penyedia infrastruktur asesmen literasi cerdas berbasis algoritma prediktif modern untuk institusi pendidikan di Indonesia. Deteksi hambatan belajar secara presisi dalam hitungan detik.
+            </p>
+            
+            <Link href="/auth">
+              <Button className="bg-[#1D4ED8] hover:bg-[#1E40AF] text-white font-extrabold h-16 px-10 rounded-full text-sm transition-all shadow-[0_15px_30px_rgba(29,78,216,0.3)] hover:-translate-y-1 group tracking-widest">
+                MULAI ASESMEN SEKARANG
+                <ArrowRight className="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1 stroke-[3px]" />
               </Button>
-           </Link>
-        </div>
+            </Link>
+          </div>
 
-        {/* Feature Grid with higher fidelity */}
-        <div className="grid grid-cols-3 gap-16 text-left w-full mb-32">
-           {[
-             { label: 'Gemini 1.5 Pro Engine', icon: BrainCircuit, color: 'text-primary', bg: 'bg-primary/5', desc: 'Visi komputer tercanggih untuk akurasi pendeteksian pola tulisan tangan yang belum pernah ada sebelumnya.' },
-             { label: 'Infrastruktur Aman', icon: ShieldCheck, color: 'text-emerald-500', bg: 'bg-emerald-50', desc: 'Keamanan data murid sekelas perbankan dengan otentikasi multi-tenant yang ketat, terenkripsi, dan berdaulat.' },
-             { label: 'Analisis Kolektif', icon: Users, color: 'text-orange-400', bg: 'bg-orange-50', desc: 'Lihat tren literasi tingkat sekolah atau kelas secara utuh untuk pengambilan kebijakan yang lebih objektif.' },
-           ].map((feature, i) => (
-             <div key={i} className="lumina-card p-14 bg-white flex flex-col justify-between h-[460px] group transition-all hover:bg-white hover:translate-y-[-16px] hover:shadow-[0_80px_120px_-30px_rgba(0,0,0,0.1)] border-none shadow-xl shadow-black/[0.03]">
-                <div className={cn("w-20 h-20 rounded-[2.5rem] flex items-center justify-center border-4 border-white shadow-2xl transition-all duration-700 group-hover:rotate-12 group-hover:scale-110", feature.bg, feature.color)}>
-                   <feature.icon size={42} strokeWidth={2.5} />
+          {/* Right Side: Mockup Visual Borderless */}
+          <div className="relative flex justify-center lg:justify-end mt-12 lg:mt-0">
+            <div className="w-full max-w-[560px] bg-white rounded-[3.5rem] p-12 shadow-[0_30px_80px_rgba(0,0,0,0.08)] relative">
+              <div className="flex items-center gap-5 mb-12">
+                <div className="w-14 h-14 rounded-full bg-[#F0F5FF] flex items-center justify-center text-[#1D4ED8] shadow-[0_4px_20px_rgba(29,78,216,0.1)]">
+                  <Sparkles className="w-6 h-6" />
                 </div>
                 <div>
-                   <h3 className="text-3xl font-black text-slate-900 mb-8 italic tracking-tighter group-hover:text-primary transition-colors">{feature.label}</h3>
-                   <p className="text-slate-400 font-bold leading-relaxed text-lg italic">{feature.desc}</p>
+                  <h3 className="font-extrabold text-slate-900 text-xl tracking-tight">Mesin Pemindai Intelijen</h3>
+                  <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mt-1">Active Scanning</p>
+                </div>
+              </div>
+
+              {/* Mock Content Bars with Scanner Animation */}
+              <div className="space-y-4 mb-12 relative overflow-hidden py-2 px-1">
+                <div className="absolute top-0 bottom-0 left-0 w-full bg-gradient-to-b from-transparent via-[#1D4ED8]/20 to-transparent animate-[scan_3s_ease-in-out_infinite] z-10 pointer-events-none">
+                  <div className="w-full h-px bg-[#1D4ED8]/50 shadow-[0_0_8px_#1D4ED8]"></div>
+                </div>
+                <div className="h-5 bg-slate-100 rounded-full w-full"></div>
+                <div className="h-5 bg-slate-100 rounded-full w-[85%]"></div>
+                <div className="h-5 bg-slate-100 rounded-full w-[60%]"></div>
+              </div>
+
+              {/* Insight Popup Bubble */}
+              <div className="bg-[#F8FAFC] rounded-[2rem] p-8 relative overflow-hidden border border-slate-100">
+                <div className="absolute top-0 left-0 w-1 h-full bg-[#1D4ED8]"></div>
+                <p className="text-[10px] font-extrabold text-[#1D4ED8] uppercase tracking-[0.2em] mb-3">Insight Detected</p>
+                <p className="text-slate-600 font-bold text-[15px] leading-relaxed">
+                  "Peserta didik mengalami kendala pada pemahaman spasial antar kalimat (Fase Wacana)..."
+                </p>
+              </div>
+
+              {/* Floating Decorative Elements */}
+              <div className="absolute -top-4 -right-4 w-10 h-10 bg-white border border-slate-100 rounded-full shadow-[0_10px_20px_rgba(0,0,0,0.05)] flex items-center justify-center text-[#1D4ED8] animate-pulse">
+                <Sparkles className="w-5 h-5" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
+        {/* Feature Grid - Borderless Flat */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-40">
+           {[
+             { label: 'Gemini 1.5 Pro Engine', icon: BrainCircuit, color: 'text-[#1D4ED8]', bg: 'bg-[#F0F5FF]', desc: 'Visi komputer tercanggih untuk akurasi pendeteksian pola tulisan tangan yang belum pernah ada sebelumnya.' },
+             { label: 'Infrastruktur Aman', icon: ShieldCheck, color: 'text-emerald-600', bg: 'bg-emerald-50', desc: 'Keamanan data murid sekelas perbankan dengan otentikasi multi-tenant yang ketat, terenkripsi, dan berdaulat.' },
+             { label: 'Analisis Kolektif', icon: Users, color: 'text-orange-500', bg: 'bg-orange-50', desc: 'Lihat tren literasi tingkat sekolah atau kelas secara utuh untuk pengambilan kebijakan yang lebih objektif.' },
+           ].map((feature, i) => (
+             <div key={i} className="bg-white p-12 rounded-[2.5rem] flex flex-col justify-between h-auto min-h-[380px] shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_70px_rgba(0,0,0,0.06)] hover:-translate-y-2 transition-all duration-500 cursor-pointer">
+                <div className={cn("w-20 h-20 rounded-[2rem] flex items-center justify-center mb-8 shadow-sm", feature.bg, feature.color)}>
+                   <feature.icon size={40} strokeWidth={2.5} />
+                </div>
+                <div>
+                   <h3 className="text-2xl font-extrabold text-slate-900 mb-4 tracking-tight">{feature.label}</h3>
+                   <p className="text-slate-500 font-medium leading-relaxed text-base">{feature.desc}</p>
                 </div>
              </div>
            ))}
         </div>
       </main>
 
-      {/* Footer Branding with Logo */}
-      <footer className="px-16 py-32 border-t border-slate-50 flex flex-col items-center gap-16 bg-white shadow-inner">
-         <div className="flex items-center gap-6 group cursor-pointer transition-all hover:scale-110">
-            <img src="/logo.png" alt="Inkata Logo" className="w-20 h-20 object-contain shadow-2xl rounded-3xl" />
-            <div className="flex flex-col -gap-1">
-               <h1 className="text-5xl font-black text-slate-900 tracking-tighter italic leading-none group-hover:text-primary transition-colors">inkata.</h1>
-               <p className="text-[10px] font-black uppercase text-slate-300 tracking-[0.5em] leading-none pt-4">Aplikasi Evaluasi Literasi Nasional</p>
-            </div>
+       <footer className="px-16 py-24 bg-white flex flex-col items-center gap-12 border-t border-slate-100">
+         <div className="flex items-center gap-4 group cursor-pointer transition-all hover:scale-105">
+            <h1 className="text-4xl font-extrabold text-slate-900 tracking-tighter leading-none">
+              Inkata<span className="text-[#1D4ED8]">.</span>
+            </h1>
          </div>
-         <div className="w-20 h-1.5 bg-primary/20 rounded-full animate-pulse" />
-         <p className="text-slate-300 font-black uppercase text-[10px] tracking-[0.8em] text-center px-4">Penyedia Infrastruktur Asesmen Literasi Premium v2.2</p>
-         <div className="flex gap-12 font-black text-slate-400 text-[9px] uppercase tracking-widest border-t border-slate-50 pt-16 w-full justify-center">
-            <Link href="#" className="hover:text-primary transition-colors shadow-sm">Keamanan</Link>
-            <Link href="#" className="hover:text-primary transition-colors shadow-sm">Privasi</Link>
-            <Link href="#" className="hover:text-primary transition-colors shadow-sm italic">Copyright © 2026 Inkata Education Technologies</Link>
+         <p className="text-slate-400 font-extrabold uppercase text-[10px] tracking-[0.5em] text-center px-4">Penyedia Infrastruktur Asesmen Literasi Nasional</p>
+         <div className="flex gap-10 font-extrabold text-slate-400 text-[10px] uppercase tracking-widest pt-8 w-full justify-center border-t border-slate-50">
+            <Link href="#" className="hover:text-[#1D4ED8] transition-colors">Keamanan</Link>
+            <Link href="#" className="hover:text-[#1D4ED8] transition-colors">Privasi</Link>
+            <span className="hover:text-[#1D4ED8] transition-colors">© 2026 Sistem Inkata.</span>
          </div>
       </footer>
     </div>

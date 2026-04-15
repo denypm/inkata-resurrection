@@ -9,7 +9,9 @@ export default function DashboardLayout({
   return (
     <>
       <Navbar />
-      {children}
+      <main className="pb-24 lg:pb-0">
+        {children}
+      </main>
     </>
   )
 }
