@@ -31,7 +31,12 @@ export const metadata: Metadata = {
     description: "Infrastruktur asesmen cerdas pelopor transformasi data literasi sekolah.",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/inkata-logo.png",
+    shortcut: "/inkata-logo.png",
+    apple: [
+      { url: "/inkata-logo.png", sizes: "32x32", type: "image/png" },
+      { url: "/inkata-logo.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 

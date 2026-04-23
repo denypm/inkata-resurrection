@@ -2,9 +2,10 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { ArrowRight, Sparkles, BrainCircuit, ShieldCheck, Users } from 'lucide-react'
+import { ArrowRight, Sparkles, BrainCircuit, ShieldCheck, Users, FileUp } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 export default function LandingPage() {
   return (
@@ -13,9 +14,7 @@ export default function LandingPage() {
       <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-transparent shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 h-[88px] flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer">
-             <h1 className="text-[28px] font-extrabold tracking-tighter text-slate-900">
-              Inkata<span className="text-[#1D4ED8]">.</span>
-             </h1>
+             <Image src="/inkata-logo.png" alt="Inkata. Logo" width={130} height={40} className="h-10 w-auto object-contain" />
           </div>
           
           <div className="flex items-center gap-8">
@@ -75,8 +74,8 @@ export default function LandingPage() {
 
               {/* Mock Content Bars with Scanner Animation */}
               <div className="space-y-4 mb-12 relative overflow-hidden py-2 px-1">
-                <div className="absolute top-0 bottom-0 left-0 w-full bg-gradient-to-b from-transparent via-[#1D4ED8]/20 to-transparent animate-[scan_3s_ease-in-out_infinite] z-10 pointer-events-none">
-                  <div className="w-full h-px bg-[#1D4ED8]/50 shadow-[0_0_8px_#1D4ED8]"></div>
+                <div className="absolute top-0 bottom-0 left-0 w-full bg-gradient-to-b from-transparent via-[#1D4ED8]/10 to-transparent animate-[scan_3s_ease-in-out_infinite] z-10 pointer-events-none">
+                  <div className="w-full h-px bg-[#1D4ED8]/30"></div>
                 </div>
                 <div className="h-5 bg-slate-100 rounded-full w-full"></div>
                 <div className="h-5 bg-slate-100 rounded-full w-[85%]"></div>
@@ -121,11 +120,30 @@ export default function LandingPage() {
         </div>
       </main>
 
+      {/* Template Download Section */}
+      <section className="max-w-[1440px] mx-auto px-6 md:px-12 py-32 border-t border-slate-100">
+        <div className="bg-[#F8FAFC] rounded-[3rem] p-12 md:p-20 flex flex-col lg:flex-row items-center justify-between gap-12 border border-slate-100 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#1D4ED8]/[0.02] rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
+          <div className="max-w-2xl relative z-10">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">Unduh Template Data Siswa</h2>
+            <p className="text-slate-500 font-medium leading-relaxed text-lg">
+              Sederhanakan alur kerja Anda. Gunakan template resmi kami untuk memasukkan daftar nama, jenjang, dan kelas agar fitur sinkronisasi data di Inkata. dapat bekerja secara otomatis dan presisi.
+            </p>
+          </div>
+          <div className="relative z-10">
+            <a href="/template_asesmen_inkata.xlsx" download>
+              <Button className="bg-slate-900 hover:bg-black text-white font-extrabold h-16 px-12 rounded-full text-sm uppercase tracking-widest shadow-2xl transition-all active:scale-95 flex items-center gap-3">
+                Unduh Template (.xlsx)
+                <FileUp className="w-5 h-5" />
+              </Button>
+            </a>
+          </div>
+        </div>
+      </section>
+
        <footer className="px-16 py-24 bg-white flex flex-col items-center gap-12 border-t border-slate-100">
          <div className="flex items-center gap-4 group cursor-pointer transition-all hover:scale-105">
-            <h1 className="text-4xl font-extrabold text-slate-900 tracking-tighter leading-none">
-              Inkata<span className="text-[#1D4ED8]">.</span>
-            </h1>
+           <Image src="/inkata-logo.png" alt="Inkata. Logo" width={150} height={50} className="h-11 w-auto object-contain" />
          </div>
          <p className="text-slate-400 font-extrabold uppercase text-[10px] tracking-[0.5em] text-center px-4">Penyedia Infrastruktur Asesmen Literasi Nasional</p>
          <div className="flex gap-10 font-extrabold text-slate-400 text-[10px] uppercase tracking-widest pt-8 w-full justify-center border-t border-slate-50">

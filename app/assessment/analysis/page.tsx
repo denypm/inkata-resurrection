@@ -49,7 +49,10 @@ export default function LiteracyAnalysisPage() {
           <div className="flex flex-col md:flex-row justify-between items-end gap-6">
             <div className="max-w-2xl">
               <span className="font-extrabold text-[10px] tracking-[0.2em] uppercase text-[#1D4ED8] mb-3 block">Laporan Deskriptif Sentral</span>
-              <h1 className="text-4xl md:text-[40px] font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-6">Analitik Eksekutif <span className="text-[#1D4ED8]">Inkata.</span></h1>
+              <h1 className="text-4xl md:text-[40px] font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-6 flex items-center gap-3">
+                Analitik Eksekutif 
+                <img src="/inkata-logo.png" alt="Inkata. Logo" className="h-10 w-auto object-contain" />
+              </h1>
               
               <div className="flex items-center gap-4">
                 <span className="font-extrabold text-[11px] text-slate-400 uppercase tracking-widest">Ruang Analisis:</span>
@@ -202,15 +205,15 @@ export default function LiteracyAnalysisPage() {
                     <tr className="hover:bg-slate-50 transition-colors group border-b border-slate-100/50">
                       <td className="px-10 py-8">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-full bg-[#1D4ED8] flex items-center justify-center font-extrabold text-[11px] text-white overflow-hidden shadow-sm shadow-[#1D4ED8]/20">
-                             <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHdx1Bzh4IZYMOHubmgbF4GxuyELcKYvQsoSgNL4gzG1tDDnsB85EZuenFLG6uOxUIGmx7ooSgUpMnoDiA75TT4v26AsckbW2LR5AuJ4FOiQ8D3BtAf_tGw2CGjmXLgZxpNo4kA0QjrnU6R6dazEBeHHUd1UUZF-w451jfx7eEqzS-FIiUxaUuvcx47mMETpkkYNUPVeTGWaRE7RzdSMnFm4tuFSYvgMlK5jfqNeynNE0w_ZV32D76TBaAnBH2y867PA4RU4pfP-4" alt="AJ" className="w-full h-full object-cover"/>
+                          <div className="w-10 h-10 rounded-full bg-[#1D4ED8] flex items-center justify-center font-extrabold text-[11px] text-white shadow-sm shadow-[#1D4ED8]/20">
+                             AA
                           </div>
-                          <span className="font-extrabold text-slate-900">Alex Johnson</span>
+                          <span className="font-extrabold text-slate-900">Ahmad Ahmad</span>
                         </div>
                       </td>
-                      <td className="px-6 py-8 font-extrabold text-slate-600">142 <span className="text-[10px] text-slate-400">WPM</span></td>
-                      <td className="px-6 py-8 font-extrabold text-slate-600">96<span className="text-[10px] text-slate-400">%</span></td>
-                      <td className="px-6 py-8 font-extrabold text-slate-600">98<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">87 <span className="text-[10px] text-slate-400">Skor</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">90<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">90<span className="text-[10px] text-slate-400">%</span></td>
                       <td className="px-10 py-8 text-right">
                         <span className="px-4 py-2 bg-[#F0F5FF] text-[#1D4ED8] font-extrabold rounded-full text-[9px] uppercase tracking-widest border border-[#1D4ED8]/10">Fase Wacana</span>
                       </td>
@@ -218,33 +221,33 @@ export default function LiteracyAnalysisPage() {
                     <tr className="hover:bg-slate-50 transition-colors group border-b border-slate-100/50">
                       <td className="px-10 py-8">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center font-extrabold text-[11px] text-white shadow-sm shadow-emerald-500/20 overflow-hidden">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuArG2GoM1KdVHX-XTejNlxqtxbIY6dC72ZrHRG4p66fwwLAYft3bNGxqyvWnwm9Kmg9IEhBejloFTHl-E3lPx2KPxtklKstnLxkk0ub50W86hSy34qAIovI1ps2uHC7OkYiBUeQYWCug8WQirsadTCFBTTp4EK0gBhWLooCLQkp6roaidA2gfrCry645mIGBG__8qV28GEO6dDt5OG8dyVLw_NgqrIH5B7FP1erSf8V5PNOPIZjriqP7wRl7XMZV0ySilp0I6s6_KI" alt="SM" className="w-full h-full object-cover" />
+                          <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center font-extrabold text-[11px] text-white shadow-sm shadow-orange-500/20">
+                            BB
                           </div>
-                          <span className="font-extrabold text-slate-900">Sarah Miller</span>
+                          <span className="font-extrabold text-slate-900">Budi Budi</span>
                         </div>
                       </td>
-                      <td className="px-6 py-8 font-extrabold text-slate-600">94 <span className="text-[10px] text-slate-400">WPM</span></td>
-                      <td className="px-6 py-8 font-extrabold text-slate-600">72<span className="text-[10px] text-slate-400">%</span></td>
-                      <td className="px-6 py-8 font-extrabold text-slate-600">80<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">65 <span className="text-[10px] text-slate-400">Skor</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">60<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">55<span className="text-[10px] text-slate-400">%</span></td>
                       <td className="px-10 py-8 text-right">
-                        <span className="px-4 py-2 bg-slate-100 text-slate-600 font-extrabold rounded-full text-[9px] uppercase tracking-widest border border-slate-200">Fase Bunyi</span>
+                        <span className="px-4 py-2 bg-orange-50 text-orange-600 font-extrabold rounded-full text-[9px] uppercase tracking-widest border border-orange-100">Fase Komunikasi</span>
                       </td>
                     </tr>
                     <tr className="hover:bg-slate-50 transition-colors group">
                       <td className="px-10 py-8">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center font-extrabold text-[11px] text-white overflow-hidden shadow-sm shadow-orange-500/20">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBy7ojibxR_CoDzJG3WN3xrG9vUdJpSTM67rwSuVvv69ckncsJXwC5T-1mA1sMH2Csmel05Yru0rIaqZKNmk0sj7qpGSsIpE5ckJSbmfkmia8GozcbG4g8jb8b0iBptaK7M2Dk7F-QBDINE1oNXQsdjZrN5mBg7MV6WCalYrQJ-1zgCystGtLMYcoA5pDUfPQHAQ5B_9O4czpYbuV3UyC4inOFMe625VlitUjSE1UFtcHL3b3HD1FN-MOK2EFVr6K1BmIfrgqkkqU" alt="LT" className="w-full h-full object-cover" />
+                          <div className="w-10 h-10 rounded-full bg-slate-400 flex items-center justify-center font-extrabold text-[11px] text-white shadow-sm shadow-slate-400/20">
+                            CC
                           </div>
-                          <span className="font-extrabold text-slate-900">Leo Thompson</span>
+                          <span className="font-extrabold text-slate-900">Caca Caca</span>
                         </div>
                       </td>
-                      <td className="px-6 py-8 font-extrabold text-slate-600">128 <span className="text-[10px] text-slate-400">WPM</span></td>
-                      <td className="px-6 py-8 font-extrabold text-slate-600">88<span className="text-[10px] text-slate-400">%</span></td>
-                      <td className="px-6 py-8 font-extrabold text-slate-600">90<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">45 <span className="text-[10px] text-slate-400">Skor</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">40<span className="text-[10px] text-slate-400">%</span></td>
+                      <td className="px-6 py-8 font-extrabold text-slate-600">20<span className="text-[10px] text-slate-400">%</span></td>
                       <td className="px-10 py-8 text-right">
-                        <span className="px-4 py-2 bg-orange-50 text-orange-600 font-extrabold rounded-full text-[9px] uppercase tracking-widest border border-orange-100">Fase Komunikasi</span>
+                        <span className="px-4 py-2 bg-slate-100 text-slate-600 font-extrabold rounded-full text-[9px] uppercase tracking-widest border border-slate-200">Fase Bunyi</span>
                       </td>
                     </tr>
                   </tbody>

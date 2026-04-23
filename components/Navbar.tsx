@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { LogOut, Settings, HelpCircle, Shield, ChevronDown } from 'lucide-react'
+import { LogOut, Settings, HelpCircle, Shield, ChevronDown, UserCircle2 } from 'lucide-react'
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -112,8 +112,8 @@ export default function Navbar() {
               className="flex items-center gap-2 cursor-pointer group"
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
-              <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-100 hover:shadow-md transition-shadow">
-                <img alt="Profil Pengajar" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4qYGXpFufMuM8q4uz0krMPxOM_fwh2guFy15WJwMXJzG15KMaHDUfzRmzSFjbeKe1anRpF5ccUSRPvbCw0vz9yMkpUF11gbJlz4JVMKM1TX04wF3Vqkfe8jh1r8fsnMvPX2xoQ2K3bq1NfQ9J_di-iOP5o_5tsG7JrpXJcxsyy4vugJ_qYijoZ_49kErpCq0KBnIKrGRslaNNIqw-1ADHryKUATWAhX3zWeTPoqLQJShdO_b8orQkUkrnfait6gdDpr0g-oli-Rk"/>
+              <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:shadow-md transition-shadow ring-4 ring-slate-50">
+                <UserCircle2 className="w-7 h-7" strokeWidth={1.5} />
               </div>
               <ChevronDown className={`w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-transform ${dropdownOpen ? 'rotate-180' : ''} hidden sm:block`} />
             </div>

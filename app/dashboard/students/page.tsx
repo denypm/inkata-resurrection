@@ -16,10 +16,21 @@ export default function StudentsPage() {
 
   const fetchStudents = async () => {
     const supabase = createClient()
-    const { data: dbStudents, error } = await supabase
+    const { data: { user } } = await supabase.auth.getUser()
+    let schoolId = null;
+    if (user) {
+      const { data: teacher } = await supabase.from('teachers').select('school_id').eq('id', user.id).single()
+      if (teacher) schoolId = teacher.school_id;
+    }
+
+    let query = supabase
        .from('students')
        .select(`*, assessments:assessments(score)`)
        .order('created_at', { ascending: false })
+       
+    if (schoolId) query = query.eq('school_id', schoolId)
+    
+    const { data: dbStudents, error } = await query
     
     if (dbStudents) {
        const mapped = dbStudents.map(s => {
@@ -177,7 +188,7 @@ export default function StudentsPage() {
             {/* Insights Bento Card */}
             <div className="bg-[#1D4ED8] p-8 rounded-[2.5rem] text-white overflow-hidden relative group shadow-[0_20px_40px_rgba(29,78,216,0.3)]">
               <div className="relative z-10">
-                <h3 className="text-2xl font-extrabold tracking-tight mb-3">Laporan Inkata.</h3>
+                <img src="/inkata-logo.png" alt="Inkata. Logo" className="h-7 w-auto object-contain mb-3 brightness-0 invert" />
                 <p className="text-white/80 text-[13px] font-medium leading-relaxed mb-8">Pemantauan progres dan modifikasi Tabel terhubung dan tersimpan waktu nyata pada Supabase Database.</p>
                 <div className="flex items-center gap-4">
                   <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl">

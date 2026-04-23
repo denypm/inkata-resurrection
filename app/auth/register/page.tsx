@@ -96,9 +96,9 @@ export default function RegisterPage() {
        {/* Auth Card */}
        <div className="bg-white w-full max-w-[420px] rounded-[3rem] px-10 py-12 shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-slate-50 relative z-10 flex flex-col items-center">
           
-          <h1 className="text-[28px] font-extrabold text-[#1D4ED8] tracking-tighter mb-8">
-             inkata.
-          </h1>
+          <div className="mb-8">
+             <img src="/inkata-logo.png" alt="Inkata. Logo" className="h-10 w-auto object-contain" />
+          </div>
 
           <div className="text-center mb-10 w-full space-y-2">
              <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Daftar Akun Edukator</h2>

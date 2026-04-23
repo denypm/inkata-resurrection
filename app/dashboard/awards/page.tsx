@@ -9,12 +9,34 @@ export default function AwardsPage() {
   const [selectedStudent, setSelectedStudent] = useState<any>(null)
   const certificateRef = useRef<HTMLDivElement>(null)
 
-  // Dummy data, idealnya ini dari get() di Supabase
-  const awardedStudents = [
-    { id: '2024001', name: 'Ahmad Rizky Pratama', grade: '4', score: 85, phase: 'Fase Wacana', date: '14 April 2026' },
-    { id: '2024004', name: 'Emma Thompson', grade: '4', score: 94, phase: 'Fase Komunikasi', date: '10 April 2026' },
-    { id: '2024012', name: 'Dewi Anggraini', grade: '5', score: 88, phase: 'Fase Wacana', date: '02 April 2026' }
-  ]
+  const [awardedStudents, setAwardedStudents] = useState<any[]>([])
+
+  React.useEffect(() => {
+    const fetchAwarded = async () => {
+       const { createClient } = await import('@/lib/supabase/client')
+       const supabase = createClient()
+       const { data: students } = await supabase.from('students').select(`
+         *,
+         assessments:assessments(score, insights, created_at)
+       `)
+       if (students) {
+         const formatted = students.map(s => {
+            const hasAssessment = s.assessments && s.assessments.length > 0;
+            const latest = hasAssessment ? s.assessments[s.assessments.length - 1] : null;
+            return {
+               id: s.id,
+               name: s.name,
+               grade: s.grade,
+               score: latest ? latest.score : 0,
+               phase: latest ? (latest.insights?.fase_saat_ini || 'Belum Dinilai') : 'Belum Dinilai',
+               date: latest ? new Date(latest.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' }) : '-'
+            }
+         }).filter(s => s.score >= 80)
+         setAwardedStudents(formatted)
+       }
+    }
+    fetchAwarded()
+  }, [])
 
   const printCertificate = () => {
     window.print()
@@ -101,15 +123,9 @@ export default function AwardsPage() {
                      {/* Content Foreground */}
                      <div className="relative z-10 w-full max-w-3xl flex flex-col items-center">
                        
-                       <div className="flex items-center gap-4 mb-4">
-                         <div className="w-10 h-10 rounded-xl bg-[#1D4ED8] flex items-center justify-center text-white scale-150 transform">
-                           <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>school</span>
-                         </div>
-                       </div>
-                       
-                       <h2 className="text-xl font-extrabold tracking-tighter text-[#1D4ED8] mt-6 mb-16">
-                          Inkata<span className="text-slate-900 align-super">.</span>
-                       </h2>
+                        <div className="mt-6 mb-16">
+                           <img src="/inkata-logo.png" alt="Inkata. Logo" className="h-14 w-auto object-contain" />
+                        </div>
 
                        <h1 className="text-[54px] font-black text-slate-900 tracking-tighter uppercase mb-6 drop-shadow-sm leading-none">
                          Sertifikat Penghargaan

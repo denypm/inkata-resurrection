@@ -11,7 +11,8 @@ import {
   ShieldCheck, 
   Settings, 
   Search,
-  Bell
+  Bell,
+  UserCircle2
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -33,9 +34,9 @@ export default function Sidebar() {
         <div className="flex items-center gap-10">
           <Link href="/dashboard" className="flex items-center gap-3 group">
             <img 
-               src="/logo.png" 
-               alt="Inkata Logo" 
-               className="w-14 h-14 object-contain group-hover:scale-110 transition-transform duration-500" 
+               src="/inkata-logo.png" 
+               alt="Inkata. Logo" 
+               className="h-10 w-auto object-contain group-hover:scale-110 transition-transform duration-500" 
             />
             <div className="flex flex-col -gap-1">
                <h1 className="text-xl font-black text-primary tracking-tighter leading-none">Inkata.</h1>
@@ -62,8 +63,8 @@ export default function Sidebar() {
            <Search size={22} className="cursor-pointer hover:text-primary transition-colors" />
            <Bell size={22} className="cursor-pointer hover:text-primary transition-colors" />
            <Settings size={22} className="cursor-pointer hover:text-primary transition-colors" />
-           <div className="w-12 h-12 bg-slate-100 rounded-2xl border-4 border-white shadow-2xl overflow-hidden ring-8 ring-primary/5">
-              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=TeacherDeny" alt="User" />
+           <div className="flex items-center justify-center w-12 h-12 bg-slate-100 rounded-2xl border-4 border-white shadow-2xl ring-8 ring-primary/5 text-slate-400">
+              <UserCircle2 size={32} strokeWidth={1.5} />
            </div>
         </div>
       </nav>

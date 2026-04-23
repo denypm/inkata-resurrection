@@ -4,19 +4,52 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Printer, Download, ArrowLeft, Building2, UserCircle2, BrainCircuit, CheckCircle2, ChevronRight, Share2 } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
 
 export default function AssessmentResultPage() {
   const router = useRouter()
   const [result, setResult] = useState<any>(null)
 
   useEffect(() => {
-    const savedData = sessionStorage.getItem('inkata_latest_result')
-    if (savedData) {
-      setResult(JSON.parse(savedData))
-    } else {
-      // Jika tidak ada data, kembalikan ke pemindai
-      router.push('/assessment')
+    const fetchLatest = async () => {
+       const savedData = sessionStorage.getItem('inkata_latest_result')
+       if (savedData) {
+         setResult(JSON.parse(savedData))
+         return
+       }
+
+       // Pemulihan Data Server Jika session hilang
+       const supabase = createClient()
+       const { data: { user } } = await supabase.auth.getUser()
+       if (!user) return router.push('/assessment')
+
+       // Get teacher school_id
+       const { data: teacher } = await supabase.from('teachers').select('school_id').eq('id', user.id).single()
+       if (!teacher) return router.push('/assessment')
+
+       // Get latest assessment for this school
+       const { data: assessment } = await supabase.from('assessments')
+          .select('*, students!inner(name, id, room, school_id)')
+          .eq('students.school_id', teacher.school_id)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single()
+       
+       if (assessment && assessment.students) {
+          setResult({
+             studentName: assessment.students.name,
+             nis: assessment.students.id.substring(0, 8).toUpperCase(),
+             classGroup: `Kelas ${assessment.students.grade || "-"}`,
+             score: assessment.score,
+             phase: assessment.insights?.fase_saat_ini || "Belum Dinilai",
+             feedback: assessment.narrative_feedback ? assessment.narrative_feedback.split('\n\n') : [],
+             image_url: assessment.image_url
+          })
+       } else {
+          router.push('/assessment')
+       }
     }
+    fetchLatest()
   }, [router])
 
   const handlePrint = () => {
@@ -62,8 +95,9 @@ export default function AssessmentResultPage() {
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mt-1">Sistem Evaluasi Literasi Inkata.</p>
              </div>
           </div>
-          <div className="text-right">
-             <h2 className="text-3xl font-extrabold tracking-tighter text-[#1D4ED8]">Inkata<span className="text-slate-900 text-sm align-super ml-1">.v2.2</span></h2>
+          <div className="text-right flex flex-col items-end">
+             <img src="/inkata-logo.png" alt="Inkata. Logo" className="h-9 w-auto object-contain" />
+             <span className="text-slate-400 text-[9px] font-extrabold uppercase tracking-widest mt-1">v2.2 Engine</span>
           </div>
         </div>
 

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Shield, Building2, Users, ToggleLeft, ToggleRight, Search, TrendingUp, Activity } from 'lucide-react'
+import PulseLogo from '@/components/ui/pulse-logo'
 
 export default function SuperAdminDashboard() {
   const router = useRouter()
@@ -52,6 +53,24 @@ export default function SuperAdminDashboard() {
     ))
   }
 
+  const toggleSchoolPlan = async (id: string) => {
+    const target = schools.find(s => s.id === id)
+    if (!target) return
+
+    const newPlan = target.plan?.toLowerCase() === 'enterprise' ? 'standard' : 'enterprise'
+    const newMaxStudents = newPlan === 'enterprise' ? 99999 : 40
+    
+    const supabase = createClient()
+    await supabase
+      .from('schools')
+      .update({ plan: newPlan, max_students: newMaxStudents })
+      .eq('id', id)
+
+    setSchools(schools.map(school => 
+      school.id === id ? { ...school, plan: newPlan, max_students: newMaxStudents } : school
+    ))
+  }
+
   const filteredSchools = schools.filter(s => 
     s.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
@@ -62,8 +81,8 @@ export default function SuperAdminDashboard() {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center font-manrope">
          <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 border-[#1D4ED8]/20 border-t-[#1D4ED8] rounded-full animate-spin"></div>
-            <p className="text-sm font-bold text-slate-400 tracking-widest animate-pulse uppercase">Memverifikasi Otoritas Owner...</p>
+            <PulseLogo />
+            <p className="text-[10px] font-extrabold text-slate-400 tracking-[0.3em] animate-pulse uppercase mt-4">Memverifikasi Otoritas Owner</p>
          </div>
       </div>
     )
@@ -114,10 +133,12 @@ export default function SuperAdminDashboard() {
           </div>
           <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-[0_10px_40px_rgba(0,0,0,0.03)] flex flex-col gap-3 hover:-translate-y-0.5 transition-transform">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-purple-50 text-purple-600">
-              <TrendingUp className="w-5 h-5" />
+               <Shield className="w-5 h-5" />
             </div>
-            <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mt-2">Est. Siswa</p>
-            <h3 className="text-4xl font-extrabold text-slate-900 tracking-tighter">~{totalStudentEstimate}</h3>
+            <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mt-2">Klien Enterprise</p>
+            <h3 className="text-4xl font-extrabold text-slate-900 tracking-tighter">
+              {schools.filter(s => s.plan?.toLowerCase() === 'enterprise').length}
+            </h3>
           </div>
         </section>
 
@@ -173,9 +194,12 @@ export default function SuperAdminDashboard() {
                         </div>
                       </td>
                       <td className="px-8 py-5">
-                        <span className={`text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-full ${school.plan === 'Enterprise' ? 'bg-[#1D4ED8] text-white' : 'bg-slate-100 text-slate-600'}`}>
-                          {school.plan || 'Enterprise'}
-                        </span>
+                        <button 
+                          onClick={() => toggleSchoolPlan(school.id)}
+                          className={`text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-full transition-all hover:scale-105 ${school.plan?.toLowerCase() === 'enterprise' ? 'bg-[#1D4ED8] text-white' : 'bg-slate-100 text-slate-600'}`}
+                        >
+                          {school.plan || 'Standard'}
+                        </button>
                       </td>
                       <td className="px-8 py-5">
                         <span className={`text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-full ${school.is_active ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-500'}`}>

@@ -29,12 +29,11 @@ export default function StudentReportPage() {
         <div className="w-full flex justify-between items-center mb-24 px-6 bg-white/70 backdrop-blur-3xl p-8 rounded-[3.5rem] border-2 border-white shadow-2xl shadow-black/[0.05] animate-in slide-in-from-top-10 duration-700 relative overflow-hidden group">
            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.02] rounded-bl-[6rem] -z-10 group-hover:scale-110 transition-transform" />
            <div className="flex items-center gap-6">
-              <div className="w-16 h-16 bg-white p-1 rounded-2xl shadow-xl border-2 border-white transition-all group-hover:rotate-6">
-                 <img src="/logo.png" alt="Inkata Logo" className="w-full h-full object-contain" />
+              <div className="flex items-center gap-4">
+                 <img src="/inkata-logo.png" alt="Inkata. Logo" className="h-10 w-auto object-contain" />
               </div>
-              <div className="flex flex-col -gap-0.5">
-                 <h1 className="text-2xl font-black text-slate-900 tracking-tighter leading-none group-hover:text-primary transition-colors">inkata.</h1>
-                 <p className="font-black text-slate-300 uppercase text-[8px] tracking-[0.4em] leading-none pt-2">Laporan Analisis Siswa</p>
+              <div className="flex flex-col -gap-0.5 ml-2">
+                 <p className="font-black text-slate-300 uppercase text-[8px] tracking-[0.4em] leading-none">Laporan Analisis Siswa</p>
               </div>
            </div>
            <Button variant="outline" className="h-14 rounded-2xl bg-white border-2 border-slate-50 font-black text-slate-500 gap-4 hover:border-primary hover:text-primary transition-all uppercase tracking-[0.4em] text-[8px] px-12 shadow-sm group/btn">

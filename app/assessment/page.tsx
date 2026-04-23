@@ -3,8 +3,9 @@
 import React, { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { FileUp, Loader2, ImagePlus, UserCircle, AlignLeft, Sparkles, CheckCircle2, Camera } from 'lucide-react'
+import { FileUp, Loader2, ImagePlus, UserCircle, AlignLeft, Sparkles, CheckCircle2, Camera, Table } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import * as XLSX from 'xlsx'
 
 export default function InputAsesmenPage() {
   const router = useRouter()
@@ -14,18 +15,18 @@ export default function InputAsesmenPage() {
   const [selectedStudent, setSelectedStudent] = useState<any>(null)
   const [isDragOver, setIsDragOver] = useState(false)
   const [uploadedFile, setUploadedFile] = useState<File | null>(null)
-  const [isCameraActive, setIsCameraActive] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const streamRef = useRef<MediaStream | null>(null)
+  const cameraInputRef = useRef<HTMLInputElement>(null)
+  const importInputRef = useRef<HTMLInputElement>(null)
+  const [isImporting, setIsImporting] = useState(false)
+
+  const fetchStudents = async () => {
+     const supabase = createClient()
+     const { data } = await supabase.from('students').select('*')
+     if (data) setDbStudents(data)
+  }
 
   React.useEffect(() => {
-     const fetchStudents = async () => {
-        const supabase = createClient()
-        const { data } = await supabase.from('students').select('*')
-        if (data) setDbStudents(data)
-     }
      fetchStudents()
   }, [])
 
@@ -39,44 +40,9 @@ export default function InputAsesmenPage() {
     setIsDragOver(false);
   };
 
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-      streamRef.current = stream;
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
-      }
-      setIsCameraActive(true);
-    } catch (err) {
-      alert("Tidak dapat mengakses kamera belakang perangkat Anda. Pastikan izin diberikan.");
-    }
-  };
-
-  const stopCamera = () => {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop());
-      streamRef.current = null;
-    }
-    setIsCameraActive(false);
-  };
-
-  const captureImage = () => {
-    if (videoRef.current && canvasRef.current) {
-      const context = canvasRef.current.getContext('2d');
-      if (context) {
-        canvasRef.current.width = videoRef.current.videoWidth;
-        canvasRef.current.height = videoRef.current.videoHeight;
-        context.drawImage(videoRef.current, 0, 0);
-        
-        canvasRef.current.toBlob((blob) => {
-          if (blob) {
-            const file = new File([blob], "camera_capture.jpg", { type: "image/jpeg" });
-            stopCamera();
-            handleAnalyze(file);
-          }
-        }, 'image/jpeg', 0.95);
-      }
+  const startCamera = () => {
+    if (cameraInputRef.current) {
+       cameraInputRef.current.click();
     }
   };
 
@@ -115,7 +81,8 @@ export default function InputAsesmenPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ 
              image: base64Image,
-             student_id: selectedStudent?.id 
+             student_id: selectedStudent?.id,
+             grade: selectedStudent?.room || "Asesmen Umum"
           }),
         });
 
@@ -125,19 +92,37 @@ export default function InputAsesmenPage() {
         if (res.ok) {
            const aiData = await res.json();
            
+           let cleanPhase = "Fase Bunyi";
+           const rawPhase = (aiData.fase_saat_ini || "").toLowerCase();
+           if (rawPhase.includes("wacana")) cleanPhase = "Fase Wacana";
+           else if (rawPhase.includes("komunikasi")) cleanPhase = "Fase Komunikasi";
+
            // Adaptasikan AI Original ke Struktur Lama
            const mockResult = {
              studentName: selectedStudent ? selectedStudent.name : "Peserta Umum (Tanpa Identitas)",
              nis: selectedStudent ? selectedStudent.id.split('-')[0].toUpperCase() : "N/A",
              classGroup: selectedStudent ? `Kelas ${selectedStudent.room}` : "Kelas Umum",
              score: aiData.skor_keseluruhan || Math.floor(Math.random() * 40) + 40,
-             phase: aiData.fase_saat_ini || "Fase Bunyi",
+             phase: cleanPhase,
              feedback: [
                aiData.analisis_bunyi || "Deteksi bunyi telah dihimpun logikanya.",
                aiData.analisis_komunikasi || "Proses iterasi sintaksis membutuhkan perhatian di repetisi fonem.",
                aiData.analisis_wacana || "Rekomendasi: Lakukan tes ulang di minggu berikutnya."
              ],
              image_url: aiData.image_url || null
+           }
+           
+           // Insert into Database Live Portfolio
+           if (selectedStudent?.id) {
+             const supabase = createClient();
+             await supabase.from('assessments').insert({
+               student_id: selectedStudent.id,
+               score: mockResult.score,
+               
+               narrative_feedback: mockResult.feedback.join('\n\n'),
+                insights: { fase_saat_ini: mockResult.phase },
+               image_url: mockResult.image_url
+             });
            }
            
            sessionStorage.setItem('inkata_latest_result', JSON.stringify(mockResult))
@@ -154,6 +139,65 @@ export default function InputAsesmenPage() {
        alert("Sistem Terputus Server Timeout.");
     }
   }
+
+  const handleImportExcel = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsImporting(true);
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      try {
+        const data = new Uint8Array(event.target?.result as ArrayBuffer);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet) as any[];
+
+        // Mapping data dari template: Nama Siswa, Jenjang, Kelas
+        const studentsToInsert = jsonData
+          .filter(row => row['Nama Siswa'] && row['Jenjang'] && row['Kelas'])
+          .map(row => ({
+            name: row['Nama Siswa'],
+            grade_level: row['Jenjang'],
+            room: row['Kelas'],
+          }));
+
+        if (studentsToInsert.length === 0) {
+          alert("Tidak ada data siswa yang valid ditemukan di file Excel.");
+          setIsImporting(false);
+          return;
+        }
+
+        const supabase = createClient();
+        
+        // Dapatkan school_id guru saat ini
+        const { data: { user } } = await supabase.auth.getUser();
+        const { data: teacher } = await supabase
+          .from('teachers')
+          .select('school_id')
+          .eq('id', user?.id)
+          .single();
+
+        if (teacher?.school_id) {
+          const finalData = studentsToInsert.map(s => ({ ...s, school_id: teacher.school_id }));
+          const { error } = await supabase.from('students').insert(finalData);
+          
+          if (error) throw error;
+          
+          alert(`Berhasil mengimpor ${studentsToInsert.length} siswa.`);
+          await fetchStudents(); // Refresh dropdown
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Gagal mengimpor data. Pastikan format kolom sesuai template (Nama Siswa, Jenjang, Kelas).");
+      } finally {
+        setIsImporting(false);
+        if (importInputRef.current) importInputRef.current.value = '';
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  };
 
   const getPhaseText = () => {
     if (analyzePhase === 0) return 'Identifikasi Teks Aktif';
@@ -254,6 +298,31 @@ export default function InputAsesmenPage() {
                    Inkata. mendukung format JPG, PNG, maupun PDF. Untuk hasil optik optimal, pastikan tidak ada bayangan pada kertas yang dipindai.
                  </p>
               </div>
+
+              <div className="mt-4 flex gap-4">
+                 <input 
+                   type="file" 
+                   ref={importInputRef} 
+                   onChange={handleImportExcel} 
+                   className="hidden" 
+                   accept=".xlsx, .xls" 
+                 />
+                 <button 
+                   onClick={() => importInputRef.current?.click()}
+                   disabled={isImporting}
+                   className="flex-1 flex items-center justify-center gap-3 py-5 bg-slate-900 text-white rounded-[1.5rem] text-[10px] font-extrabold uppercase tracking-widest hover:bg-black transition-all disabled:opacity-50 shadow-lg"
+                 >
+                   {isImporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Table className="w-4 h-4" />}
+                   {isImporting ? 'Mengimpor...' : 'Import Data'}
+                 </button>
+                 <a 
+                   href="/template_asesmen_inkata.xlsx" 
+                   download
+                   className="flex-none flex items-center justify-center gap-2 py-5 px-6 bg-[#1D4ED8] text-white rounded-[1.5rem] text-[10px] font-extrabold uppercase tracking-widest hover:bg-[#1E40AF] transition-all shadow-lg"
+                 >
+                  <FileUp className="w-4 h-4" /> Unduh Template
+                 </a>
+              </div>
             </div>
           </div>
 
@@ -284,25 +353,6 @@ export default function InputAsesmenPage() {
                     <div className="h-full bg-[#1D4ED8] rounded-full transition-all duration-500" style={{ width: `${(analyzePhase / 4) * 100}%` }}></div>
                   </div>
                </div>
-             ) : isCameraActive ? (
-               // Camera Active State
-               <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-6 bg-slate-900 rounded-[2.5rem]">
-                 <div className="w-full max-w-md bg-black rounded-3xl overflow-hidden shadow-2xl relative">
-                    <video ref={videoRef} className="w-full h-auto max-h-[400px] object-cover" autoPlay playsInline muted></video>
-                    <canvas ref={canvasRef} className="hidden"></canvas>
-                    
-                    <div className="absolute inset-0 border-4 border-white/20 m-4 rounded-2xl pointer-events-none"></div>
-                 </div>
-                 
-                 <div className="flex gap-4 mt-8">
-                   <button onClick={stopCamera} className="bg-white/10 hover:bg-white/20 text-white font-extrabold px-8 py-4 rounded-full text-[11px] uppercase tracking-widest backdrop-blur-sm transition-all active:scale-95">
-                     Batal
-                   </button>
-                   <button onClick={captureImage} className="bg-[#1D4ED8] hover:bg-[#1E40AF] text-white font-extrabold px-12 py-4 rounded-full text-[11px] uppercase tracking-widest shadow-[0_10px_20px_rgba(29,78,216,0.3)] transition-all active:scale-95 flex items-center gap-2">
-                     <Camera className="w-4 h-4" /> Jepret Foto
-                   </button>
-                 </div>
-               </div>
              ) : (
                // Idle / Upload State
                <div 
@@ -319,6 +369,7 @@ export default function InputAsesmenPage() {
                  <p className="text-slate-500 font-medium mb-10 max-w-sm text-center">Tarik file gambar ke area pemindai ini atau gunakan fitur optik lanjutan.</p>
                  
                  <input type="file" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleAnalyze(e.target.files[0])} className="hidden" accept="image/*" />
+                 <input type="file" ref={cameraInputRef} onChange={(e) => e.target.files?.[0] && handleAnalyze(e.target.files[0])} className="hidden" accept="image/*" capture="environment" />
                  
                  <div className="flex flex-col sm:flex-row gap-4 mt-6">
                    <button 
@@ -338,6 +389,35 @@ export default function InputAsesmenPage() {
              )}
           </div>
         </div>
+
+        {/* Deskripsi Indikator Standar Literasi Bawah */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-[0_15px_30px_rgba(0,0,0,0.02)] hover:-translate-y-1 transition-transform group">
+            <div className="w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-500 mb-4 group-hover:scale-110 transition-transform">
+              <span className="material-symbols-outlined">mic</span>
+            </div>
+            <h4 className="text-lg font-extrabold text-slate-900 mb-2">1. Fase Bunyi</h4>
+            <p className="text-xs text-slate-500 font-medium leading-relaxed mb-2"><b>Kelas 1:</b> Pengenalan huruf, jumlah kata &lt;15 kata, saltik &gt;7.</p>
+            <p className="text-xs text-slate-500 font-medium leading-relaxed"><b>Kelas 2-6:</b> Terdapat saltik/kesalahan kapital lebih dari 5 kali (tidak lolos dari bottleneck fase bawah).</p>
+          </div>
+          <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-[0_15px_30px_rgba(0,0,0,0.02)] hover:-translate-y-1 transition-transform group">
+            <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-500 mb-4 group-hover:scale-110 transition-transform">
+              <span className="material-symbols-outlined">forum</span>
+            </div>
+            <h4 className="text-lg font-extrabold text-slate-900 mb-2">2. Fase Komunikasi</h4>
+            <p className="text-xs text-slate-500 font-medium leading-relaxed mb-2"><b>Kelas 1:</b> Kalimat cukup panjang (minimal 3 kalimat, &gt;15 kata), saltik &lt;7, tanda baca sedang, tapi belum koheren.</p>
+            <p className="text-xs text-slate-500 font-medium leading-relaxed"><b>Kelas 2-6:</b> Kalimat mulai menyambung. Jumlah saltik berkisar 3-5 kali.</p>
+          </div>
+          <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-[0_15px_30px_rgba(0,0,0,0.02)] hover:-translate-y-1 transition-transform group">
+            <div className="w-12 h-12 bg-[#F0F5FF] rounded-2xl flex items-center justify-center text-[#1D4ED8] mb-4 group-hover:scale-110 transition-transform">
+              <span className="material-symbols-outlined">menu_book</span>
+            </div>
+            <h4 className="text-lg font-extrabold text-slate-900 mb-2">3. Fase Wacana</h4>
+            <p className="text-xs text-slate-500 font-medium leading-relaxed mb-2"><b>Kelas 1:</b> Mencakup 1 paragraf/lebih (&gt;30 kata). Saltik &lt;3. Tanda baca tinggi, berkesinambungan dan berkoherensi.</p>
+            <p className="text-xs text-slate-500 font-medium leading-relaxed"><b>Kelas 2-6:</b> Wajib berparagraf murni, berkesinambungan. Saltik sangat minor (0-2 kali).</p>
+          </div>
+        </div>
+
       </main>
     </div>
   )

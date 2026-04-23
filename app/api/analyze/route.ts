@@ -5,39 +5,41 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function POST(req: Request) {
   try {
-    const { image, student_id } = await req.json();
+    const { image, student_id, grade } = await req.json();
     if (!image) return NextResponse.json({ error: "Image data missing" }, { status: 400 });
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
+    // Cek apakah siswa berlabel kelas 1
+    const isKelas1 = grade === "1" || grade === "Kelas 1";
+
     const prompt = `
-      Anda adalah "Sistem Mesin Inkata", pakar analisis kognitif literasi yang sangat akurat. Deteksi sampel tulisan tangan ini secara mutlak berdasarkan "Konvensi Bottleneck Inkata".
-      
-      Aturan Evaluasi & Kuantifikasi:
+      Anda adalah "Sistem Mesin Inkata", pakar analisis kognitif literasi yang sangat teliti. Evaluasi tulisan tangan ini secara mutlak berdasarkan "Konvensi Bottleneck Inkata".
+      Evaluasi ini untuk siswa ${grade}. PENTING: Ikuti RUMUS BOTTLENECK ini dan JANGAN simpan simpangan:
 
-      1. Fase Bunyi (Skor Fase 0-40) 
-         - Kondisi Wajib: Kalimat sangat sedikit (<15 kata/paragraf), ejaan berantakan (>30% salah), hampir/sama sekali tidak ada tanda baca yang tepat (0-1), kapitalisasi acak di tengah kata. 
-         - Aksi Anda: Berikan penilaian "Fase Bunyi" pada kolom fase_saat_ini. Catat kesalahan kritis.
-
-      2. Fase Komunikasi (Skor Fase 41-75)
-         - Kondisi Wajib: Kalimat panjang (>15 kata, minimal 3 kalimat) TETAPI ketersambungan makna (kohesi) tidak jelas/tidak saling berhubungan, tanda baca sebagian besar salah (<50% benar). Anak hanya "menulis memanjang" tanpa korelasi logika tinggi.
-         - Aksi Anda: Berikan label "Fase Komunikasi". Temukan tumpang tindih sintaksisnya.
-
-      3. Fase Wacana (Skor Fase 76-100)
-         - Kondisi Wajib: Terdapat rentetan kalimat berkaitan secara proposisi. Memiliki Koherensi (ketersambungan logika) di atas 80% dan Kohesi kesepadanan tanda baca >80%. Pikiran inti paragraf terlihat nyata.
-         - Aksi Anda: Berikan label "Fase Wacana". Evaluasi elaborasi gagasan.
+      ${isKelas1 ? `
+      [RUMUS KELAS 1]
+      1. Fase Bunyi: Penulisan huruf kapital dan tanda baca kurang tepat hingga tidak ada tanda baca. Jumlah kata tidak lebih dari 15 kata. Jumlah saltik (salah ketik/ejaan) lebih dari 7.
+      2. Fase Komunikasi: Kalimat cukup panjang (minimal 3 kalimat), jumlah saltik kurang dari 7. Jumlah kalimat lebih dari 15 kata. Ketepatan penggunaan tanda baca sedang. Tapi di fase ini, tulisan siswa tidak koheren.
+      3. Fase Wacana: Tulisan siswa sudah mencakup 1 paragraf atau lebih. Jumlah saltik kurang dari 3. Jumlah kalimat lebih dari 30 kata. Penggunaan tanda baca tinggi. Dan tulisan sudah berkesinambungan, berkoherensi, dan menghubungkan proposisi/pernyataan satu dengan lainnya.
+      ` : `
+      [RUMUS KELAS 2 HINGGA 6]
+      1. Fase Bunyi: Terdapat kesalahan ejaan/kapital lebih dari 5 letak. Sistem otomatis mengunci di Fase Bunyi.
+      2. Fase Komunikasi: Kesalahan ejaan/kapital berjumlah 3 hingga 5 kali. Kalimat sudah mulai menyambung namun belum koheren sempurna.
+      3. Fase Wacana: Kesalahan ejaan/kapital rapi (0 hingga 2 letak saltik saja), dan WAJIB terdapat struktur tulisan satu paragraf murni (berkesinambungan, berkoherensi, dan menghubungkan proposisi satu dengan yang lainnya).
+      `}
 
       Keluarkan hasil Anda dalam FORMAT JSON MURNI (tanpa markdown), seperti di bawah ini:
       {
-        "skor_keseluruhan": number (0-100 secara kuantitatif murni, menyesuaikan skor fase),
+        "skor_keseluruhan": number (0-100 secara kuantitatif murni),
         "fase_saat_ini": string ("Fase Bunyi" / "Fase Komunikasi" / "Fase Wacana"),
-        "vokal": number (index 0-100),
+        "vokal": number,
         "diksi": number,
         "sintaksis": number,
         "logika": number,
         "ejaan": number,
         "analisis_bunyi": "ringkasan kritis bukti fase",
-        "analisis_komunikasi": "ringkasan waspada terkait kohesi",
+        "analisis_komunikasi": "ringkasan terkait kohesi",
         "analisis_wacana": "ringkasan ketersambungan makna",
         "jumlah_kata": number (hitung mutlak),
         "error_ejaan": number (jumlah salah mutlak),
@@ -88,12 +90,21 @@ export async function POST(req: Request) {
       await supabase.from('assessments').insert({
         student_id: student_id || null,
         score: parsedData.skor_keseluruhan,
-        literacy_phase: parsedData.fase_saat_ini, 
-        vowels: parsedData.vokal,
-        diction: parsedData.diksi,
-        syntax: parsedData.sintaksis,
-        logic: parsedData.logika,
-        spelling: parsedData.ejaan,
+        insights: {
+          fase_saat_ini: parsedData.fase_saat_ini,
+          vokal: parsedData.vokal,
+          diksi: parsedData.diksi,
+          sintaksis: parsedData.sintaksis,
+          logika: parsedData.logika,
+          ejaan: parsedData.ejaan,
+          analisis_bunyi: parsedData.analisis_bunyi,
+          analisis_komunikasi: parsedData.analisis_komunikasi,
+          analisis_wacana: parsedData.analisis_wacana,
+          jumlah_kata: parsedData.jumlah_kata,
+          error_ejaan: parsedData.error_ejaan,
+          error_kapital: parsedData.error_kapital
+        },
+        narrative_feedback: `${parsedData.fase_saat_ini} — ${parsedData.analisis_bunyi || ''} ${parsedData.analisis_komunikasi || ''} ${parsedData.analisis_wacana || ''}`.trim(),
         image_url: uploadedImageUrl
       });
       
