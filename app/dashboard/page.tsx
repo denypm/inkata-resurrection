@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
-import { FileUp, Users, AlertCircle, Trophy, BarChart3, Search, ChevronRight } from 'lucide-react'
+import { FileUp, Users, AlertCircle, Trophy, BarChart3, Search, ChevronRight, Copy, Check, Building2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import PulseLogo from '@/components/ui/pulse-logo'
 import { useSubscription } from '@/lib/hooks/useSubscription'
@@ -12,6 +12,8 @@ export default function DashboardPage() {
   const [dbStudents, setDbStudents] = useState<any[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(true)
+  const [schoolInfo, setSchoolInfo] = useState<{ name: string; inviteCode: string } | null>(null)
+  const [codeCopied, setCodeCopied] = useState(false)
   const { isEnterprise, maxStudents, loading: subLoading } = useSubscription()
 
   useEffect(() => {
@@ -24,7 +26,12 @@ export default function DashboardPage() {
       if (user) {
         if (user.email) setUserName(user.email.split('@')[0])
         const { data: teacher } = await supabase.from('teachers').select('school_id').eq('id', user.id).single()
-        if (teacher) schoolId = teacher.school_id;
+        if (teacher) {
+          schoolId = teacher.school_id;
+          // Ambil info sekolah + invite_code
+          const { data: school } = await supabase.from('schools').select('name, invite_code').eq('id', teacher.school_id).single()
+          if (school) setSchoolInfo({ name: school.name, inviteCode: school.invite_code || '-' })
+        }
       }
 
       // 2. Tarik Data Nyata Siswa
@@ -85,6 +92,27 @@ export default function DashboardPage() {
               Selamat datang,<br />
               <span className="text-[#1D4ED8]">{userName}.</span>
             </h1>
+            {schoolInfo && (
+              <div className="flex items-center gap-3 mt-3">
+                <Building2 className="w-4 h-4 text-slate-400" />
+                <span className="text-sm font-bold text-slate-500">{schoolInfo.name}</span>
+                <span className="text-slate-300">·</span>
+                <span className="text-sm font-bold text-slate-400">Kode:</span>
+                <span className="text-sm font-extrabold text-[#1D4ED8] tracking-[0.15em]">{schoolInfo.inviteCode}</span>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(schoolInfo.inviteCode)
+                    setCodeCopied(true)
+                    setTimeout(() => setCodeCopied(false), 2000)
+                  }}
+                  className="flex items-center gap-1 text-[10px] font-bold text-slate-400 hover:text-[#1D4ED8] transition-colors px-2 py-1 rounded-lg hover:bg-blue-50"
+                  title="Salin kode sekolah"
+                >
+                  {codeCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                  {codeCopied ? 'Tersalin!' : 'Salin'}
+                </button>
+              </div>
+            )}
           </div>
           
           <div className="flex gap-4">
