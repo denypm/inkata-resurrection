@@ -18,8 +18,17 @@ export default function SuperAdminDashboard() {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       
-      // RBAC: Hanya Owner
-      if (!user || (user.email !== 'denydenary@gmail.com' && user.user_metadata?.role !== 'superadmin')) {
+      // RBAC: Hanya Super Admin (cek DB role + metadata)
+      if (!user) {
+        router.push('/dashboard')
+        return
+      }
+      
+      const { data: teacherRole } = await supabase.from('teachers').select('role').eq('id', user.id).single()
+      const hasDbSuperAdmin = teacherRole?.role === 'super_admin'
+      const hasMetaSuperAdmin = user.user_metadata?.role === 'superadmin' || user.user_metadata?.role === 'super_admin'
+      
+      if (!hasDbSuperAdmin && !hasMetaSuperAdmin) {
         router.push('/dashboard')
         return
       }

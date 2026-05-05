@@ -28,9 +28,9 @@ export default function DashboardPage() {
         const { data: teacher } = await supabase.from('teachers').select('school_id').eq('id', user.id).single()
         if (teacher) {
           schoolId = teacher.school_id;
-          // Ambil info sekolah + invite_code
+          // Ambil info sekolah + invite_code (dengan fallback jika kolom belum ada)
           const { data: school } = await supabase.from('schools').select('name, invite_code').eq('id', teacher.school_id).single()
-          if (school) setSchoolInfo({ name: school.name, inviteCode: school.invite_code || '-' })
+          if (school) setSchoolInfo({ name: school.name, inviteCode: (school as any).invite_code || '-' })
         }
       }
 
@@ -51,8 +51,8 @@ export default function DashboardPage() {
             return {
                id: s.id,
                name: s.name,
-               grade: s.grade,
-               room: s.grade,
+               grade: s.grade || '-',
+               room: s.grade || '-',
                score: latest ? latest.score : 0,
                phase: latest ? (latest.insights?.fase_saat_ini || 'Belum Dinilai') : 'Belum Dinilai'
             }

@@ -3,15 +3,121 @@ import { NextResponse } from "next/server";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
+// Validasi struktur output AI
+function validateAIOutput(data: any): boolean {
+  const requiredFields = [
+    'skor_keseluruhan', 'fase_saat_ini', 'vokal', 'diksi', 
+    'sintaksis', 'logika', 'ejaan', 'analisis_bunyi', 
+    'analisis_komunikasi', 'analisis_wacana', 'jumlah_kata',
+    'error_ejaan', 'error_kapital'
+  ];
+  return requiredFields.every(field => field in data);
+}
+
+// Cross-validasi bottleneck: pastikan fase sesuai indikator kuantitatif
+function crossValidatePhase(data: any, isKelas1: boolean): string {
+  const errorEjaan = Number(data.error_ejaan) || 0;
+  const errorKapital = Number(data.error_kapital) || 0;
+  const jumlahKata = Number(data.jumlah_kata) || 0;
+  const totalErrors = errorEjaan + errorKapital;
+
+  if (isKelas1) {
+    // Kelas 1 rubrik
+    if (jumlahKata <= 15 || totalErrors > 7) return "Fase Bunyi";
+    if (jumlahKata > 15 && jumlahKata <= 30 && totalErrors < 7) return "Fase Komunikasi";
+    if (jumlahKata > 30 && totalErrors < 3) return "Fase Wacana";
+    // Fallback ke AI jika ambigu
+    return data.fase_saat_ini || "Fase Bunyi";
+  } else {
+    // Kelas 2-6 rubrik
+    if (totalErrors > 5) return "Fase Bunyi";
+    if (totalErrors >= 3 && totalErrors <= 5) return "Fase Komunikasi";
+    if (totalErrors <= 2) return "Fase Wacana";
+    return data.fase_saat_ini || "Fase Bunyi";
+  }
+}
+
+// Deteksi kelas dari string grade
+function detectKelas(grade: string): { isKelas1: boolean; level: number } {
+  const g = String(grade || "").toLowerCase().trim();
+  
+  // Cari angka kelas secara eksplisit
+  // Pattern: "kelas 1", "1 sd", "kelas 1 sd", "1 - A", dll
+  const kelasMatch = g.match(/(?:kelas\s*)?(\d{1,2})\s*(?:sd|mi|smp|mts|sma|smk|ma)?/i);
+  
+  if (kelasMatch) {
+    const level = parseInt(kelasMatch[1], 10);
+    return { isKelas1: level === 1, level };
+  }
+  
+  // Pattern: "SD - A" (tanpa angka kelas, asumsikan umum)
+  if (g.includes('sd') || g.includes('mi')) {
+    return { isKelas1: false, level: 0 };
+  }
+  
+  return { isKelas1: false, level: 0 };
+}
+
+// Limit: max 10MB base64
+const MAX_IMAGE_SIZE_BYTES = 10 * 1024 * 1024;
+
 export async function POST(req: Request) {
   try {
+    // === AUTH CHECK ===
+    const { createClient } = await import('@/lib/supabase/server');
+    const supabase = createClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: "Akses ditolak. Silakan login terlebih dahulu." }, 
+        { status: 401 }
+      );
+    }
+
     const { image, student_id, grade } = await req.json();
-    if (!image) return NextResponse.json({ error: "Image data missing" }, { status: 400 });
+    if (!image) {
+      return NextResponse.json({ error: "Image data missing" }, { status: 400 });
+    }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // === SIZE CHECK ===
+    const base64Data = image.split(",")[1];
+    if (!base64Data) {
+      return NextResponse.json({ error: "Invalid image format" }, { status: 400 });
+    }
+    
+    const estimatedSize = Math.ceil(base64Data.length * 0.75);
+    if (estimatedSize > MAX_IMAGE_SIZE_BYTES) {
+      return NextResponse.json(
+        { error: "Ukuran gambar terlalu besar. Maksimal 10MB." }, 
+        { status: 413 }
+      );
+    }
 
-    // Cek apakah siswa berlabel kelas 1
-    const isKelas1 = grade === "1" || grade === "Kelas 1";
+    // === STUDENT VALIDATION ===
+    if (student_id) {
+      const { data: studentCheck } = await supabase
+        .from('students')
+        .select('id')
+        .eq('id', student_id)
+        .single();
+      
+      if (!studentCheck) {
+        return NextResponse.json(
+          { error: "Student ID tidak valid atau tidak ditemukan." }, 
+          { status: 404 }
+        );
+      }
+    }
+
+    // === DETECT MIME TYPE ===
+    const mimeMatch = image.match(/^data:([a-zA-Z0-9]+\/[a-zA-Z0-9\-.+]+).*,/);
+    const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
+
+    // === KELAS DETECTION ===
+    const { isKelas1, level } = detectKelas(grade);
+
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `
       Anda adalah "Sistem Mesin Inkata", pakar analisis kognitif literasi yang sangat teliti. Evaluasi tulisan tangan ini secara mutlak berdasarkan "Konvensi Bottleneck Inkata".
@@ -29,49 +135,68 @@ export async function POST(req: Request) {
       3. Fase Wacana: Kesalahan ejaan/kapital rapi (0 hingga 2 letak saltik saja), dan WAJIB terdapat struktur tulisan satu paragraf murni (berkesinambungan, berkoherensi, dan menghubungkan proposisi satu dengan yang lainnya).
       `}
 
-      Keluarkan hasil Anda dalam FORMAT JSON MURNI (tanpa markdown), seperti di bawah ini:
+      PENTING: Hitung error_ejaan dan error_kapital secara MUTLAK dari gambar, bukan perkiraan.
+
+      Keluarkan hasil Anda dalam FORMAT JSON MURNI (tanpa markdown, tanpa backtick), seperti di bawah ini:
       {
         "skor_keseluruhan": number (0-100 secara kuantitatif murni),
         "fase_saat_ini": string ("Fase Bunyi" / "Fase Komunikasi" / "Fase Wacana"),
-        "vokal": number,
-        "diksi": number,
-        "sintaksis": number,
-        "logika": number,
-        "ejaan": number,
-        "analisis_bunyi": "ringkasan kritis bukti fase",
-        "analisis_komunikasi": "ringkasan terkait kohesi",
-        "analisis_wacana": "ringkasan ketersambungan makna",
-        "jumlah_kata": number (hitung mutlak),
-        "error_ejaan": number (jumlah salah mutlak),
-        "error_kapital": number
+        "vokal": number (0-100),
+        "diksi": number (0-100),
+        "sintaksis": number (0-100),
+        "logika": number (0-100),
+        "ejaan": number (0-100),
+        "analisis_bunyi": "ringkasan kritis bukti fase bunyi",
+        "analisis_komunikasi": "ringkasan terkait kohesi dan komunikasi",
+        "analisis_wacana": "ringkasan ketersambungan makna dan wacana",
+        "jumlah_kata": number (hitung mutlak dari gambar),
+        "error_ejaan": number (jumlah salah ejaan mutlak),
+        "error_kapital": number (jumlah salah kapital mutlak)
       }
     `;
 
     const result = await model.generateContent([
       prompt,
-      { inlineData: { data: image.split(",")[1], mimeType: "image/jpeg" } },
+      { inlineData: { data: base64Data, mimeType } },
     ]);
 
     const response = await result.response;
     const text = response.text().replace(/```json|```/g, "").trim();
-    const parsedData = JSON.parse(text);
+    
+    let parsedData: any;
+    try {
+      parsedData = JSON.parse(text);
+    } catch (parseError) {
+      console.error("AI returned invalid JSON:", text);
+      return NextResponse.json(
+        { error: "AI mengembalikan format yang tidak valid. Silakan coba lagi." }, 
+        { status: 500 }
+      );
+    }
 
-    // Ekstraksi Base64 & Tipe Format
-    const base64Data = image.split(",")[1];
-    const mimeMatch = image.match(/^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,/);
-    const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
+    // === VALIDATE AI OUTPUT STRUCTURE ===
+    if (!validateAIOutput(parsedData)) {
+      console.error("AI output missing required fields:", Object.keys(parsedData));
+      return NextResponse.json(
+        { error: "AI mengembalikan data yang tidak lengkap. Silakan coba lagi." }, 
+        { status: 500 }
+      );
+    }
 
-    // Integrasi Permanen ke Database dan Storage Inkata
+    // === CROSS-VALIDATE BOTTLENECK ===
+    const validatedPhase = crossValidatePhase(parsedData, isKelas1);
+    parsedData.fase_saat_ini = validatedPhase;
+
+    // Clamp score to 0-100
+    parsedData.skor_keseluruhan = Math.max(0, Math.min(100, Number(parsedData.skor_keseluruhan) || 0));
+
+    // === UPLOAD IMAGE TO STORAGE ===
     let uploadedImageUrl = null;
     
     try {
-      const { createClient } = await import('@/lib/supabase/server');
-      const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
-
-      // 1. Upload Berkas Fisik ke Supabase Storage (Bucket: manuscripts)
       const buffer = Buffer.from(base64Data, "base64");
-      const filename = `inkata_scan_${crypto.randomUUID()}.${mimeType.split("/")[1]}`;
+      const fileExt = mimeType.split("/")[1] || "jpeg";
+      const filename = `inkata_scan_${crypto.randomUUID()}.${fileExt}`;
       
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('manuscripts')
@@ -85,10 +210,22 @@ export async function POST(req: Request) {
         const { data: publicUrlData } = supabase.storage.from('manuscripts').getPublicUrl(filename);
         uploadedImageUrl = publicUrlData.publicUrl;
       }
+    } catch (storageError) {
+      console.warn("Storage upload warning:", storageError);
+    }
 
-      // 2. Transmisi Data Hasil AI dan Image URL Keterkaitan
-      await supabase.from('assessments').insert({
-        student_id: student_id || null,
+    // === SINGLE INSERT TO DATABASE (menghapus duplikasi) ===
+    if (student_id) {
+      // Get teacher ID for audit trail
+      const { data: teacher } = await supabase
+        .from('teachers')
+        .select('id')
+        .eq('id', user.id)
+        .single();
+
+      const { error: insertError } = await supabase.from('assessments').insert({
+        student_id,
+        teacher_id: teacher?.id || null,
         score: parsedData.skor_keseluruhan,
         insights: {
           fase_saat_ini: parsedData.fase_saat_ini,
@@ -107,20 +244,23 @@ export async function POST(req: Request) {
         narrative_feedback: `${parsedData.fase_saat_ini} — ${parsedData.analisis_bunyi || ''} ${parsedData.analisis_komunikasi || ''} ${parsedData.analisis_wacana || ''}`.trim(),
         image_url: uploadedImageUrl
       });
-      
-    } catch (dbError) {
-      // Graceful degradation
-      console.warn("Warning Storage/DB Integration:", dbError);
+
+      if (insertError) {
+        console.error("Assessment insert error:", insertError);
+      }
     }
 
-    // Embed URL pada return untuk merender live pada front-end / modul sertifikat WA
+    // Embed URL for frontend
     if (uploadedImageUrl) {
-        parsedData.image_url = uploadedImageUrl;
+      parsedData.image_url = uploadedImageUrl;
     }
 
     return NextResponse.json(parsedData);
-  } catch (error) {
-    console.error("AI Analysis Error:", error);
-    return NextResponse.json({ error: "Gagal menganalisis gambar" }, { status: 500 });
+  } catch (error: any) {
+    console.error("AI Analysis Error:", error?.message || error);
+    return NextResponse.json(
+      { error: "Gagal menganalisis gambar: " + (error?.message || String(error)) }, 
+      { status: 500 }
+    );
   }
 }

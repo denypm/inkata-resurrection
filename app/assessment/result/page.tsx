@@ -9,28 +9,35 @@ import { createClient } from '@/lib/supabase/client'
 export default function AssessmentResultPage() {
   const router = useRouter()
   const [result, setResult] = useState<any>(null)
+  const [schoolName, setSchoolName] = useState<string>("Memuat Institusi...")
 
   useEffect(() => {
     const fetchLatest = async () => {
+       const supabase = createClient()
+       const { data: { user } } = await supabase.auth.getUser()
+       if (user) {
+         const { data: teacher } = await supabase.from('teachers').select('school_id, schools(name)').eq('id', user.id).single()
+         if (teacher && teacher.schools) {
+           setSchoolName((teacher.schools as any).name || (teacher.schools as any)[0]?.name)
+         } else {
+           setSchoolName("Institusi Inkata")
+         }
+       }
+
        const savedData = sessionStorage.getItem('inkata_latest_result')
        if (savedData) {
          setResult(JSON.parse(savedData))
          return
        }
 
-       // Pemulihan Data Server Jika session hilang
-       const supabase = createClient()
-       const { data: { user } } = await supabase.auth.getUser()
        if (!user) return router.push('/assessment')
-
-       // Get teacher school_id
-       const { data: teacher } = await supabase.from('teachers').select('school_id').eq('id', user.id).single()
-       if (!teacher) return router.push('/assessment')
+       const { data: teacherData } = await supabase.from('teachers').select('school_id').eq('id', user.id).single()
+       if (!teacherData) return router.push('/assessment')
 
        // Get latest assessment for this school
        const { data: assessment } = await supabase.from('assessments')
-          .select('*, students!inner(name, id, room, school_id)')
-          .eq('students.school_id', teacher.school_id)
+          .select('*, students!inner(name, id, grade, school_id)')
+          .eq('students.school_id', teacherData.school_id)
           .order('created_at', { ascending: false })
           .limit(1)
           .single()
@@ -91,7 +98,7 @@ export default function AssessmentResultPage() {
                 <Building2 className="w-6 h-6" />
              </div>
              <div>
-                <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">SD Pelita Harapan Bangsa</h1>
+                <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">{schoolName}</h1>
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mt-1">Sistem Evaluasi Literasi Inkata.</p>
              </div>
           </div>
@@ -136,10 +143,10 @@ export default function AssessmentResultPage() {
                <h3 className="text-4xl font-extrabold tracking-tight text-slate-900">{result.phase}</h3>
                
                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden mt-6 flex">
-                 <div className="h-full bg-slate-300 w-1/3"></div>
-                 <div className="h-full bg-slate-400 w-1/3"></div>
-                 <div className="h-full bg-[#1D4ED8] w-[25%] relative shadow-[0_0_10px_rgba(29,78,216,0.5)]"></div>
-               </div>
+                  <div className={`h-full ${result.phase?.includes('Bunyi') ? 'bg-[#1D4ED8] shadow-[0_0_10px_rgba(29,78,216,0.5)]' : 'bg-slate-300'} w-1/3`}></div>
+                  <div className={`h-full ${result.phase?.includes('Komunikasi') ? 'bg-[#1D4ED8] shadow-[0_0_10px_rgba(29,78,216,0.5)]' : 'bg-slate-400'} w-1/3`}></div>
+                  <div className={`h-full ${result.phase?.includes('Wacana') ? 'bg-[#1D4ED8] shadow-[0_0_10px_rgba(29,78,216,0.5)]' : 'bg-slate-200'} w-1/3`}></div>
+                </div>
             </div>
           </div>
 

@@ -53,11 +53,19 @@ export async function updateSession(request: NextRequest) {
 
   // Lapisan Ekstrem: Super Admin Role-Based Access Control (RBAC)
   if (user && request.nextUrl.pathname.startsWith('/superadmin')) {
-    // Memeriksa metadata peran otentikasi. Jika bukan 'superadmin' dan BUKAN email Owner (denydenary@gmail.com), putuskan koneksi akses.
-    const isOwnerTargetEmail = user.email === 'denydenary@gmail.com' || user.email?.includes('admin@inkata');
-    const hasSuperAdminMetadata = user.user_metadata?.role === 'superadmin';
+    // Cek apakah user memiliki role super_admin di database atau metadata
+    const hasSuperAdminMetadata = user.user_metadata?.role === 'superadmin' || user.user_metadata?.role === 'super_admin';
     
-    if (!isOwnerTargetEmail && !hasSuperAdminMetadata) {
+    // Cek role di tabel teachers via Supabase
+    const { data: teacherRole } = await supabase
+      .from('teachers')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+    
+    const hasDbSuperAdmin = teacherRole?.role === 'super_admin';
+    
+    if (!hasSuperAdminMetadata && !hasDbSuperAdmin) {
       const url = request.nextUrl.clone()
       url.pathname = '/dashboard'
       return NextResponse.redirect(url)

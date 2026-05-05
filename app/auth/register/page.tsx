@@ -113,7 +113,7 @@ export default function RegisterPage() {
           .insert({
             id: userId,
             school_id: schoolId,
-            full_name: email.split('@')[0],
+            name: email.split('@')[0],
             email: email,
             role: 'teacher',
           })
@@ -124,8 +124,8 @@ export default function RegisterPage() {
       }
     }
 
-    alert('Pendaftaran berhasil! Silakan periksa email Anda untuk verifikasi, lalu masuk ke sistem.')
-    router.push('/auth')
+    alert('Pendaftaran institusi berhasil! Membuka gerbang utama Dasbor Inkata...');
+    router.push('/dashboard')
     setLoading(false)
   }
 

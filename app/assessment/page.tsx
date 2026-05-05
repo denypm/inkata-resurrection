@@ -22,8 +22,13 @@ export default function InputAsesmenPage() {
 
   const fetchStudents = async () => {
      const supabase = createClient()
-     const { data } = await supabase.from('students').select('*')
-     if (data) setDbStudents(data)
+     const { data: { user } } = await supabase.auth.getUser()
+     if (!user) return
+     const { data: teacher } = await supabase.from('teachers').select('school_id').eq('id', user.id).single()
+     if (teacher && teacher.school_id) {
+       const { data } = await supabase.from('students').select('*').eq('school_id', teacher.school_id)
+       if (data) setDbStudents(data)
+     }
   }
 
   React.useEffect(() => {
@@ -82,7 +87,7 @@ export default function InputAsesmenPage() {
           body: JSON.stringify({ 
              image: base64Image,
              student_id: selectedStudent?.id,
-             grade: selectedStudent?.room || "Asesmen Umum"
+             grade: selectedStudent?.grade || "Asesmen Umum"
           }),
         });
 
@@ -90,43 +95,30 @@ export default function InputAsesmenPage() {
         setAnalyzePhase(4); 
 
         if (res.ok) {
-           const aiData = await res.json();
-           
-           let cleanPhase = "Fase Bunyi";
-           const rawPhase = (aiData.fase_saat_ini || "").toLowerCase();
-           if (rawPhase.includes("wacana")) cleanPhase = "Fase Wacana";
-           else if (rawPhase.includes("komunikasi")) cleanPhase = "Fase Komunikasi";
+            const aiData = await res.json();
+            
+            // Fase sudah di-cross-validate oleh server
+            const cleanPhase = aiData.fase_saat_ini || "Fase Bunyi";
 
-           // Adaptasikan AI Original ke Struktur Lama
-           const mockResult = {
-             studentName: selectedStudent ? selectedStudent.name : "Peserta Umum (Tanpa Identitas)",
-             nis: selectedStudent ? selectedStudent.id.split('-')[0].toUpperCase() : "N/A",
-             classGroup: selectedStudent ? `Kelas ${selectedStudent.room}` : "Kelas Umum",
-             score: aiData.skor_keseluruhan || Math.floor(Math.random() * 40) + 40,
-             phase: cleanPhase,
-             feedback: [
-               aiData.analisis_bunyi || "Deteksi bunyi telah dihimpun logikanya.",
-               aiData.analisis_komunikasi || "Proses iterasi sintaksis membutuhkan perhatian di repetisi fonem.",
-               aiData.analisis_wacana || "Rekomendasi: Lakukan tes ulang di minggu berikutnya."
-             ],
-             image_url: aiData.image_url || null
-           }
-           
-           // Insert into Database Live Portfolio
-           if (selectedStudent?.id) {
-             const supabase = createClient();
-             await supabase.from('assessments').insert({
-               student_id: selectedStudent.id,
-               score: mockResult.score,
-               
-               narrative_feedback: mockResult.feedback.join('\n\n'),
-                insights: { fase_saat_ini: mockResult.phase },
-               image_url: mockResult.image_url
-             });
-           }
-           
-           sessionStorage.setItem('inkata_latest_result', JSON.stringify(mockResult))
-           router.push('/assessment/result')
+            const assessmentResult = {
+              studentName: selectedStudent ? selectedStudent.name : "Peserta Umum (Tanpa Identitas)",
+              nis: selectedStudent ? selectedStudent.id.split('-')[0].toUpperCase() : "N/A",
+              classGroup: selectedStudent ? `Kelas ${selectedStudent.grade}` : "Kelas Umum",
+              score: aiData.skor_keseluruhan || 0,
+              phase: cleanPhase,
+              feedback: [
+                aiData.analisis_bunyi || "Analisis fase bunyi tidak tersedia.",
+                aiData.analisis_komunikasi || "Analisis fase komunikasi tidak tersedia.",
+                aiData.analisis_wacana || "Analisis fase wacana tidak tersedia."
+              ],
+              image_url: aiData.image_url || null
+            }
+            
+            // Database insert sudah ditangani oleh API server-side
+            // Tidak perlu insert ulang di client
+            
+            sessionStorage.setItem('inkata_latest_result', JSON.stringify(assessmentResult))
+            router.push('/assessment/result')
         } else {
            alert("Terjadi Kendala Membaca Pemahaman AI Gemini Anda. Silahkan coba foto lain.");
            setAnalyzePhase(0);
@@ -154,13 +146,12 @@ export default function InputAsesmenPage() {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet) as any[];
 
-        // Mapping data dari template: Nama Siswa, Jenjang, Kelas
+        // Mapping data dari template: Nama Siswa, Kelas
         const studentsToInsert = jsonData
-          .filter(row => row['Nama Siswa'] && row['Jenjang'] && row['Kelas'])
+          .filter(row => row['Nama Siswa'] && row['Kelas'])
           .map(row => ({
-            name: row['Nama Siswa'],
-            grade_level: row['Jenjang'],
-            room: row['Kelas'],
+            name: String(row['Nama Siswa']).trim(),
+            grade: String(row['Kelas']).trim()
           }));
 
         if (studentsToInsert.length === 0) {
@@ -188,9 +179,9 @@ export default function InputAsesmenPage() {
           alert(`Berhasil mengimpor ${studentsToInsert.length} siswa.`);
           await fetchStudents(); // Refresh dropdown
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error(err);
-        alert("Gagal mengimpor data. Pastikan format kolom sesuai template (Nama Siswa, Jenjang, Kelas).");
+        alert("Gagal mengimpor data: " + (err?.message || "Kesalahan pada file Excel atau Database."));
       } finally {
         setIsImporting(false);
         if (importInputRef.current) importInputRef.current.value = '';
@@ -229,8 +220,8 @@ export default function InputAsesmenPage() {
             </div>
             <div className="h-10 w-px bg-slate-100"></div>
             <div className="flex flex-col text-right">
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1">Sisa Lisensi</span>
-              <span className="text-sm font-extrabold text-slate-900">12 Entri</span>
+               <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1">Status Entri</span>
+               <span className="text-sm font-extrabold text-slate-900">Aktif</span>
             </div>
           </div>
         </div>
@@ -271,7 +262,7 @@ export default function InputAsesmenPage() {
                              </div>
                              <div className="flex-1">
                                <p className="text-sm font-extrabold text-slate-900">{student.name}</p>
-                               <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">Kelas {student.room} • {student.grade_level}</p>
+                               <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">{student.grade}</p>
                              </div>
                            </div>
                          ))}
@@ -295,7 +286,7 @@ export default function InputAsesmenPage() {
               <div className="mt-12 p-5 bg-slate-50 rounded-2xl border border-slate-100 flex items-start gap-4">
                  <AlignLeft className="w-5 h-5 text-slate-400 shrink-0 mt-0.5" />
                  <p className="text-xs text-slate-500 font-medium leading-relaxed">
-                   Inkata. mendukung format JPG, PNG, maupun PDF. Untuk hasil optik optimal, pastikan tidak ada bayangan pada kertas yang dipindai.
+                    Inkata. mendukung format JPG dan PNG. Untuk hasil optik optimal, pastikan tidak ada bayangan pada kertas yang dipindai.
                  </p>
               </div>
 

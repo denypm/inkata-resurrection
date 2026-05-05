@@ -21,7 +21,9 @@ export default function Navbar() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
         setUserEmail(user.email ?? null)
-        if (user.email === 'denydenary@gmail.com' || user.user_metadata?.role === 'superadmin') {
+        // Cek role di DB
+        const { data: teacher } = await supabase.from('teachers').select('role').eq('id', user.id).single()
+        if (teacher?.role === 'super_admin' || user.user_metadata?.role === 'superadmin' || user.user_metadata?.role === 'super_admin') {
           setIsSuperAdmin(true)
         }
       }
