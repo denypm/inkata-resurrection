@@ -146,12 +146,14 @@ export default function InputAsesmenPage() {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet) as any[];
 
-        // Mapping data dari template: Nama Siswa, Kelas
+        // Mapping data dari template: Nama Siswa, Jenjang, Kelas
         const studentsToInsert = jsonData
-          .filter(row => row['Nama Siswa'] && row['Kelas'])
+          .filter(row => row['Nama Siswa'] && (row['Jenjang'] || row['Kelas']))
           .map(row => ({
             name: String(row['Nama Siswa']).trim(),
-            grade: String(row['Kelas']).trim()
+            grade: (row['Jenjang'] && row['Kelas']) 
+              ? `${String(row['Jenjang']).trim()} - ${String(row['Kelas']).trim()}`
+              : String(row['Jenjang'] || row['Kelas'] || 'Umum').trim()
           }));
 
         if (studentsToInsert.length === 0) {

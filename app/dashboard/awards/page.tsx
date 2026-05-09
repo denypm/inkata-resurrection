@@ -31,7 +31,7 @@ export default function AwardsPage() {
                phase: latest ? (latest.insights?.fase_saat_ini || 'Belum Dinilai') : 'Belum Dinilai',
                date: latest ? new Date(latest.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' }) : '-'
             }
-         }).filter(s => s.score >= 80)
+         }).filter(s => s.phase !== 'Belum Dinilai')
          setAwardedStudents(formatted)
        }
     }
@@ -71,8 +71,8 @@ export default function AwardsPage() {
                      <Award className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="font-extrabold text-slate-900 text-lg">Portofolio Lulus</h3>
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Ambang Batas Dinilai &gt; 80</p>
+                    <h3 className="font-extrabold text-slate-900 text-lg">Portofolio Siswa</h3>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Seluruh Level Kompetensi</p>
                   </div>
                 </div>
 
@@ -130,7 +130,7 @@ export default function AwardsPage() {
                        <h1 className="text-[54px] font-black text-slate-900 tracking-tighter uppercase mb-6 drop-shadow-sm leading-none">
                          Sertifikat Penghargaan
                        </h1>
-                       <p className="text-[14px] font-bold uppercase tracking-[0.4em] text-amber-500 mb-12">Level Literasi Eksekutif</p>
+                       <p className="text-[14px] font-bold uppercase tracking-[0.4em] text-amber-500 mb-12">Level {selectedStudent.phase}</p>
 
                        <p className="text-slate-500 font-medium text-lg mb-6">Diberikan secara resmi kepada:</p>
                        <h2 className="text-[64px] font-extrabold text-[#1D4ED8] leading-none mb-10 tracking-tight drop-shadow-sm border-b-2 border-slate-200 pb-4 px-12">
@@ -138,8 +138,8 @@ export default function AwardsPage() {
                        </h2>
                        
                        <p className="text-slate-500 text-lg max-w-2xl font-medium leading-relaxed mb-20">
-                         Telah berhasil melampaui ambang batas penilaian Algoritma Teks Eksekutif dan sukses menyelesaikan tes baca 
-                         dengan tingkat kompetensi membaca pada level <span className="font-extrabold text-slate-800">{selectedStudent.phase}</span>.
+                         Telah menyelesaikan proses pemindaian dan evaluasi literasi cerdas, serta diidentifikasi memiliki 
+                         tingkat kompetensi membaca pada <span className="font-extrabold text-slate-800">{selectedStudent.phase}</span>.
                        </p>
 
                        <div className="flex justify-between items-end w-full px-12 border-t border-slate-100 pt-8 mt-auto">
