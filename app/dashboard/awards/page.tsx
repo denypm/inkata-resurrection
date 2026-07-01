@@ -15,10 +15,16 @@ export default function AwardsPage() {
     const fetchAwarded = async () => {
        const { createClient } = await import('@/lib/supabase/client')
        const supabase = createClient()
+       const { data: { user } } = await supabase.auth.getUser()
+       if (!user) return
+       
+       const { data: teacher } = await supabase.from('teachers').select('school_id').eq('id', user.id).single()
+       if (!teacher?.school_id) return
+
        const { data: students } = await supabase.from('students').select(`
          *,
          assessments:assessments(score, insights, created_at)
-       `)
+       `).eq('school_id', teacher.school_id)
        if (students) {
          const formatted = students.map(s => {
             const hasAssessment = s.assessments && s.assessments.length > 0;

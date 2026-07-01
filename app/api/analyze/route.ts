@@ -22,18 +22,15 @@ function crossValidatePhase(data: any, isKelas1: boolean): string {
   const totalErrors = errorEjaan + errorKapital;
 
   if (isKelas1) {
-    // Kelas 1 rubrik
-    if (jumlahKata <= 15 || totalErrors > 7) return "Fase Bunyi";
-    if (jumlahKata > 15 && jumlahKata <= 30 && totalErrors < 7) return "Fase Komunikasi";
+    // Kelas 1 rubrik (Filter Piramida)
+    if (jumlahKata <= 15 || totalErrors >= 7) return "Fase Bunyi";
     if (jumlahKata > 30 && totalErrors < 3) return "Fase Wacana";
-    // Fallback ke AI jika ambigu
-    return data.fase_saat_ini || "Fase Bunyi";
+    return "Fase Komunikasi";
   } else {
-    // Kelas 2-6 rubrik
+    // Kelas 2-6 rubrik (Filter Piramida)
     if (totalErrors > 5) return "Fase Bunyi";
-    if (totalErrors >= 3 && totalErrors <= 5) return "Fase Komunikasi";
-    if (totalErrors <= 2) return "Fase Wacana";
-    return data.fase_saat_ini || "Fase Bunyi";
+    if (totalErrors < 3) return "Fase Wacana";
+    return "Fase Komunikasi";
   }
 }
 
@@ -116,6 +113,34 @@ export async function POST(req: Request) {
 
     // === KELAS DETECTION ===
     const { isKelas1, level } = detectKelas(grade);
+
+    // === QUOTA CHECK (Token Pulsa) ===
+    const { data: teacherInfo } = await supabase
+      .from('teachers')
+      .select(`
+        id,
+        school_id,
+        schools (
+          api_tokens_limit,
+          api_tokens_used
+        )
+      `)
+      .eq('id', user.id)
+      .single();
+
+    if (!teacherInfo || !teacherInfo.school_id) {
+      return NextResponse.json({ error: "Akun Guru tidak terdaftar pada sekolah manapun." }, { status: 403 });
+    }
+
+    // Handle single object vs array from join (Supabase usually returns array or single object depending on relation, here it's single since school_id is foreign key)
+    const schoolData = Array.isArray(teacherInfo.schools) ? teacherInfo.schools[0] : teacherInfo.schools;
+    
+    if (schoolData && (schoolData.api_tokens_used >= schoolData.api_tokens_limit)) {
+      return NextResponse.json(
+        { error: "Kuota AI Sekolah Anda telah habis. Silakan hubungi Admin Sekolah untuk isi ulang." }, 
+        { status: 402 }
+      );
+    }
 
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
@@ -216,16 +241,9 @@ export async function POST(req: Request) {
 
     // === SINGLE INSERT TO DATABASE (menghapus duplikasi) ===
     if (student_id) {
-      // Get teacher ID for audit trail
-      const { data: teacher } = await supabase
-        .from('teachers')
-        .select('id')
-        .eq('id', user.id)
-        .single();
-
       const { error: insertError } = await supabase.from('assessments').insert({
         student_id,
-        teacher_id: teacher?.id || null,
+        teacher_id: teacherInfo?.id || null,
         score: parsedData.skor_keseluruhan,
         insights: {
           fase_saat_ini: parsedData.fase_saat_ini,
@@ -245,7 +263,13 @@ export async function POST(req: Request) {
         image_url: uploadedImageUrl
       });
 
-      if (insertError) {
+      if (!insertError) {
+        // Increment Quota via RPC
+        const { error: rpcError } = await supabase.rpc('increment_api_usage', { p_school_id: teacherInfo.school_id });
+        if (rpcError) {
+          console.error("Gagal memotong kuota AI:", rpcError);
+        }
+      } else {
         console.error("Assessment insert error:", insertError);
       }
     }

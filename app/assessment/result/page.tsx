@@ -34,10 +34,10 @@ export default function AssessmentResultPage() {
        const { data: teacherData } = await supabase.from('teachers').select('school_id').eq('id', user.id).single()
        if (!teacherData) return router.push('/assessment')
 
-       // Get latest assessment for this school
+       // Get latest assessment for this teacher
        const { data: assessment } = await supabase.from('assessments')
           .select('*, students!inner(name, id, grade, school_id)')
-          .eq('students.school_id', teacherData.school_id)
+          .eq('teacher_id', user.id)
           .order('created_at', { ascending: false })
           .limit(1)
           .single()

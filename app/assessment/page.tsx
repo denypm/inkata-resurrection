@@ -173,12 +173,35 @@ export default function InputAsesmenPage() {
           .single();
 
         if (teacher?.school_id) {
-          const finalData = studentsToInsert.map(s => ({ ...s, school_id: teacher.school_id }));
-          const { error } = await supabase.from('students').insert(finalData);
+          // Cek eksistensi murid sebelumnya untuk pencegahan duplikasi
+          const { data: existingStudents } = await supabase
+            .from('students')
+            .select('name, grade')
+            .eq('school_id', teacher.school_id);
+
+          const newStudents = studentsToInsert.filter(newStudent => {
+            return !existingStudents?.some(existing => 
+              existing.name.toLowerCase() === newStudent.name.toLowerCase() && 
+              existing.grade.toLowerCase() === newStudent.grade.toLowerCase()
+            );
+          });
+
+          if (newStudents.length > 0) {
+            const finalData = newStudents.map(s => ({ ...s, school_id: teacher.school_id }));
+            const { error } = await supabase.from('students').insert(finalData);
+            
+            if (error) throw error;
+            
+            const skippedCount = studentsToInsert.length - newStudents.length;
+            if (skippedCount > 0) {
+              alert(`Berhasil mengimpor ${newStudents.length} siswa baru. (${skippedCount} siswa dilewati karena sudah terdaftar).`);
+            } else {
+              alert(`Berhasil mengimpor ${newStudents.length} siswa.`);
+            }
+          } else {
+            alert(`Tidak ada siswa baru yang diimpor. Semua data (${studentsToInsert.length} siswa) sudah terdaftar sebelumnya.`);
+          }
           
-          if (error) throw error;
-          
-          alert(`Berhasil mengimpor ${studentsToInsert.length} siswa.`);
           await fetchStudents(); // Refresh dropdown
         }
       } catch (err: any) {

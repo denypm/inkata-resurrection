@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS public.schools (
     status TEXT DEFAULT 'active', -- 'active' atau 'locked' (Kill Switch)
     plan TEXT DEFAULT 'standard',
     max_students INTEGER DEFAULT 40,
+    api_tokens_limit INTEGER DEFAULT 0,
+    api_tokens_used INTEGER DEFAULT 0,
     invite_code TEXT UNIQUE,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
@@ -64,6 +66,30 @@ RETURNS BOOLEAN AS $$
     SELECT 1 FROM public.teachers WHERE id = auth.uid() AND role = 'super_admin'
   );
 $$ LANGUAGE sql SECURITY DEFINER;
+
+-- Fungsi RPC: Increment API Usage
+CREATE OR REPLACE FUNCTION public.increment_api_usage(p_school_id UUID)
+RETURNS void AS $$
+BEGIN
+  UPDATE public.schools
+  SET api_tokens_used = api_tokens_used + 1
+  WHERE id = p_school_id;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Fungsi RPC: Top-up API Quota (Superadmin only)
+CREATE OR REPLACE FUNCTION public.topup_api_quota(p_school_id UUID, p_amount INTEGER)
+RETURNS void AS $$
+BEGIN
+  IF NOT public.is_super_admin() THEN
+    RAISE EXCEPTION 'Akses ditolak: Hanya Superadmin yang bisa melakukan Top-Up.';
+  END IF;
+
+  UPDATE public.schools
+  SET api_tokens_limit = api_tokens_limit + p_amount
+  WHERE id = p_school_id;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- 1. Kebijakan Tabel Schools
 CREATE POLICY "Tinjauan Sekolah Tertutup" 

@@ -12,7 +12,7 @@ export default function DashboardPage() {
   const [dbStudents, setDbStudents] = useState<any[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(true)
-  const [schoolInfo, setSchoolInfo] = useState<{ name: string; inviteCode: string } | null>(null)
+  const [schoolInfo, setSchoolInfo] = useState<{ name: string; inviteCode: string; limit: number; used: number } | null>(null)
   const [codeCopied, setCodeCopied] = useState(false)
   const { isEnterprise, maxStudents, loading: subLoading } = useSubscription()
 
@@ -28,9 +28,14 @@ export default function DashboardPage() {
         const { data: teacher } = await supabase.from('teachers').select('school_id').eq('id', user.id).single()
         if (teacher) {
           schoolId = teacher.school_id;
-          // Ambil info sekolah + invite_code (dengan fallback jika kolom belum ada)
-          const { data: school } = await supabase.from('schools').select('name, invite_code').eq('id', teacher.school_id).single()
-          if (school) setSchoolInfo({ name: school.name, inviteCode: (school as any).invite_code || '-' })
+          // Ambil info sekolah + invite_code + quota
+          const { data: school } = await supabase.from('schools').select('name, invite_code, api_tokens_limit, api_tokens_used').eq('id', teacher.school_id).single()
+          if (school) setSchoolInfo({ 
+            name: school.name, 
+            inviteCode: (school as any).invite_code || '-',
+            limit: school.api_tokens_limit || 0,
+            used: school.api_tokens_used || 0
+          })
         }
       }
 
@@ -111,6 +116,12 @@ export default function DashboardPage() {
                   {codeCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                   {codeCopied ? 'Tersalin!' : 'Salin'}
                 </button>
+
+                <div className="h-4 w-px bg-slate-200 mx-1"></div>
+                <span className="text-sm font-bold text-slate-400">Kuota AI:</span>
+                <span className={`text-sm font-extrabold ${schoolInfo.used >= schoolInfo.limit ? 'text-red-500' : 'text-emerald-500'}`}>
+                  {Math.max(0, schoolInfo.limit - schoolInfo.used)} / {schoolInfo.limit} Sisa
+                </span>
               </div>
             )}
           </div>

@@ -80,6 +80,24 @@ export default function SuperAdminDashboard() {
     ))
   }
 
+  const topUpQuota = async (id: string) => {
+    const target = schools.find(s => s.id === id)
+    if (!target) return
+    const amount = parseInt(window.prompt("Masukkan jumlah kuota AI yang ingin ditambahkan (top-up):", "1000") || "0", 10)
+    if (isNaN(amount) || amount <= 0) return
+
+    const supabase = createClient()
+    // Call RPC
+    const { error } = await supabase.rpc('topup_api_quota', { p_school_id: id, p_amount: amount })
+    if (!error) {
+      setSchools(schools.map(school => 
+        school.id === id ? { ...school, api_tokens_limit: (school.api_tokens_limit || 0) + amount } : school
+      ))
+    } else {
+      alert("Gagal melakukan Top-Up: " + error.message)
+    }
+  }
+
   const filteredSchools = schools.filter(s => 
     s.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
@@ -183,6 +201,7 @@ export default function SuperAdminDashboard() {
                   <tr className="bg-slate-50/50">
                     <th className="px-8 py-4 text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Institusi</th>
                     <th className="px-8 py-4 text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Lisensi</th>
+                    <th className="px-8 py-4 text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Kuota AI</th>
                     <th className="px-8 py-4 text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Status</th>
                     <th className="px-8 py-4 text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Didaftarkan</th>
                     <th className="px-8 py-4 text-[10px] font-extrabold uppercase tracking-widest text-slate-400 text-right">Kill Switch</th>
@@ -209,6 +228,19 @@ export default function SuperAdminDashboard() {
                         >
                           {school.plan || 'Standard'}
                         </button>
+                      </td>
+                      <td className="px-8 py-5">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-slate-800">
+                            {Math.max(0, (school.api_tokens_limit || 0) - (school.api_tokens_used || 0))} sisa
+                          </span>
+                          <button 
+                            onClick={() => topUpQuota(school.id)}
+                            className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-1 rounded bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors"
+                          >
+                            + Top Up
+                          </button>
+                        </div>
                       </td>
                       <td className="px-8 py-5">
                         <span className={`text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-full ${school.is_active ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-500'}`}>
