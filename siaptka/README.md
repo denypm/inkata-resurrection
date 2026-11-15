@@ -1,0 +1,78 @@
+# SiapTKA SD Tryout — versi website publik
+
+Website tryout TKA SD (kelas 6): simulasi CBT Matematika & Bahasa Indonesia, latihan harian,
+bank soal, ranking, dan rapor. Satu halaman HTML statis + Supabase (database & login Google).
+
+| File | Isi |
+|---|---|
+| `index.html` | Seluruh aplikasi (vanilla JS, tanpa build) |
+| `adapter.js` | Penghubung ke Supabase, meniru API `window.claude.use("db"/"user")` dari versi artifact |
+| `config.js` | URL proyek + anon key Supabase (wajib diisi) |
+| `schema.sql` | Tabel, Row Level Security, fungsi admin, realtime |
+
+Siapa pun bisa membuka situs dan mengerjakan soal tanpa login. Siswa yang **masuk dengan Google**
+nilainya tersimpan dan ikut ranking. Nama siswa dan ranking hanya terlihat oleh pengguna yang sudah masuk.
+
+## Langkah pemasangan (±15 menit)
+
+### 1. Buat proyek Supabase
+1. Buka https://supabase.com → **New project** (paket gratis cukup). Catat region terdekat (Singapore).
+2. **SQL Editor → New query**, tempel isi `schema.sql`, klik **Run**.
+3. Masih di SQL Editor, jadikan akun Google Anda admin (huruf kecil semua):
+   ```sql
+   insert into public.admins(email) values ('email-google-anda@gmail.com') on conflict do nothing;
+   ```
+
+### 2. Aktifkan login Google
+1. Google Cloud Console → **APIs & Services → Credentials → Create credentials → OAuth client ID**
+   (tipe *Web application*). Jika diminta, isi dulu *OAuth consent screen* (External, nama aplikasi "SiapTKA").
+2. Di **Authorized redirect URIs** isi: `https://PROJECT-ANDA.supabase.co/auth/v1/callback`
+3. Supabase → **Authentication → Sign In / Providers → Google**: aktifkan, tempel Client ID & Client Secret.
+4. Supabase → **Authentication → URL Configuration**:
+   - *Site URL*: alamat situs Anda, mis. `https://siaptka.vercel.app`
+   - *Redirect URLs*: tambahkan alamat yang sama (dan `http://localhost:8000` jika ingin uji lokal).
+
+### 3. Isi `config.js`
+Supabase → **Project Settings → API**: salin *Project URL* dan *anon public key* ke `config.js`.
+Anon key aman untuk publik (akses diatur RLS). **Jangan** pernah menaruh *service_role key* di situs.
+
+### 4. Deploy (pilih salah satu)
+- **Vercel**: Add New → Project → impor repo ini → *Root Directory* = `siaptka`, *Framework Preset* = Other,
+  tanpa build command → Deploy. (Proyek Vercel terpisah dari Inkata.)
+- **Netlify / Cloudflare Pages**: base directory `siaptka`, tanpa build command.
+- **GitHub Pages**: salin isi folder ini ke repo/branch Pages.
+
+Setelah mendapat alamat situs, masukkan alamat itu ke langkah 2.4.
+
+### 5. Pindahkan bank soal dari versi claude.ai
+1. Buka artifact lama → **Kelola Soal → Cadangan bank soal → Tampilkan cadangan (JSON) → Salin semua**.
+2. Buka situs baru, masuk dengan Google (akun admin) → **Kelola Soal → Impor JSON** → tempel → **Impor**.
+
+## Soal harian otomatis
+Tugas terjadwal "Bank Soal Harian SiapTKA SD" saat ini menulis ke database artifact claude.ai.
+Supaya soal baru masuk ke situs ini, tugas itu perlu diubah agar menyimpan ke tabel `bank` lewat
+REST API Supabase:
+
+```
+POST https://PROJECT-ANDA.supabase.co/rest/v1/bank
+Prefer: resolution=merge-duplicates
+apikey / Authorization: Bearer <service_role key>   ← disimpan sebagai kredensial lingkungan, bukan di repo
+{"id":"sd-d-2026-11-16","tanggal":"2026-11-16","jenjang":"sd","sumber":"harian","soal":[ ... ]}
+```
+
+## Model data
+- `bank(id, tanggal, jenjang, sumber, soal jsonb)`. Format soal sama dengan versi artifact
+  (`pg` / `pgk` / `bs`, kunci indeks / array indeks / array boolean).
+- `scores(uid, data jsonb)`: ringkasan untuk ranking `{best, tryout, rata, poin, streak, harianBenar, updatedAt}`.
+- `user_docs(uid, doc_id, data jsonb)`: `t-<timestamp>` hasil tryout, `h-YYYY-MM-DD` progres harian.
+- `profiles(uid, name)`: nama dari akun Google, untuk ranking.
+- `admins(email)`: siapa yang boleh membuka Kelola Soal dan menulis ke `bank`.
+
+Catatan: ranking dihitung dari dokumen `scores` milik siswa sendiri, jadi siswa yang paham teknis
+masih bisa mengubah poinnya. Untuk kompetisi resmi, hitung ulang poin di server (fungsi Postgres).
+
+## Uji lokal
+```
+cd siaptka && python3 -m http.server 8000
+```
+Buka http://localhost:8000 (tambahkan alamat ini ke Redirect URLs Supabase agar login berfungsi).
