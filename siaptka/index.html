@@ -228,7 +228,7 @@ main{max-width:1120px;margin:0 auto;padding:24px 16px 48px;display:flex;flex-dir
 .sticker{position:fixed;right:14px;bottom:24px;z-index:30;width:118px;text-decoration:none;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25));transform:rotate(-6deg)}
 .sticker svg{width:100%;height:auto;display:block}
 .sticker-x{position:fixed;right:10px;bottom:132px;z-index:31;width:24px;height:24px;border-radius:50%;border:0;background:rgba(20,35,58,.75);color:#fff;font-size:14px;line-height:1;display:grid;place-items:center}
-@media (max-width:760px){.sticker{bottom:84px;width:96px}.sticker-x{bottom:172px}}
+@media (max-width:760px){.sticker{bottom:80px;width:78px}.sticker-x{bottom:150px}}
 .sheet-bg{position:fixed;inset:0;z-index:85;background:rgba(10,25,45,.55);display:flex;align-items:center;justify-content:center;padding:16px}
 .sheet{background:var(--card);border-radius:24px;padding:26px 26px 30px;max-width:520px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);position:relative}
 .sheet h2{font-family:var(--f-body);font-size:24px;font-weight:800}
@@ -245,6 +245,35 @@ main{max-width:1120px;margin:0 auto;padding:24px 16px 48px;display:flex;flex-dir
   .sheet-bg{align-items:flex-end;padding:0}
   .sheet{border-radius:24px 24px 0 0;max-width:none;padding:24px 22px calc(28px + env(safe-area-inset-bottom))}
 }
+
+/* ===== fitur tambahan ===== */
+.svc8{grid-template-columns:repeat(8,1fr)}
+@media (max-width:760px){.svc8{grid-template-columns:repeat(4,1fr);row-gap:14px}}
+.stars{display:inline-flex;gap:1px;font-size:18px;line-height:1}.stars i{font-style:normal;color:var(--line)}.stars i.on{color:#f2b51d}
+.babgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.babcard{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--card);text-align:left;box-shadow:var(--shadow)}
+.babcard:hover{border-color:var(--brand)}
+.babic{flex:0 0 46px;height:46px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-family:var(--f-display);font-size:18px;color:var(--t);background:color-mix(in srgb,var(--t) 14%,var(--card))}
+.rangkuman{max-width:75ch}.rangkuman p,.rangkuman ul,.rangkuman ol{margin:0 0 10px}.rangkuman li{margin-bottom:4px}
+.evgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.evcard{display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:20px;color:#fff;background:linear-gradient(135deg,#e2352b,#ee6a12 60%,#f6b21a);box-shadow:0 8px 24px rgba(226,53,43,.18)}
+.evcard h3{font-family:var(--f-display);font-size:20px;font-weight:800;color:#fff}
+.evcard.big h3{font-size:24px}
+.evcard .ev-info{opacity:.92}
+.ev-top{display:flex;gap:6px;flex-wrap:wrap}
+.ev-tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:rgba(255,255,255,.22)}
+.ev-tag.live{background:#fff;color:#e2352b}.ev-tag.prem{background:#1d2a3a}
+.evcard .cta{background:#fff;color:#c2410c}
+.evcard .pill.good{background:rgba(255,255,255,.9)}
+.liga{border-left:6px solid var(--lc)}
+.liga-badge{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;background:var(--lc,var(--brand));font-family:var(--f-display);font-size:18px}
+.liga-badge.big{width:64px;height:64px;font-size:28px}
+.akun-h{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.badge{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:12px 8px;border:1px solid var(--line);border-radius:14px;opacity:.45;filter:grayscale(1)}
+.badge.ok{opacity:1;filter:none;background:color-mix(in srgb,#f2b51d 10%,var(--card));border-color:color-mix(in srgb,#f2b51d 45%,var(--line))}
+.badge span{font-size:28px}.badge b{font-size:13px}.badge small{font-size:11px;color:var(--muted)}
+.code-box{font-family:var(--f-display);font-weight:800;font-size:32px;letter-spacing:.2em;padding:10px 16px;border:2px dashed var(--brand);border-radius:12px;align-self:flex-start;color:var(--brand)}
 
 /* format table */
 table.t{width:100%;border-collapse:collapse;font-size:14px}
@@ -368,6 +397,7 @@ textarea.input{min-height:90px;resize:vertical;font-family:var(--f-body)}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="config.js"></script>
 <script src="adapter.js"></script>
+<script src="fitur.js"></script>
 <script>
 "use strict";
 /* ====================== KONFIGURASI ====================== */
@@ -379,12 +409,15 @@ const MAPEL = {
 const TIPE = {pg:"Pilihan ganda",pgk:"Pilihan ganda kompleks",bs:"Benar–Salah"};
 const LETTERS = "ABCDE";
 const NAV = [
-  ["beranda","Beranda",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>'],
-  ["tryout","Tryout",'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>'],
+  ["beranda","Beranda",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',1],
+  ["tryout","Tryout",'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>',1],
+  ["belajar","Belajar",'<path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/>',1],
   ["harian","Latihan Harian",'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>'],
+  ["tanya","Tanya Soal",'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.7M12 17h.01"/>',1],
   ["bank","Bank Soal",'<path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/>'],
   ["ranking","Ranking",'<path d="M8 21V11M12 21V5M16 21v-7"/>'],
-  ["rapor","Rapor",'<path d="M4 19l5-6 4 3 7-9"/>']
+  ["rapor","Rapor",'<path d="M4 19l5-6 4 3 7-9"/>'],
+  ["akun","Akun",'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',1]
 ];
 
 /* ====================== STATE ====================== */
@@ -496,7 +529,8 @@ function computeMyScore(){
   let benarH=0; myHarian().forEach(h=>{ benarH+=Object.values(h.cek||{}).filter(x=>x===true).length; });
   const benarT=tr.reduce((s,a)=>s+(a.benar||0),0);
   const skorList=tr.map(a=>a.skor);
-  return {best,tryout:tr.length,rata:skorList.length?r1(skorList.reduce((a,b)=>a+b,0)/skorList.length):0,poin:benarT*10+benarH*5,streak:streak(),harianBenar:benarH};
+  const res={best,tryout:tr.length,rata:skorList.length?r1(skorList.reduce((a,b)=>a+b,0)/skorList.length):0,poin:benarT*10+benarH*5,streak:streak(),harianBenar:benarH};
+  return window.FX ? FX.extendScore(res) : res;
 }
 async function syncScore(){
   if(!S.db||!S.uid||S.readonly) return;
@@ -550,6 +584,7 @@ async function init(){
       render();
     },()=>{});
   }
+  if(window.FX) FX.init();
   const saved=load("siaptka-exam");
   if(saved && saved.endsAt && saved.soalIds){ S.pendingExam=saved; render(); }
 }
@@ -573,6 +608,7 @@ function render(){
   else if(v==="ranking") html+=viewRanking();
   else if(v==="rapor") html+=viewRapor();
   else if(v==="admin" && S.isOwner) html+=viewAdmin();
+  else if(window.FX && FX.view(v)!=null) html+=FX.view(v);
   else html+=viewBeranda();
   app.innerHTML=html;
   afterRender();
@@ -585,8 +621,9 @@ function renderNav(){
   const cur=S.view;
   const a=(i,withIcon)=>`<a href="#${i[0]}" ${cur===i[0]?'aria-current="page"':''}>${withIcon?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${i[2]}</svg>`:""}<span>${i[1]==="Latihan Harian"&&withIcon?"Harian":i[1]==="Bank Soal"&&withIcon?"Bank":i[1]==="Kelola Soal"&&withIcon?"Kelola":i[1]}</span></a>`;
   $("#nav").innerHTML=items.map(i=>a(i,false)).join("");
-  $("#bnav").style.gridTemplateColumns="repeat("+items.length+",1fr)";
-  $("#bnav").innerHTML=items.map(i=>a(i,true)).join("");
+  const mob=items.filter(i=>i[3]);
+  $("#bnav").style.gridTemplateColumns="repeat("+mob.length+",1fr)";
+  $("#bnav").innerHTML=mob.map(i=>a(i,true)).join("");
   $("#who").textContent=S.myName?("Masuk sebagai "+S.myName):"";
   const ab=$("#authbox"), loggedIn=!!S.uid, canLogin=!!(window.SiapAuth&&window.SiapAuth.configured);
   ab.innerHTML = loggedIn ? `<button class="hdr-out" data-act="logout">Keluar</button>` : canLogin ? `<button class="hdr-cta hdr-login" data-act="login"><span>Masuk</span></button>` : "";
@@ -660,6 +697,10 @@ const ART={
   sticker:`<svg viewBox="0 0 130 150" aria-hidden="true"><path d="M10 8h110l-6 60 8 74H6l6-70z" fill="#fff4d6" stroke="#1d2a3a" stroke-width="3"/><text x="65" y="32" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-weight="800" font-size="20" fill="#e2352b" stroke="#1d2a3a" stroke-width=".8">GRATIS</text><text x="65" y="72" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-weight="800" font-size="34" fill="#1d2a3a">SIAP</text><text x="65" y="108" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-weight="800" font-size="34" fill="#1d2a3a">TKA</text><rect x="22" y="118" width="86" height="18" rx="9" fill="#1767c2"/><text x="65" y="131" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-weight="800" font-size="11" fill="#fff">TRYOUT 2027</text><circle cx="114" cy="54" r="11" fill="#1767c2"/><text x="114" y="59" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-weight="800" font-size="13" fill="#fff">%</text></svg>`
 };
 const SVC_IC={
+  mega:'<svg viewBox="0 0 24 24" fill="none" stroke="#e2352b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 15.4 6.7 18.4l1.2-6L3.4 8.3l6-.7z" fill="#ffe1dc"/></svg>',
+  belajar:'<svg viewBox="0 0 24 24" fill="none" stroke="#14968b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z" fill="#d4f3ee"/></svg>',
+  tanya:'<svg viewBox="0 0 24 24" fill="none" stroke="#7a4fd8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12z" fill="#ece4ff"/><path d="M10 9.5a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2M12 15.5h.01"/></svg>',
+  premium:'<svg viewBox="0 0 24 24" fill="none" stroke="#ee6a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l4 4 5-7 5 7 4-4-2 11H5z" fill="#ffe6d3"/></svg>',
   tryout:'<svg viewBox="0 0 24 24" fill="none" stroke="#1767c2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2" fill="#d9ebff"/><path d="M8 21h8M12 17v4"/><path d="M8 10.5l2.5 2.5L16 8"/></svg>',
   harian:'<svg viewBox="0 0 24 24" fill="none" stroke="#d9466f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2" fill="#ffe0ea"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/></svg>',
   bank:'<svg viewBox="0 0 24 24" fill="none" stroke="#14968b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z" fill="#d4f3ee"/><path d="M4 19V5M9 8h5M9 12h5"/></svg>',
@@ -697,14 +738,18 @@ function homeTop(sc,tgl,hs,doneN,first){
   </section>
   <section class="svc">
     <h2>Semua kebutuhan latihan TKA ada di SiapTKA</h2>
-    <div class="svc-row">
+    <div class="svc-row svc8">
+      <a href="#tryout"><span class="svc-ic" style="--t:#e2352b">${SVC_IC.mega}<em>SERENTAK</em></span>Mega Tryout</a>
       <a href="#tryout"><span class="svc-ic" style="--t:#1767c2">${SVC_IC.tryout}<em>TKA 2026</em></span>Tryout CBT</a>
+      <a href="#belajar"><span class="svc-ic" style="--t:#14968b">${SVC_IC.belajar}</span>Belajar per Bab</a>
       <a href="#harian"><span class="svc-ic" style="--t:#e2508f">${SVC_IC.harian}<em>BARU!</em></span>Latihan Harian</a>
-      <a href="#bank"><span class="svc-ic" style="--t:#14968b">${SVC_IC.bank}</span>Bank Soal</a>
-      <a href="#ranking"><span class="svc-ic" style="--t:#e8a33a">${SVC_IC.ranking}</span>Ranking</a>
+      <a href="#tanya"><span class="svc-ic" style="--t:#7a4fd8">${SVC_IC.tanya}<em>AI</em></span>Tanya Soal</a>
+      <a href="#ranking"><span class="svc-ic" style="--t:#e8a33a">${SVC_IC.ranking}</span>Liga & Ranking</a>
       <a href="#rapor"><span class="svc-ic" style="--t:#5b50e0">${SVC_IC.rapor}</span>Rapor</a>
+      <a href="#paket"><span class="svc-ic" style="--t:#ee6a12">${SVC_IC.premium}</span>Premium</a>
     </div>
   </section>
+  ${window.FX?FX.homeBlock():""}
   <div class="pop-h"><h2>${IC.star}Paket populer untuk</h2><button class="jsel" data-act="jenjang">${esc(jenjangLabel())} ${IC.down}</button></div>
   <section class="pgrid">
     ${tryCard("mat","#5aa9f0","Format TKA 2026",IC.cal,"Tryout Matematika","Simulasi CBT Matematika & Numerasi lengkap dengan timer",ART.mat,"Analisis topik terlemah langsung muncul di rapor")}
@@ -769,7 +814,7 @@ function mapelCard(k){
   </div>`;
 }
 function viewTryout(){
-  return `
+  return `${window.FX?FX.megaBlock():""}
   <div class="spread"><div class="stack" style="gap:4px"><h1>Tryout</h1><p class="muted">Simulasi TKA SD berbasis komputer: ada timer, tanda ragu-ragu, dan pembahasan setelah selesai.</p></div></div>
   <div class="banner info small">Jumlah soal mengikuti format TKA 2026. Selama bank soal belum mencapai jumlah itu, tryout berjalan sebagai versi mini dengan waktu yang disesuaikan. Bank bertambah setiap hari.</div>
   <section class="grid g2">${Object.keys(MAPEL).map(mapelCard).join("")}</section>
@@ -880,13 +925,13 @@ async function finishExam(auto){
   const ids=E.soalIds.filter(id=>S.byId[id]);
   let benar=0,salah=0,kosong=0;
   ids.forEach(id=>{ const q=S.byId[id], v=E.jawaban[id]; if(!answered(q,v)) kosong++; else if(correct(q,v)) benar++; else salah++; });
-  const att={jenis:"tryout",mapel:E.mapel,soalIds:ids,jawaban:E.jawaban,ragu:E.ragu,n:ids.length,benar,salah,kosong,skor:r1(benar/ids.length*100),durasi:Math.min(E.menit*60,Math.round((Date.now()-E.mulai)/1000)),menit:E.menit,selesai:new Date().toISOString(),otomatis:!!auto};
+  const att={jenis:E.event?"event":"tryout",event:E.event||undefined,mapel:E.mapel,soalIds:ids,jawaban:E.jawaban,ragu:E.ragu,n:ids.length,benar,salah,kosong,skor:r1(benar/ids.length*100),durasi:Math.min(E.menit*60,Math.round((Date.now()-E.mulai)/1000)),menit:E.menit,selesai:new Date().toISOString(),otomatis:!!auto};
   S.exam=null; saveExam(); $("#layer").innerHTML="";
   S.result=Object.assign({_id:null,filter:"semua"},att);
   render(); window.scrollTo(0,0);
   if(auto) toast("Waktu habis. Jawabanmu sudah dikumpulkan.");
   if(S.db && S.uid && !S.readonly){
-    try{ const id="t-"+Date.now(); await S.db.collection("data/users/"+S.uid).doc(id).set(att); S.result._id=id; S.mine=S.mine.filter(d=>d.id!==id).concat([{id,data:att}]); await syncScore(); }
+    try{ const id=E.event?("e-"+E.event+"-"+E.mapel):("t-"+Date.now()); const doc=JSON.parse(JSON.stringify(att)); await S.db.collection("data/users/"+S.uid).doc(id).set(doc); S.result._id=id; S.mine=S.mine.filter(d=>d.id!==id).concat([{id,data:doc}]); if(E.event && window.FX) await FX.submitEvent(att); await syncScore(); }
     catch(e){ handleWriteErr(e); }
   }
 }
@@ -901,7 +946,8 @@ function topicStats(ids,jaw){
   return Object.entries(t).sort((a,b)=>a[1].b/a[1].n-b[1].b/b[1].n);
 }
 function viewResult(){
-  const R=S.result; const ids=R.soalIds.filter(id=>S.byId[id]);
+  const R=S.result;
+  if(R.event && window.FX && !FX.announced(R.event)) return FX.pendingResult(R); const ids=R.soalIds.filter(id=>S.byId[id]);
   const ts=topicStats(ids,R.jawaban);
   const f=R.filter;
   const list=ids.map((id,i)=>({q:S.byId[id],i})).filter(({q})=>{ const v=R.jawaban[q.id]; if(f==="salah") return answered(q,v)&&!correct(q,v); if(f==="kosong") return !answered(q,v); if(f==="ragu") return R.ragu&&R.ragu[q.id]; if(f==="benar") return correct(q,v); return true; });
@@ -1027,6 +1073,7 @@ function viewRanking(){
   <div class="stack" style="gap:4px"><h1>Ranking</h1><p class="muted">Poin dari tryout (10 per jawaban benar) dan latihan harian (5 per jawaban benar). Ranking per mapel memakai skor tryout terbaik.</p></div>
   <div class="row"><div class="field" style="min-width:240px"><label for="rT">Peringkat berdasarkan</label><select id="rT" class="input" data-act="rtab"><option value="poin" ${tab==="poin"?"selected":""}>Total poin</option>${mapelAda.map(k=>`<option value="${k}" ${tab===k?"selected":""}>Skor terbaik ${esc(MAPEL[k].nama)}</option>`).join("")}</select></div>
   ${myIdx>=0?`<span class="pill brand" style="align-self:flex-end;margin-bottom:8px">Posisimu: #${myIdx+1} dari ${rows.length}</span>`:""}</div>
+  ${window.FX&&S.uid?FX.ligaBlock():""}
   <section class="card">
   ${rows.length?`<div class="tablewrap"><table class="t"><thead><tr><th style="width:60px">#</th><th>Peserta</th><th style="text-align:right">Tryout</th><th style="text-align:right">Beruntun</th><th style="text-align:right">${tab==="poin"?"Poin":"Skor"}</th></tr></thead>
   <tbody>${rows.map((r,i)=>`<tr class="${r.id===S.uid?"me":""}"><td><span class="rank" style="color:${i===0?"var(--accent)":i<3?"var(--brand)":"var(--muted)"}">${i+1}</span></td><td>${esc(nameOf(r.id))}</td><td class="n">${r.s.tryout||0}</td><td class="n">${r.s.streak||0} hari</td><td class="n"><b>${tab==="poin"?r.v.toLocaleString("id-ID"):r.v}</b></td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">Belum ada peserta di ranking ini.</div>`}
@@ -1102,6 +1149,7 @@ function viewAdmin(){
     <textarea id="aJ" class="input" style="min-height:120px;font-family:ui-monospace,monospace;font-size:13px" placeholder='[{"mapel":"mat","topik":"Peluang","tipe":"pg","teks":"…","opsi":["…","…"],"kunci":1,"pembahasan":"…"}]'></textarea>
     <div><button class="btn" data-act="aimport">Impor</button></div>
   </section>
+  ${window.FX?FX.adminBlock():""}
   <section class="card stack"><h2>Cadangan bank soal</h2>
     <p class="small muted">Unduh semua paket soal sebagai satu file JSON. File ini bisa dipulihkan lewat kotak Impor JSON di atas (di situs ini atau situs SiapTKA lain).</p>
     <div><button class="btn" data-act="abackup">Unduh cadangan (JSON)</button></div>
@@ -1162,7 +1210,7 @@ document.addEventListener("click",e=>{
   if(b.tagName==="SELECT"||b.tagName==="INPUT") return;
   const E=S.exam;
   switch(act){
-    case "start": S.result=null; startExam(b.dataset.m); break;
+    case "start": if(window.FX && !FX.canStartTryout()) break; S.result=null; startExam(b.dataset.m); break;
     case "resume": S.exam=S.pendingExam; S.pendingExam=null; S.exam._done=false; render(); break;
     case "discard": confirmBox("Buang tryout ini?","Jawaban yang sudah kamu isi akan hilang.","Buang",()=>{ S.pendingExam=null; store("siaptka-exam"); closeModal(); render(); },true); break;
     case "font": E.big=!E.big; saveExam(); render(); break;
@@ -1198,13 +1246,14 @@ document.addEventListener("click",e=>{
     case "pgo": S.practice.idx=+b.dataset.i; render(); break;
     case "pprev": S.practice.idx--; render(); break;
     case "pnext": S.practice.idx++; render(); window.scrollTo(0,0); break;
-    case "pcek": { const P=S.practice; const q=S.byId[P.ids[P.idx]]; P.cek[q.id]=correct(q,P.jawaban[q.id]); render(); break; }
+    case "pcek": { const P=S.practice; const q=S.byId[P.ids[P.idx]]; P.cek[q.id]=correct(q,P.jawaban[q.id]); if(P.onCek) P.onCek(q,P.cek[q.id]); render(); break; }
     case "prac": { const l=bankFiltered(); S.practice={ids:shuffle(l).slice(0,50).map(q=>q.id),idx:0,jawaban:{},cek:{},judul:"Latihan bebas"+(S.ui.bankMapel?" · "+mapelNama(S.ui.bankMapel):"")}; render(); window.scrollTo(0,0); break; }
     case "closeprac": S.practice=null; render(); break;
     case "bopen": S.ui.bankOpen[b.dataset.id]=!S.ui.bankOpen[b.dataset.id]; render(); break;
     case "bmore": S.ui.bankLimit=(S.ui.bankLimit||30)+30; render(); break;
     case "aadd": adminAdd(); break;
     case "aimport": adminImport(); break;
+    default: if(window.FX && FX.acts[act]) FX.acts[act](b,e); break;
     case "login": window.SiapAuth.signIn(); break;
     case "logout": confirmBox("Keluar dari akun?","Nilai yang sudah tersimpan tetap aman dan muncul lagi saat kamu masuk kembali.","Keluar",()=>window.SiapAuth.signOut()); break;
     case "abackup": adminBackup(); break;
@@ -1218,6 +1267,7 @@ document.addEventListener("change",e=>{
   if(act==="btopik"){ S.ui.bankTopik=t.value; S.ui.bankLimit=30; render(); }
   if(act==="btgl"){ S.ui.bankTanggal=t.value; S.ui.bankLimit=30; render(); }
   if(act==="rtab"){ S.ui.rankTab=t.value; render(); }
+  if(window.FX && FX.chg[act]) FX.chg[act](t);
 });
 let bqT=null;
 document.addEventListener("input",e=>{

@@ -9,6 +9,8 @@ bank soal, ranking, dan rapor. Satu halaman HTML statis + Supabase (database & l
 | `adapter.js` | Penghubung ke Supabase, meniru API `window.claude.use("db"/"user")` dari versi artifact |
 | `config.js` | URL proyek + anon key Supabase (wajib diisi) |
 | `schema.sql` | Tabel, Row Level Security, fungsi admin, realtime |
+| `fitur.js` | Mega Tryout, Belajar per bab, Liga & lencana, orang tua, Tanya Soal, Premium |
+| `supabase/functions/` | Edge Functions: `tanya` (Claude), `bayar` & `midtrans-webhook` (Midtrans) |
 
 Siapa pun bisa membuka situs dan mengerjakan soal tanpa login. Siswa yang **masuk dengan Google**
 nilainya tersimpan dan ikut ranking. Nama siswa dan ranking hanya terlihat oleh pengguna yang sudah masuk.
@@ -47,6 +49,40 @@ Setelah mendapat alamat situs, masukkan alamat itu ke langkah 2.4.
 ### 5. Pindahkan bank soal dari versi claude.ai
 1. Buka artifact lama → **Kelola Soal → Cadangan bank soal → Tampilkan cadangan (JSON) → Salin semua**.
 2. Buka situs baru, masuk dengan Google (akun admin) → **Kelola Soal → Impor JSON** → tempel → **Impor**.
+
+## Fitur
+| Fitur | Halaman | Catatan |
+|---|---|---|
+| Tryout CBT per mapel | `#tryout` | Timer, ragu-ragu, pembahasan. Akun gratis 3× per minggu, Premium tanpa batas |
+| **Mega Tryout serentak** | `#tryout`, `#mega` | Admin membuat event di Kelola Soal (jadwal, jendela, waktu pengumuman, gratis/premium). Soal sama untuk semua peserta; nilai, peringkat, persentil, dan pembahasan dibuka bersamaan |
+| **Belajar per bab** | `#belajar` | 12 bab (8 Matematika, 4 Bahasa Indonesia) dengan rangkuman materi + latihan mudah/sedang/sulit, 3 bintang per bab. Rangkuman bisa diubah di Kelola Soal |
+| Latihan harian | `#harian` | 20 soal baru tiap pagi |
+| **Liga XP & lencana** | `#ranking`, `#akun` | XP = 10/benar tryout & Mega Tryout, 5/benar harian & belajar. Liga Perunggu → Perak → Emas → Berlian, papan liga mingguan, 10 lencana |
+| **Pantauan orang tua** | `#akun`, `#anak-…` | Anak membuat kode pantau (24 jam); orang tua masuk dengan Google lalu memasukkan kode dan bisa melihat rapor anak |
+| **Tanya Soal** | `#tanya` | Foto/ketik soal → dijelaskan AI (Claude) langkah demi langkah; guru/admin memverifikasi; jawaban terverifikasi bisa dicari siswa lain. Gratis 3/hari, Premium 30/hari |
+| **Paket Premium** | `#paket` | Pembayaran Midtrans (QRIS, VA, e-wallet). Harga di tabel `paket` |
+| Ranking & rapor | `#ranking`, `#rapor` | |
+
+## Edge Functions (Tanya Soal & pembayaran)
+Butuh [Supabase CLI](https://supabase.com/docs/guides/cli). Dari folder `siaptka/`:
+
+```
+supabase login
+supabase link --project-ref PROJECT-ANDA
+supabase secrets set ANTHROPIC_API_KEY=...            # dari console.anthropic.com
+supabase secrets set MIDTRANS_SERVER_KEY=... MIDTRANS_PRODUCTION=false   # true saat sudah live
+supabase functions deploy tanya
+supabase functions deploy bayar
+supabase functions deploy midtrans-webhook --no-verify-jwt
+```
+
+- **Tanya Soal** memakai model `claude-opus-5-5` (effort `medium`) dengan *refusal fallback* sisi server aktif
+  (`fallbacks: "default"`): jika model menolak, permintaan otomatis dicoba ulang di model cadangan.
+  Biaya kira-kira Rp30–150 per pertanyaan tergantung panjang jawaban dan foto; kuota harian membatasi pemakaian.
+- **Midtrans**: daftar di midtrans.com, ambil *Server Key* (Sandbox dulu untuk uji coba). Di Dashboard Midtrans →
+  Settings → Payment → *Notification URL* isi `https://PROJECT-ANDA.supabase.co/functions/v1/midtrans-webhook`.
+  Webhook memeriksa tanda tangan SHA-512 dan jumlah bayar sebelum mengaktifkan Premium.
+- Ubah harga/paket langsung di tabel `paket` (Table Editor). Harga diambil server, bukan dari browser.
 
 ## Soal harian otomatis
 Tugas terjadwal "Bank Soal Harian SiapTKA SD" saat ini menulis ke database artifact claude.ai.
