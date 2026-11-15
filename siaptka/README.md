@@ -78,7 +78,7 @@ supabase functions deploy midtrans-webhook --no-verify-jwt
 
 - **Tanya Soal** memakai model `claude-opus-5-5` (effort `medium`) dengan *refusal fallback* sisi server aktif
   (`fallbacks: "default"`): jika model menolak, permintaan otomatis dicoba ulang di model cadangan.
-  Biaya kira-kira Rp30–150 per pertanyaan tergantung panjang jawaban dan foto; kuota harian membatasi pemakaian.
+  Perkiraan biaya API ±Rp500–1.500 per pertanyaan (tarif $4/$20 per juta token input/output; tergantung panjang jawaban dan foto). Kuota harian membatasi pemakaian; model bisa diganti di `tanya/index.ts` jika ingin lebih murah.
 - **Midtrans**: daftar di midtrans.com, ambil *Server Key* (Sandbox dulu untuk uji coba). Di Dashboard Midtrans →
   Settings → Payment → *Notification URL* isi `https://PROJECT-ANDA.supabase.co/functions/v1/midtrans-webhook`.
   Webhook memeriksa tanda tangan SHA-512 dan jumlah bayar sebelum mengaktifkan Premium.
