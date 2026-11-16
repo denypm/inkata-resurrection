@@ -53,6 +53,9 @@ Setelah mendapat alamat situs, masukkan alamat itu ke langkah 2.4.
 ## Fitur
 | Fitur | Halaman | Catatan |
 |---|---|---|
+| **Halaman TKA SD** | `#tka` | Hitung mundur ke perkiraan TKA SD April 2027 (ubah `TKA_TARGET` di `fitur.js` saat jadwal resmi keluar), alasan pentingnya TKA, format, kisi-kisi per elemen, contoh soal, strategi, FAQ |
+| **Drill Soal & rekomendasi** | `#belajar`, `#rapor` | Bab dikelompokkan per elemen kisi-kisi resmi (Matematika: Bilangan / Geometri & Pengukuran / Data; Bahasa Indonesia: Pemahaman Tekstual / Inferensial / Evaluasi & Apresiasi). Drill: pilih bab, tingkat, jumlah soal. Rapor menampilkan bab yang perlu dikuasai |
+| **Nilai IRT & leaderboard nasional** | `#mega` | Mega Tryout menyimpan pola benar/salah per soal; saat diumumkan, tiap soal diberi bobot 1–3 menurut tingkat kesulitannya (proporsi peserta yang benar). Peringkat nasional, persentil, dan daftar soal tersulit |
 | Tryout CBT per mapel | `#tryout` | Timer, ragu-ragu, pembahasan. Akun gratis 3× per minggu, Premium tanpa batas |
 | **Mega Tryout serentak** | `#tryout`, `#mega` | Admin membuat event di Kelola Soal (jadwal, jendela, waktu pengumuman, gratis/premium). Soal sama untuk semua peserta; nilai, peringkat, persentil, dan pembahasan dibuka bersamaan |
 | **Belajar per bab** | `#belajar` | 12 bab (8 Matematika, 4 Bahasa Indonesia) dengan rangkuman materi + latihan mudah/sedang/sulit, 3 bintang per bab. Rangkuman bisa diubah di Kelola Soal |

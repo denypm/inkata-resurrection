@@ -16,22 +16,30 @@ const FX = (() => {
   const inWeek = iso => { if(!iso) return false; return weekKey(new Date(iso))===weekKey(); };
 
   /* ====================== BAB & RANGKUMAN ====================== */
+  /* Elemen mengikuti kisi-kisi resmi TKA SD: Matematika (Bilangan; Geometri & Pengukuran; Data),
+     Bahasa Indonesia (Pemahaman Tekstual; Pemahaman Inferensial; Evaluasi & Apresiasi). */
+  const ELEMEN = {
+    mat: [["bilangan","Bilangan"],["geoukur","Geometri & Pengukuran"],["data","Data"]],
+    bind: [["tekstual","Pemahaman Tekstual"],["inferensial","Pemahaman Inferensial"],["evaluasi","Evaluasi & Apresiasi"]]
+  };
   const BAB = {
     mat: [
-      ["ruang","Bangun Ruang & Volume",/volume|kubus|balok|bangun ruang|jaring|prisma|limas|tabung|kerucut/i],
-      ["data","Pengolahan Data & Peluang",/data|rata|median|modus|peluang|statistik|jangkauan|diagram/i],
-      ["perbandingan","Perbandingan, Skala, Kecepatan & Debit",/perbandingan|skala|kecepatan|debit|jarak/i],
-      ["kpk","KPK, FPB, Faktor & Kelipatan",/kpk|fpb|faktor|kelipatan|prima/i],
-      ["pecahan","Pecahan, Desimal & Persen",/pecahan|desimal|persen|diskon|untung|rugi|bunga/i],
-      ["ukur","Pengukuran (Waktu, Berat, Panjang)",/waktu|berat|panjang|satuan|pengukuran|volume cair|liter/i],
-      ["geometri","Bangun Datar & Koordinat",/luas|keliling|bangun datar|lingkaran|trapesium|segitiga|persegi|koordinat|sudut|simetri/i],
-      ["bilangan","Bilangan & Operasi Hitung",/.*/]
+      ["ruang","Bangun Ruang & Volume",/volume|kubus|balok|bangun ruang|jaring|prisma|limas|tabung|kerucut/i,"geoukur"],
+      ["data","Pengolahan Data & Peluang",/data|rata|median|modus|peluang|statistik|jangkauan|diagram/i,"data"],
+      ["kecepatan","Skala, Kecepatan & Debit",/skala|kecepatan|debit|jarak/i,"geoukur"],
+      ["perbandingan","Perbandingan",/perbandingan|rasio/i,"bilangan"],
+      ["kpk","KPK, FPB, Faktor & Kelipatan",/kpk|fpb|faktor|kelipatan|prima/i,"bilangan"],
+      ["pecahan","Pecahan, Desimal & Persen",/pecahan|desimal|persen|diskon|untung|rugi|bunga/i,"bilangan"],
+      ["ukur","Pengukuran Waktu, Berat & Panjang",/waktu|berat|panjang|satuan|pengukuran|liter/i,"geoukur"],
+      ["geometri","Bangun Datar & Koordinat",/luas|keliling|bangun datar|lingkaran|trapesium|segitiga|persegi|koordinat|sudut|simetri/i,"geoukur"],
+      ["bilangan","Bilangan Bulat, Operasi Hitung & Pola",/.*/,"bilangan"]
     ],
     bind: [
-      ["fungsional","Teks Pengumuman, Surat & Jadwal",/pengumuman|undangan|surat|jadwal|tabel|iklan|brosur/i],
-      ["sastra","Cerita, Puisi & Unsur Intrinsik",/cerita|watak|amanat|puisi|tokoh|ringkasan|larik|latar|alur|dongeng|fabel/i],
-      ["kebahasaan","Ejaan, Tanda Baca & Kalimat",/ejaan|kapital|tanda baca|koma|kata baku|imbuhan|konjungsi|kalimat efektif|kata penghubung|sinonim|antonim/i],
-      ["informasi","Memahami Isi Bacaan",/.*/]
+      ["fungsional","Teks Pengumuman, Surat, Jadwal & Tabel",/pengumuman|undangan|surat|jadwal|tabel|iklan|brosur/i,"tekstual"],
+      ["sastra","Cerita, Puisi & Unsur Intrinsik",/cerita|watak|amanat|puisi|tokoh|ringkasan|larik|latar|alur|dongeng|fabel/i,"evaluasi"],
+      ["kebahasaan","Ejaan, Tanda Baca & Kalimat",/ejaan|kapital|tanda baca|koma|kata baku|imbuhan|konjungsi|kalimat efektif|kata penghubung|sinonim|antonim/i,"evaluasi"],
+      ["tersurat","Informasi Tersurat",/tersurat|informasi dalam teks|isi bacaan|detail|membaca data/i,"tekstual"],
+      ["inferensial","Ide Pokok, Simpulan & Informasi Tersirat",/.*/,"inferensial"]
     ]
   };
   const babOf = q => { const list=BAB[q.mapel]||[]; const t=(q.topik||"")+" "; const hit=list.find(b=>b[2].test(t)); return hit?hit[0]:"lain"; };
@@ -40,12 +48,14 @@ const FX = (() => {
     "mat-bilangan":`<p><b>Urutan operasi hitung campuran</b></p><ol><li>Kerjakan yang di dalam kurung lebih dulu.</li><li>Perkalian dan pembagian (dari kiri ke kanan).</li><li>Penjumlahan dan pengurangan (dari kiri ke kanan).</li></ol><p>Contoh: 125 + 75 × 4 − 250 : 5 = 125 + 300 − 50 = <b>375</b>.</p><p><b>Bilangan bulat</b>: bilangan negatif ada di kiri nol. Naik berarti ditambah, turun berarti dikurangi. −3 + 11 = 8; 8 − 5 = 3.</p><p><b>Pola bilangan</b>: cari selisih tetap. Suku ke-n = suku pertama + (n − 1) × selisih. Contoh 8, 11, 14, … suku ke-12 = 8 + 11 × 3 = <b>41</b>.</p>`,
     "mat-pecahan":`<p><b>Pecahan</b>: samakan penyebut sebelum menjumlah/mengurang. Pecahan campuran boleh dihitung bagian bulat dan pecahannya terpisah.</p><p><b>Mengubah bentuk</b>: <sup>3</sup>/<sub>5</sub> = <sup>6</sup>/<sub>10</sub> = 0,6 = 60%. Persen artinya per seratus.</p><p><b>Diskon</b>: potongan = persen diskon × harga awal; harga bayar = harga awal − potongan.</p><p><b>Untung/rugi</b>: untung = harga jual − harga beli. Persentase untung = untung : harga beli × 100%.</p>`,
     "mat-kpk":`<p><b>Faktor</b> = bilangan yang membagi habis. <b>Kelipatan</b> = hasil kali bilangan dengan 1, 2, 3, ….</p><p>Gunakan <b>faktorisasi prima</b> (pohon faktor):</p><ul><li><b>KPK</b>: ambil semua faktor prima, pilih pangkat <b>terbesar</b>. Dipakai untuk soal “bersamaan lagi”, “setiap … hari/detik”.</li><li><b>FPB</b>: ambil faktor prima yang <b>sama</b>, pilih pangkat <b>terkecil</b>. Dipakai untuk soal “dibagi sama banyak”, “paket/kantong paling banyak”.</li></ul><p>Contoh: 48 = 2<sup>4</sup> × 3, 72 = 2<sup>3</sup> × 3<sup>2</sup> → FPB = 2<sup>3</sup> × 3 = 24, KPK = 2<sup>4</sup> × 3<sup>2</sup> = 144.</p>`,
-    "mat-perbandingan":`<p><b>Perbandingan a : b</b> dengan jumlah J: bagian A = a/(a+b) × J. Jika yang diketahui selisih S: bagian A = a/(a−b) × S.</p><p><b>Skala</b> 1 : n artinya 1 cm di peta = n cm sebenarnya. Jarak sebenarnya = jarak peta × n. Ingat 1 km = 100.000 cm.</p><p><b>Kecepatan</b> = jarak : waktu. Jarak = kecepatan × waktu. ¼ jam = 15 menit.</p><p><b>Debit</b> = volume : waktu. 1 liter = 1 dm<sup>3</sup> = 1.000 cm<sup>3</sup>.</p>`,
+    "mat-perbandingan":`<p><b>Perbandingan a : b</b> dengan jumlah J: bagian A = <sup>a</sup>/<sub>a + b</sub> × J.</p><p>Jika yang diketahui <b>selisih</b> S: bagian A = <sup>a</sup>/<sub>a − b</sub> × S.</p><p>Contoh: tabungan Dina : Sari = 3 : 5, jumlah Rp64.000 → Sari = <sup>5</sup>/<sub>8</sub> × 64.000 = Rp40.000.</p><p>Perbandingan senilai: makin banyak, makin banyak (harga dan jumlah barang). Berbalik nilai: makin banyak, makin sedikit (jumlah pekerja dan lama kerja).</p>`,
+    "mat-kecepatan":`<p><b>Skala</b> 1 : n artinya 1 cm di peta = n cm sebenarnya. Jarak sebenarnya = jarak peta × n. Ingat 1 km = 100.000 cm.</p><p><b>Kecepatan</b> = jarak : waktu. Jarak = kecepatan × waktu. Waktu = jarak : kecepatan. ¼ jam = 15 menit.</p><p><b>Debit</b> = volume : waktu. 1 liter = 1 dm<sup>3</sup> = 1.000 cm<sup>3</sup>.</p>`,
     "mat-ukur":`<p><b>Waktu</b>: 1 jam = 60 menit, 1 menit = 60 detik. Jumlahkan jam dengan jam dan menit dengan menit; jika menit ≥ 60, ubah jadi jam.</p><p><b>Berat</b>: kg – hg (ons) – dag – g, setiap turun satu tangga dikali 10. 1 kg = 10 ons = 1.000 g.</p><p><b>Panjang</b>: km – hm – dam – m – dm – cm – mm, setiap turun satu tangga dikali 10.</p><p>Tip: ubah semua ke satuan terkecil dulu, baru dijumlah.</p>`,
     "mat-geometri":`<ul><li>Persegi: L = s × s, K = 4s</li><li>Persegi panjang: L = p × l, K = 2(p + l)</li><li>Segitiga: L = ½ × a × t</li><li>Trapesium: L = ½ × (jumlah sisi sejajar) × t</li><li>Lingkaran: L = π × r × r, K = π × d (π = <sup>22</sup>/<sub>7</sub> atau 3,14)</li></ul><p><b>Luas</b> dipakai untuk menutup permukaan (rumput, keramik); <b>keliling</b> untuk tepi (pagar, pita).</p><p><b>Koordinat (x, y)</b>: x = ke kanan/kiri, y = ke atas/bawah.</p>`,
     "mat-ruang":`<ul><li>Kubus: V = s × s × s, luas permukaan = 6 × s × s, 12 rusuk, 8 titik sudut, 6 sisi.</li><li>Balok: V = p × l × t, luas permukaan = 2(pl + pt + lt).</li><li>Prisma segitiga: 9 rusuk, 6 titik sudut, 5 sisi.</li><li>Limas segiempat: 8 rusuk, 5 titik sudut, 5 sisi.</li><li>Tabung: jaring-jaring = 2 lingkaran + 1 persegi panjang.</li></ul><p>1 liter = 1.000 cm<sup>3</sup>. Air setinggi sebagian: V = p × l × tinggi air.</p>`,
     "mat-data":`<ul><li><b>Rata-rata</b> = jumlah semua data : banyak data. Dari tabel: kalikan nilai × frekuensi dulu.</li><li><b>Modus</b> = data yang paling sering muncul (bisa lebih dari satu).</li><li><b>Median</b> = nilai tengah setelah data <b>diurutkan</b>. Jika banyak data genap, rata-ratakan dua data tengah.</li><li><b>Jangkauan</b> = data terbesar − data terkecil.</li></ul><p><b>Peluang</b> = banyak kejadian yang diharapkan : banyak semua kemungkinan. Nilainya 0 (mustahil) sampai 1 (pasti).</p>`,
-    "bind-informasi":`<ul><li><b>Ide pokok</b>: gagasan utama paragraf, biasanya di kalimat pertama atau terakhir; kalimat lain menjelaskannya.</li><li><b>Informasi tersurat</b>: tertulis langsung di bacaan. <b>Tersirat</b>: disimpulkan dari petunjuk.</li><li><b>Fakta</b> bisa dibuktikan; <b>opini</b> berisi pendapat (seharusnya, sebaiknya, menurut saya).</li><li><b>Simpulan</b>: merangkum isi seluruh bacaan, tidak menambah hal baru.</li><li><b>Makna kata</b>: tebak dari kalimat di sekitarnya (konteks).</li></ul>`,
+    "bind-tersurat":`<ul><li><b>Informasi tersurat</b> = tertulis langsung di bacaan. Cari kata kunci dari pertanyaan, lalu temukan kalimat yang memuatnya.</li><li>Cocokkan pilihan jawaban dengan kalimat di bacaan, kata per kata. Hati-hati dengan pilihan yang hampir sama tetapi berbeda satu detail (tempat, jumlah, waktu).</li><li>Soal benar–salah: periksa setiap pernyataan dengan nomor kalimat yang menjadi buktinya.</li></ul>`,
+    "bind-inferensial":`<ul><li><b>Ide pokok</b>: gagasan utama paragraf, biasanya di kalimat pertama atau terakhir; kalimat lain menjelaskannya.</li><li><b>Informasi tersirat</b>: tidak ditulis langsung, disimpulkan dari petunjuk (sikap, ucapan, sebab-akibat).</li><li><b>Simpulan</b>: merangkum isi seluruh bacaan, tidak menambah hal baru.</li><li><b>Makna kata</b>: tebak dari kalimat di sekitarnya (konteks).</li><li><b>Tujuan penulis</b>: menjelaskan, membujuk, menghibur, atau melaporkan.</li><li><b>Fakta</b> bisa dibuktikan; <b>opini</b> berisi pendapat (seharusnya, sebaiknya, menurut saya).</li></ul>`,
     "bind-sastra":`<ul><li><b>Tokoh & watak</b>: lihat dari ucapan, tindakan, dan pikiran tokoh.</li><li><b>Amanat</b>: pesan baik yang ingin disampaikan pengarang.</li><li><b>Latar</b>: tempat, waktu, suasana. <b>Alur</b>: urutan peristiwa.</li><li><b>Puisi</b>: larik = baris, bait = kumpulan larik. Kata <i>bagai, seperti</i> menunjukkan perbandingan (majas).</li><li><b>Ringkasan</b> memuat peristiwa penting secara berurutan.</li></ul>`,
     "bind-fungsional":`<p><b>Pengumuman</b> memuat: judul, isi (apa, kapan, di mana, siapa), dan pembuat pengumuman.</p><p><b>Surat undangan</b>: tempat & tanggal surat, salam pembuka, isi (hari/tanggal, waktu, tempat, acara), salam penutup, pengirim.</p><p><b>Jadwal/tabel</b>: baca judul kolom dulu, lalu cari baris yang cocok dengan pertanyaan. Perhatikan catatan di bawah tabel.</p>`,
     "bind-kebahasaan":`<ul><li><b>Huruf kapital</b>: awal kalimat, nama orang, hari, bulan, nama bahasa (bahasa <i>Inggris</i>), nama jalan/geografi.</li><li><b>Koma</b>: di antara rincian (a, b, dan c) dan setelah anak kalimat di depan (Karena hujan, kami …).</li><li><b>Kata baku</b>: apotek, praktik, jadwal, antena, nasihat, kualitas.</li><li><b>Imbuhan me-</b> untuk kata kerja aktif (mengubah), <b>di-</b> untuk pasif (diubah) dan ditulis serangkai.</li><li><b>Kalimat efektif</b>: tidak boros kata (naik ke atas ✗, para siswa-siswa ✗).</li><li><b>Konjungsi antarkalimat</b>: akibatnya (sebab-akibat), meskipun demikian/namun (pertentangan), selain itu (tambahan).</li></ul>`
@@ -122,22 +132,50 @@ const FX = (() => {
   const belId = (m,k) => "b-"+m+"-"+k;
   function babList(m){
     const groups={}; S.soal.filter(q=>q.mapel===m).forEach(q=>{ const k=babOf(q); (groups[k]=groups[k]||[]).push(q); });
-    return (BAB[m]||[]).map(b=>({k:b[0],nama:b[1],soal:groups[b[0]]||[]}));
+    return (BAB[m]||[]).map(b=>({k:b[0],nama:b[1],el:b[3],soal:groups[b[0]]||[]}));
   }
   const starHTML = n => `<span class="stars" aria-label="${n} dari 3 bintang">${[0,1,2].map(i=>`<i class="${i<n?"on":""}">★</i>`).join("")}</span>`;
+  function babCard(m,b,d){ return `
+      <button class="babcard" data-act="fx-bab" data-m="${m}" data-k="${b.k}">
+        <span class="babic" style="--t:${m==="mat"?"#1767c2":"#14968b"}">${m==="mat"?"∑":"Aa"}</span>
+        <span class="stack" style="gap:2px;text-align:left;flex:1"><b>${esc(b.nama)}</b><span class="small muted">${b.soal.length} soal · ${RANGKUMAN[m+"-"+b.k]||st.rangkuman[m+"-"+b.k]?"ada rangkuman":"rangkuman segera"}</span></span>
+        ${starHTML(stars(d))}
+      </button>`; }
+  function drillCard(m){
+    const D=S.ui.drill||(S.ui.drill={babs:{},level:"",n:10});
+    const list=babList(m).filter(b=>b.soal.length);
+    const pick=list.filter(b=>D.babs[m+"-"+b.k]);
+    const pool=(pick.length?pick:list).flatMap(b=>b.soal).filter(q=>!D.level||q.level===D.level);
+    return `<section class="card stack drill">
+      <div class="card-h" style="margin:0"><h2>⚡ Drill Soal</h2><span class="small muted">Pilih bab, tingkat, dan jumlah soal sesukamu</span></div>
+      <div class="chips-row">${list.map(b=>`<button class="chip-s ${D.babs[m+"-"+b.k]?"on":""}" data-act="fx-drbab" data-k="${m}-${b.k}">${esc(b.nama)}</button>`).join("")||`<span class="small muted">Belum ada soal.</span>`}</div>
+      <div class="row">
+        <div class="field"><label for="drL">Tingkat</label><select id="drL" class="input" data-act="fx-drlv"><option value="">Semua</option>${["mudah","sedang","sulit"].map(l=>`<option value="${l}" ${D.level===l?"selected":""}>${l[0].toUpperCase()+l.slice(1)}</option>`).join("")}</select></div>
+        <div class="field"><label for="drN">Jumlah soal</label><select id="drN" class="input" data-act="fx-drn">${[5,10,20,30].map(n=>`<option ${D.n===n?"selected":""}>${n}</option>`).join("")}</select></div>
+        <span class="small muted num" style="align-self:flex-end;margin-bottom:10px">${pool.length} soal cocok${pick.length?"":" (semua bab)"}</span>
+        <button class="cta" style="padding:11px 20px;align-self:flex-end" data-act="fx-drgo" ${pool.length?"":"disabled"}>Mulai Drill</button>
+      </div></section>`;
+  }
   function viewBelajar(){
     const m=S.ui.belMapel||"mat";
     if(S.ui.bab) return viewBab(m,S.ui.bab);
     const mine=Object.fromEntries(belajarDocs().map(d=>[d.mapel+"-"+d.bab,d]));
+    const babs=babList(m);
     return `
-    <div class="stack" style="gap:4px"><h1>Belajar per Bab</h1><p class="muted">Baca rangkuman materi, lalu latihan bertingkat dari mudah ke sulit. Raih 3 bintang di setiap bab.</p></div>
+    <div class="stack" style="gap:4px"><h1>Belajar per Bab</h1><p class="muted">Bab disusun mengikuti kisi-kisi resmi TKA SD. Baca rangkuman, latihan bertingkat dari mudah ke sulit, dan raih 3 bintang di setiap bab.</p></div>
     <div class="seg" role="tablist">${Object.keys(MAPEL).map(k=>`<button class="${k===m?"on":""}" data-act="fx-belm" data-m="${k}">${esc(MAPEL[k].nama)}</button>`).join("")}</div>
-    <section class="babgrid">${babList(m).map(b=>{ const d=mine[m+"-"+b.k]; const s=stars(d); return `
-      <button class="babcard" data-act="fx-bab" data-k="${b.k}">
-        <span class="babic" style="--t:${m==="mat"?"#1767c2":"#14968b"}">${m==="mat"?"∑":"Aa"}</span>
-        <span class="stack" style="gap:2px;text-align:left;flex:1"><b>${esc(b.nama)}</b><span class="small muted">${b.soal.length} soal · ${RANGKUMAN[m+"-"+b.k]||st.rangkuman[m+"-"+b.k]?"ada rangkuman":"rangkuman segera"}</span></span>
-        ${starHTML(s)}
-      </button>`; }).join("")}</section>`;
+    ${drillCard(m)}
+    ${(ELEMEN[m]||[]).map(([ek,en])=>{ const bs=babs.filter(b=>b.el===ek); if(!bs.length) return ""; const tot=bs.reduce((s,b)=>s+stars(mine[m+"-"+b.k]),0);
+      return `<section class="stack" style="gap:10px"><div class="spread"><h2>Elemen: ${esc(en)}</h2><span class="pill num">★ ${tot}/${bs.length*3}</span></div>
+      <div class="babgrid">${bs.map(b=>babCard(m,b,mine[m+"-"+b.k])).join("")}</div></section>`; }).join("")}`;
+  }
+  function startDrill(m){
+    const D=S.ui.drill; const list=babList(m).filter(b=>b.soal.length);
+    const pick=list.filter(b=>D.babs[m+"-"+b.k]);
+    const pool=(pick.length?pick:list).flatMap(b=>b.soal).filter(q=>!D.level||q.level===D.level);
+    if(!pool.length) return;
+    S.practice={ids:shuffle(pool).slice(0,D.n).map(q=>q.id),idx:0,jawaban:{},cek:{},judul:"Drill Soal · "+mapelNama(m),onCek:recordBelajar};
+    render(); window.scrollTo(0,0);
   }
   function viewBab(m,k){
     const b=babList(m).find(x=>x.k===k)||{soal:[],nama:babNama(m,k)};
@@ -160,21 +198,42 @@ const FX = (() => {
       <button class="btn" data-act="fx-babgo" data-l="" ${b.soal.length?"":"disabled"}>Campuran semua tingkat (${Math.min(10,b.soal.length)} soal acak)</button>
     </section>`;
   }
-  let belT=null;
+  let belT=null; const belDirty=new Set();
+  function recordBelajar(q,ok){
+    if(!S.uid) return;
+    const m=q.mapel, k=babOf(q), id=belId(m,k); const cur=S.mine.find(x=>x.id===id);
+    const data=cur?JSON.parse(JSON.stringify(cur.data)):{jenis:"belajar",mapel:m,bab:k,lv:{},log:{}};
+    const lvl=q.level||"sedang"; data.lv[lvl]=data.lv[lvl]||{b:0,n:0}; data.lv[lvl].n++; if(ok){ data.lv[lvl].b++; const t=todayStr(); data.log[t]=(data.log[t]||0)+1; }
+    data.updatedAt=new Date().toISOString();
+    S.mine=S.mine.filter(x=>x.id!==id).concat([{id,data}]); belDirty.add(id);
+    clearTimeout(belT); belT=setTimeout(async()=>{ if(S.readonly) return; const ids=[...belDirty]; belDirty.clear();
+      try{ for(const i of ids){ const d=S.mine.find(x=>x.id===i); if(d) await S.db.collection("data/users/"+S.uid).doc(i).set(d.data); } await syncScore(); }catch(e){ handleWriteErr(e); } },600);
+  }
   function startBab(m,k,l){
     const b=babList(m).find(x=>x.k===k); if(!b) return;
     const pool=b.soal.filter(q=>!l||q.level===l);
-    S.practice={ids:shuffle(pool).slice(0,10).map(q=>q.id),idx:0,jawaban:{},cek:{},judul:"Belajar · "+b.nama+(l?" · "+l:""),
-      onCek(q,ok){
-        if(!S.uid) return;
-        const id=belId(m,k); const cur=S.mine.find(x=>x.id===id);
-        const data=cur?JSON.parse(JSON.stringify(cur.data)):{jenis:"belajar",mapel:m,bab:k,lv:{},log:{}};
-        const lvl=q.level||"sedang"; data.lv[lvl]=data.lv[lvl]||{b:0,n:0}; data.lv[lvl].n++; if(ok){ data.lv[lvl].b++; const t=todayStr(); data.log[t]=(data.log[t]||0)+1; }
-        data.updatedAt=new Date().toISOString();
-        S.mine=S.mine.filter(x=>x.id!==id).concat([{id,data}]);
-        clearTimeout(belT); belT=setTimeout(async()=>{ if(S.readonly) return; try{ await S.db.collection("data/users/"+S.uid).doc(id).set(data); await syncScore(); }catch(e){ handleWriteErr(e); } },600);
-      }};
+    S.practice={ids:shuffle(pool).slice(0,10).map(q=>q.id),idx:0,jawaban:{},cek:{},judul:"Belajar · "+b.nama+(l?" · "+l:""),onCek:recordBelajar};
     render(); window.scrollTo(0,0);
+  }
+
+  /* ---------- Rekomendasi bab (rapor) ---------- */
+  function babStats(){
+    const S2={}; const add=(q,ok)=>{ if(!q) return; const key=q.mapel+"-"+babOf(q); const x=S2[key]=S2[key]||{b:0,n:0,m:q.mapel,k:babOf(q)}; x.n++; if(ok) x.b++; };
+    myAttempts().concat(eventDocs()).forEach(a=>(a.soalIds||[]).forEach(id=>{ const q=S.byId[id]; if(q && answered(q,(a.jawaban||{})[id])) add(q,correct(q,a.jawaban[id])); }));
+    myHarian().forEach(hh=>Object.entries(hh.cek||{}).forEach(([id,ok])=>add(S.byId[id],ok)));
+    belajarDocs().forEach(d=>{ const key=d.mapel+"-"+d.bab; const x=S2[key]=S2[key]||{b:0,n:0,m:d.mapel,k:d.bab}; Object.values(d.lv||{}).forEach(v=>{ x.b+=v.b||0; x.n+=v.n||0; }); });
+    return S2;
+  }
+  function rekomBlock(){
+    const stt=babStats();
+    const tried=Object.values(stt).filter(x=>x.n>=2).sort((a,b)=>a.b/a.n-b.b/b.n||b.n-a.n);
+    const weak=tried.filter(x=>x.b/x.n<0.75).slice(0,4);
+    const untried=Object.keys(MAPEL).flatMap(m=>babList(m).filter(b=>b.soal.length&&!stt[m+"-"+b.k]).map(b=>({m,k:b.k}))).slice(0,Math.max(0,4-weak.length));
+    const items=weak.map(x=>({m:x.m,k:x.k,why:`Ketepatan ${Math.round(x.b/x.n*100)}% dari ${x.n} soal`})).concat(untried.map(x=>({m:x.m,k:x.k,why:"Belum pernah dikerjakan"})));
+    if(!items.length) return "";
+    const el=(m,k)=>{ const b=(BAB[m]||[]).find(x=>x[0]===k); const e=b&&(ELEMEN[m]||[]).find(x=>x[0]===b[3]); return e?e[1]:""; };
+    return `<section class="card"><div class="card-h"><h2>🎯 Rekomendasi materi untuk dikuasai</h2><span class="small muted">Berdasarkan semua jawaban tryout, latihan harian, dan belajar</span></div>
+      <div class="stack">${items.map(x=>`<div class="spread rekom"><span class="stack" style="gap:2px"><b>${esc(babNama(x.m,x.k))}</b><span class="small muted">${esc(mapelNama(x.m))} · ${esc(el(x.m,x.k))} · ${esc(x.why)}</span></span><button class="btn sm primary" data-act="fx-bab" data-m="${x.m}" data-k="${x.k}">Pelajari</button></div>`).join("")}</div></section>`;
   }
 
   /* ====================== MEGA TRYOUT ====================== */
@@ -203,7 +262,7 @@ const FX = (() => {
   }
   function homeBlock(){
     const e=st.events.find(x=>evStatus(x)==="live")||st.events.filter(x=>evStatus(x)==="soon").sort((a,b)=>T(a.mulai)-T(b.mulai))[0];
-    return e?`<section>${evCard(e,true)}</section>`:"";
+    return tkaBanner()+(e?`<section>${evCard(e,true)}</section>`:"");
   }
   function startEvent(id,k){
     const e=st.events.find(x=>x.id===id); if(!e) return;
@@ -220,7 +279,9 @@ const FX = (() => {
   async function submitEvent(att){
     const c=sb(); if(!c||!S.uid) return;
     const cur=st.evRes[att.event]||{data:{}};
-    const data=Object.assign({},cur.data,{[att.mapel]:{benar:att.benar,n:att.n,skor:att.skor,durasi:att.durasi,selesai:att.selesai}});
+    const e=st.events.find(x=>x.id===att.event)||{soal:{}};
+    const pola=((e.soal||{})[att.mapel]||att.soalIds).map(id=>{ const q=S.byId[id]; return q&&correct(q,(att.jawaban||{})[id])?"1":"0"; }).join("");
+    const data=Object.assign({},cur.data,{[att.mapel]:{benar:att.benar,n:att.n,skor:att.skor,durasi:att.durasi,selesai:att.selesai,r:pola}});
     const sk=Object.values(data).map(x=>x.skor); const total=r1(sk.reduce((a,b)=>a+b,0)/sk.length);
     const row={event_id:att.event,uid:S.uid,data,total,updated_at:new Date().toISOString()};
     const r=await c.from("event_results").upsert(row);
@@ -240,27 +301,55 @@ const FX = (() => {
     const r=await sb().from("event_results").select("uid,data,total").eq("event_id",id).order("total",{ascending:false}).limit(1000);
     st.evAll[id]=r.error?[]:(r.data||[]); resolveNames(st.evAll[id].map(x=>x.uid)); render();
   }
+  /* Penilaian berbobot ala IRT: bobot tiap soal ditentukan dari tingkat kesulitannya pada event itu
+     (proporsi peserta yang menjawab benar). Soal yang jarang dijawab benar bernilai sampai 3× soal termudah.
+     Catatan: model Rasch murni menghasilkan urutan yang sama dengan skor mentah pada tes yang sama,
+     sehingga dipakai pembobotan kesulitan agar soal sulit benar-benar lebih berharga. */
+  function irt(e,all){
+    const ks=evMapel(e), W={}, P={};
+    ks.forEach(k=>{
+      const rows=all.map(x=>(x.data[k]||{}).r).filter(r=>typeof r==="string"&&r.length);
+      const L=((e.soal||{})[k]||[]).length || (rows[0]||"").length; const N=rows.length;
+      const p=[...Array(L)].map((_,j)=>(rows.reduce((s,r)=>s+(r[j]==="1"?1:0),0)+0.5)/(N+1));
+      P[k]=p; W[k]=p.map(pj=>1+2*(1-pj));
+    });
+    const score=(x,k)=>{ const d=x.data[k]; if(!d) return null; if(typeof d.r!=="string") return d.skor??null;
+      const w=W[k], tot=w.reduce((a,b)=>a+b,0); let got=0; for(let j=0;j<w.length;j++) if(d.r[j]==="1") got+=w[j];
+      return tot?r1(got/tot*100):0; };
+    const rows=all.map(x=>{ const s={}; ks.forEach(k=>s[k]=score(x,k)); const tot=r1(ks.reduce((a,k)=>a+(s[k]||0),0)/Math.max(1,ks.length)); return {x,s,tot}; })
+      .sort((a,b)=>b.tot-a.tot||(b.x.total||0)-(a.x.total||0));
+    return {rows,P};
+  }
   function viewMega(){
     const e=st.events.find(x=>x.id===S.ui.event);
     if(!e) return `<div class="stack"><h1>Mega Tryout</h1>${megaBlock()||`<div class="empty">Belum ada Mega Tryout.</div>`}</div>`;
     if(evStatus(e)!=="done") return `<div class="stack"><button class="btn sm" style="align-self:flex-start" data-act="fx-evback">‹ Kembali</button>${evCard(e,true)}</div>`;
     const all=st.evAll[e.id]; if(!all){ loadEvAll(e.id); return `<div class="card"><p class="muted">Memuat hasil…</p></div>`; }
-    const myI=all.findIndex(x=>x.uid===S.uid), me=all[myI];
-    const pct=me?Math.round((all.length-myI-1)/Math.max(1,all.length-1)*100):null;
+    const ks=evMapel(e); const {rows,P}=irt(e,all);
+    const myI=rows.findIndex(r=>r.x.uid===S.uid), me=rows[myI];
+    const pct=me?Math.round((rows.length-myI-1)/Math.max(1,rows.length-1)*100):null;
     const mine=eventDocs().filter(a=>a.event===e.id);
+    const lim=S.ui.evLim||50;
+    const hard=k=>{ const ids=(e.soal||{})[k]||[]; return (P[k]||[]).map((p,j)=>({id:ids[j],p})).filter(o=>o.id).sort((a,b)=>a.p-b.p).slice(0,3); };
     return `
     <button class="btn sm" style="align-self:flex-start" data-act="fx-evback">‹ Kembali</button>
-    <div class="stack" style="gap:4px"><h1>${esc(e.judul)}</h1><p class="muted">${all.length} peserta · diumumkan ${esc(fmtDT(e.umum))}</p></div>
+    <div class="stack" style="gap:4px"><h1>${esc(e.judul)}</h1><p class="muted">${rows.length} peserta dari seluruh Indonesia · diumumkan ${esc(fmtDT(e.umum))}</p></div>
     ${me?`<section class="card grid g4">
-      <div class="stat"><span class="v">${me.total}</span><span class="k">Nilai rata-rata</span></div>
-      <div class="stat"><span class="v">#${myI+1}</span><span class="k">Peringkat dari ${all.length}</span></div>
+      <div class="stat"><span class="v">${me.tot}</span><span class="k">Nilai IRT (berbobot)</span></div>
+      <div class="stat"><span class="v">#${myI+1}</span><span class="k">Peringkat nasional dari ${rows.length}</span></div>
       <div class="stat"><span class="v">${pct}%</span><span class="k">Lebih baik dari peserta lain</span></div>
-      <div class="stat"><span class="v">${evMapel(e).map(k=>(me.data[k]||{}).skor??"–").join(" / ")}</span><span class="k">${evMapel(e).map(k=>esc(MAPEL[k].nama)).join(" / ")}</span></div>
+      <div class="stat"><span class="v">${ks.map(k=>me.s[k]??"–").join(" / ")}</span><span class="k">${ks.map(k=>esc(MAPEL[k].nama)).join(" / ")}</span></div>
     </section>
+    <p class="small muted">Nilai mentahmu: ${ks.map(k=>`${esc(MAPEL[k].nama)} ${(me.x.data[k]||{}).skor??"–"}`).join(" · ")}. Pada nilai IRT, soal yang jarang dijawab benar oleh peserta lain bernilai lebih besar (hingga 3× soal termudah).</p>
     <div class="row">${mine.map(a=>`<button class="btn" data-act="fx-evrev" data-id="${esc(a._id)}">Pembahasan ${esc(mapelNama(a.mapel))}</button>`).join("")}</div>`:`<div class="banner info">Kamu tidak mengikuti Mega Tryout ini.</div>`}
-    <section class="card"><div class="card-h"><h2>Peringkat</h2></div>
-      ${all.length?`<div class="tablewrap"><table class="t"><thead><tr><th>#</th><th>Peserta</th>${evMapel(e).map(k=>`<th style="text-align:right">${esc(MAPEL[k].nama)}</th>`).join("")}<th style="text-align:right">Nilai</th></tr></thead><tbody>
-      ${all.slice(0,100).map((x,i)=>`<tr class="${x.uid===S.uid?"me":""}"><td><span class="rank">${i+1}</span></td><td>${esc(nameOf(x.uid))}</td>${evMapel(e).map(k=>`<td class="n">${(x.data[k]||{}).skor??"–"}</td>`).join("")}<td class="n"><b>${x.total}</b></td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">Belum ada peserta.</div>`}
+    <section class="card"><div class="card-h"><h2>Soal tersulit</h2><span class="small muted">Paling sedikit dijawab benar</span></div>
+      <div class="grid g2">${ks.map(k=>`<div class="stack"><b>${esc(MAPEL[k].nama)}</b>${hard(k).map(o=>{ const q=S.byId[o.id]; return `<div class="small"><span class="pill bad num">${Math.round(o.p*100)}% benar</span> ${q?esc((q.topik||"")+" · "+String(q.teks).replace(/<[^>]+>/g," ").slice(0,70)+"…"):""}</div>`; }).join("")||`<span class="small muted">–</span>`}</div>`).join("")}</div>
+    </section>
+    <section class="card"><div class="card-h"><h2>Leaderboard nasional</h2><span class="small muted">Diurutkan menurut nilai IRT</span></div>
+      ${rows.length?`<div class="tablewrap"><table class="t"><thead><tr><th>#</th><th>Peserta</th>${ks.map(k=>`<th class="hm" style="text-align:right">${esc(MAPEL[k].nama)}</th>`).join("")}<th style="text-align:right">Nilai IRT</th></tr></thead><tbody>
+      ${rows.slice(0,lim).map((r,i)=>`<tr class="${r.x.uid===S.uid?"me":""}"><td><span class="rank">${i<3?["🥇","🥈","🥉"][i]:i+1}</span></td><td>${esc(nameOf(r.x.uid))}</td>${ks.map(k=>`<td class="n hm">${r.s[k]??"–"}</td>`).join("")}<td class="n"><b>${r.tot}</b></td></tr>`).join("")}
+      ${me&&myI>=lim?`<tr><td colspan="${ks.length+3}" class="small muted" style="text-align:center">…</td></tr><tr class="me"><td><span class="rank">${myI+1}</span></td><td>${esc(nameOf(S.uid))}</td>${ks.map(k=>`<td class="n hm">${me.s[k]??"–"}</td>`).join("")}<td class="n"><b>${me.tot}</b></td></tr>`:""}
+      </tbody></table></div>${rows.length>lim?`<button class="btn sm" style="margin-top:10px" data-act="fx-evmore">Tampilkan lebih banyak</button>`:""}`:`<div class="empty">Belum ada peserta.</div>`}
     </section>`;
   }
 
@@ -464,9 +553,74 @@ const FX = (() => {
     toast("Mega Tryout dibuat."); await init();
   }
 
+  /* ====================== HALAMAN TKA SD ====================== */
+  // Jadwal resmi TKA SD 2027 belum diumumkan; hitung mundur memakai perkiraan awal April 2027.
+  const TKA_TARGET = "2027-04-01T07:00:00+07:00";
+  const sisaHari = () => Math.max(0, Math.ceil((T(TKA_TARGET)-now())/864e5));
+  function tkaBanner(){
+    return `<a class="tka-banner" href="#tka"><span class="tb-n num">${sisaHari()}</span><span class="stack" style="gap:0;flex:1"><b>hari menuju TKA SD 2027</b><span class="small">Perkiraan April 2027 · lihat kisi-kisi, format, dan contoh soal</span></span><span aria-hidden="true">${IC.chev}</span></a>`;
+  }
+  function viewTka(){
+    const d=sisaHari(), w=Math.floor(d/7);
+    const faq=[
+      ["Apa itu TKA SD?","Tes Kemampuan Akademik (TKA) adalah asesmen terstandar nasional dari Kemendikdasmen untuk mengukur kemampuan akademik murid. Di jenjang SD, TKA diikuti murid kelas 6."],
+      ["Apakah TKA menentukan kelulusan?","Tidak. TKA bukan penentu kelulusan dan bukan pengganti ujian sekolah. Hasilnya berupa Sertifikat Hasil TKA (SHTKA) yang menjadi laporan capaian belajar yang terstandar."],
+      ["Untuk apa hasil TKA SD?","SHTKA dapat menjadi nilai tambah atau bahan pertimbangan dalam seleksi masuk SMP/MTs, terutama jalur prestasi, sesuai ketentuan daerah masing-masing."],
+      ["Mata pelajaran apa saja yang diujikan?","Dua mata pelajaran: Matematika serta Bahasa Indonesia. Pada TKA SD 2026 masing-masing berisi 30 soal dengan waktu 75 menit."],
+      ["Bentuk soalnya seperti apa?","Pilihan ganda (satu jawaban benar), pilihan ganda kompleks (lebih dari satu jawaban benar), dan soal benar–salah untuk beberapa pernyataan. Banyak soal diawali bacaan, tabel, atau gambar."],
+      ["Kapan TKA SD berikutnya?","TKA SD 2026 berlangsung pada April 2026. Jadwal TKA SD 2027 belum diumumkan resmi; diperkirakan kembali sekitar April 2027. Pantau pengumuman Kemendikdasmen dan sekolahmu."],
+      ["Bagaimana cara berlatih di Eduvara?","Kerjakan latihan harian setiap pagi, pelajari bab sesuai kisi-kisi di menu Belajar, ikuti tryout CBT dengan timer, lalu ikuti Mega Tryout serentak untuk melihat posisimu secara nasional."]
+    ];
+    const n=k=>S.soal.filter(q=>q.mapel===k).length;
+    return `
+    <section class="tka-hero">
+      <span class="pill" style="background:rgba(255,255,255,.2);color:#fff;border-color:transparent;align-self:flex-start">Persiapan TKA SD · Kelas 6</span>
+      <h1>Persiapan TKA SD untuk masuk SMP favoritmu</h1>
+      <p>Latihan sesuai kisi-kisi resmi: Matematika serta Bahasa Indonesia, simulasi CBT dengan timer, dan Mega Tryout serentak.</p>
+      <div class="tka-count"><div><b class="num">${d}</b><span>hari</span></div><div><b class="num">${w}</b><span>minggu</span></div><div class="tc-note small">menuju perkiraan TKA SD<br>April 2027</div></div>
+      <div class="row"><a class="cta" style="padding:12px 22px" href="#tryout">Coba Tryout TKA</a><button class="btn" style="background:#fff;border-color:#fff" data-act="fx-tkacontoh">Coba 6 contoh soal</button></div>
+    </section>
+    <section class="stack"><h2>Kenapa penting mempersiapkan TKA?</h2>
+      <div class="grid g3">
+        <div class="card stack"><span style="font-size:28px">🏫</span><b>Seleksi SMP favorit</b><p class="small muted">Sertifikat Hasil TKA dapat dipertimbangkan pada seleksi masuk SMP/MTs jalur prestasi.</p></div>
+        <div class="card stack"><span style="font-size:28px">📊</span><b>Laporan belajar terstandar</b><p class="small muted">Hasil TKA berlaku secara nasional sehingga lebih objektif untuk melihat kemampuan akademik.</p></div>
+        <div class="card stack"><span style="font-size:28px">🧠</span><b>Bernalar, bukan menghafal</b><p class="small muted">Soal TKA menuntut pemahaman konsep dan membaca teks, sehingga perlu dilatih sejak awal.</p></div>
+      </div>
+    </section>
+    <section class="card"><div class="card-h"><h2>Format TKA SD</h2><span class="small muted">Acuan TKA SD 2026</span></div>
+      <div class="tablewrap"><table class="t"><thead><tr><th>Mata pelajaran</th><th style="text-align:right">Soal</th><th style="text-align:right">Waktu</th><th style="text-align:right">Soal di Eduvara</th></tr></thead>
+      <tbody>${Object.keys(MAPEL).map(k=>`<tr><td>${esc(MAPEL[k].nama)}</td><td class="n">${MAPEL[k].soal}</td><td class="n">${MAPEL[k].menit} menit</td><td class="n">${n(k)}</td></tr>`).join("")}</tbody></table></div>
+      <p class="small muted" style="margin-top:10px">Bentuk soal: pilihan ganda, pilihan ganda kompleks, dan benar–salah.</p>
+    </section>
+    <section class="stack"><h2>Kisi-kisi materi</h2>
+      <div class="grid g2">${Object.keys(ELEMEN).map(m=>`<div class="card stack"><div class="spread"><h3 style="font-size:18px">${esc(MAPEL[m].nama)}</h3><span class="pill brand">${ELEMEN[m].length} elemen</span></div>
+        ${ELEMEN[m].map(([ek,en])=>`<div class="kisi"><b>${esc(en)}</b><div class="chips-row">${BAB[m].filter(b=>b[3]===ek).map(b=>`<button class="chip-s" data-act="fx-bab" data-m="${m}" data-k="${b[0]}">${esc(b[1])}</button>`).join("")}</div></div>`).join("")}
+      </div>`).join("")}</div>
+      <p class="small muted">Klik nama bab untuk membaca rangkuman dan berlatih.</p>
+    </section>
+    <section class="stack"><h2>Strategi persiapan di Eduvara</h2>
+      <div class="grid g4">
+        <a class="card stack step" href="#harian"><span class="step-n">1</span><b>Latihan harian</b><span class="small muted">20 soal baru tiap pagi, langsung ada pembahasan.</span></a>
+        <a class="card stack step" href="#belajar"><span class="step-n">2</span><b>Kuasai tiap bab</b><span class="small muted">Rangkuman + latihan mudah–sulit + Drill Soal.</span></a>
+        <a class="card stack step" href="#tryout"><span class="step-n">3</span><b>Tryout CBT</b><span class="small muted">Biasakan timer 75 menit dan tanda ragu-ragu.</span></a>
+        <a class="card stack step" href="#rapor"><span class="step-n">4</span><b>Evaluasi rapor</b><span class="small muted">Lihat rekomendasi materi yang perlu dikuasai.</span></a>
+      </div>
+    </section>
+    <section class="stack"><h2>Pertanyaan yang sering diajukan</h2>
+      <div class="card faq">${faq.map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("")}</div>
+      <p class="small muted">Informasi jadwal dan ketentuan dapat berubah. Ikuti pengumuman resmi Kemendikdasmen dan sekolah. Simulasi resmi tersedia di laman Pusmendik Kemendikdasmen.</p>
+    </section>`;
+  }
+  function tkaContoh(){
+    const pick=k=>shuffle(S.soal.filter(q=>q.mapel===k)).slice(0,3).map(q=>q.id);
+    const ids=pick("mat").concat(pick("bind")); if(!ids.length){ toast("Soal belum tersedia."); return; }
+    S.practice={ids,idx:0,jawaban:{},cek:{},judul:"Contoh soal TKA SD",onCek:recordBelajar}; render(); window.scrollTo(0,0);
+  }
+
   /* ====================== ROUTING & AKSI ====================== */
   function view(v){
     if(v==="belajar") return viewBelajar();
+    if(v==="tka") return viewTka();
     if(v==="tanya") return viewTanya();
     if(v==="akun") return viewAkun();
     if(v.startsWith("paket")) return viewPaket();
@@ -476,7 +630,11 @@ const FX = (() => {
   }
   const acts={
     "fx-belm":b=>{ S.ui.belMapel=b.dataset.m; S.ui.bab=null; render(); },
-    "fx-bab":b=>{ S.ui.bab=b.dataset.k; render(); window.scrollTo(0,0); },
+    "fx-bab":b=>{ if(b.dataset.m) S.ui.belMapel=b.dataset.m; S.ui.bab=b.dataset.k; if(S.view!=="belajar"){ location.hash="#belajar"; setTimeout(()=>{ S.ui.bab=b.dataset.k; if(b.dataset.m) S.ui.belMapel=b.dataset.m; render(); },0); } else { render(); window.scrollTo(0,0); } },
+    "fx-drbab":b=>{ const D=S.ui.drill; D.babs[b.dataset.k]=!D.babs[b.dataset.k]; render(); },
+    "fx-drgo":()=>startDrill(S.ui.belMapel||"mat"),
+    "fx-tkacontoh":()=>tkaContoh(),
+    "fx-evmore":()=>{ S.ui.evLim=(S.ui.evLim||50)+100; render(); },
     "fx-babback":()=>{ S.ui.bab=null; render(); },
     "fx-babgo":b=>startBab(S.ui.belMapel||"mat",S.ui.bab,b.dataset.l),
     "fx-evgo":b=>startEvent(b.dataset.e,b.dataset.m),
@@ -496,9 +654,9 @@ const FX = (() => {
     "fx-tqok":async b=>{ const id=+b.dataset.id; const v=($("#tk-"+id)||{}).value; const r=await sb().from("tanya").update({koreksi:v,status:"diverifikasi"}).eq("id",id); if(r.error) toast(r.error.message); else { toast("Tersimpan."); st.adminLoaded=false; render(); } },
     "noop":()=>{}
   };
-  const chg={ "fx-foto":t=>pickFoto(t), "fx-rgbab":t=>{ S.ui.rgBab=t.value; render(); } };
+  const chg={ "fx-drlv":t=>{ S.ui.drill.level=t.value; render(); }, "fx-drn":t=>{ S.ui.drill.n=+t.value; render(); }, "fx-foto":t=>pickFoto(t), "fx-rgbab":t=>{ S.ui.rgBab=t.value; render(); } };
 
-  return { init, view, acts, chg, extendScore, megaBlock, homeBlock, ligaBlock, adminBlock, startEvent, submitEvent, announced, pendingResult,
+  return { init, view, acts, chg, rekomBlock, ELEMEN, BAB, RANGKUMAN, extendScore, megaBlock, homeBlock, ligaBlock, adminBlock, startEvent, submitEvent, announced, pendingResult,
            canStartTryout, isPremium, babOf, st };
 })();
 window.FX = FX;

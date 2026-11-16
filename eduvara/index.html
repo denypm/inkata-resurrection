@@ -275,6 +275,25 @@ main{max-width:1120px;margin:0 auto;padding:24px 16px 48px;display:flex;flex-dir
 .badge span{font-size:28px}.badge b{font-size:13px}.badge small{font-size:11px;color:var(--muted)}
 .code-box{font-family:var(--f-display);font-weight:800;font-size:32px;letter-spacing:.2em;padding:10px 16px;border:2px dashed var(--brand);border-radius:12px;align-self:flex-start;color:var(--brand)}
 
+.chips-row{display:flex;flex-wrap:wrap;gap:8px}
+.chip-s{border:1.5px solid var(--line);background:var(--card);border-radius:99px;padding:7px 12px;font-size:13px;font-weight:600}
+.chip-s.on{background:var(--brand-soft);border-color:var(--brand);color:var(--brand)}
+.drill{border-left:5px solid var(--cta)}
+.rekom{padding:10px 0;border-bottom:1px solid var(--line)}.rekom:last-child{border-bottom:0}
+.tka-banner{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:18px;background:linear-gradient(100deg,#14233a,#1767c2);color:#fff;text-decoration:none}
+.tka-banner .tb-n{font-family:var(--f-display);font-weight:800;font-size:34px;line-height:1;color:#ffd34d}
+.tka-hero{display:flex;flex-direction:column;gap:12px;padding:26px 22px;border-radius:24px;color:#fff;background:var(--hero)}
+.tka-hero h1{color:#fff;font-size:30px;max-width:22ch}.tka-hero p{opacity:.92;max-width:52ch}
+.tka-count{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.tka-count>div:not(.tc-note){background:rgba(255,255,255,.16);border-radius:14px;padding:10px 16px;display:flex;flex-direction:column;align-items:center;min-width:86px}
+.tka-count b{font-family:var(--f-display);font-weight:800;font-size:34px;line-height:1.1}.tka-count span{font-size:12px;opacity:.9}
+.tc-note{opacity:.9}
+.kisi{display:flex;flex-direction:column;gap:6px;padding:10px 0;border-top:1px solid var(--line)}
+.step{text-decoration:none;color:var(--ink)}.step:hover{border-color:var(--brand)}
+.step-n{width:30px;height:30px;border-radius:50%;background:var(--cta);color:#fff;display:grid;place-items:center;font-weight:800}
+.faq details{border-bottom:1px solid var(--line);padding:12px 2px}.faq details:last-child{border-bottom:0}
+.faq summary{cursor:pointer;font-weight:700}.faq details p{margin-top:8px;color:var(--muted)}
+@media (max-width:520px){.hm{display:none}}
 /* format table */
 table.t{width:100%;border-collapse:collapse;font-size:14px}
 table.t th,table.t td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
@@ -412,6 +431,7 @@ const NAV = [
   ["beranda","Beranda",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',1],
   ["tryout","Tryout",'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>',1],
   ["belajar","Belajar",'<path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/>',1],
+  ["tka","TKA SD",'<path d="M12 3l9 4.5-9 4.5-9-4.5z"/><path d="M6 10v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/>'],
   ["harian","Latihan Harian",'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>'],
   ["tanya","Tanya Soal",'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.7M12 17h.01"/>',1],
   ["bank","Bank Soal",'<path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/>'],
@@ -628,7 +648,7 @@ function renderNav(){
   const ab=$("#authbox"), loggedIn=!!S.uid, canLogin=!!(window.SiapAuth&&window.SiapAuth.configured);
   ab.innerHTML = loggedIn ? `<button class="hdr-out" data-act="logout">Keluar</button>` : canLogin ? `<button class="hdr-cta hdr-login" data-act="login"><span>Masuk</span></button>` : "";
   document.body.classList.toggle("anon", !loggedIn && canLogin);
-  $("#promo").innerHTML = cur==="beranda" && !S.exam ? `<div class="promo"><a class="promo-in" href="#harian"><div class="promo-box"><b>TRYOUT TKA SD GRATIS! 20 SOAL BARU TIAP HARI</b><small>MENUJU TKA SD APRIL 2027 · TERBIT SETIAP PAGI</small></div><span class="promo-go" aria-hidden="true">${IC.chev}</span><span class="visually-hidden" style="position:absolute;left:-9999px">Buka latihan harian</span></a></div>` : "";
+  $("#promo").innerHTML = cur==="beranda" && !S.exam ? `<div class="promo"><a class="promo-in" href="#tka"><div class="promo-box"><b>TRYOUT TKA SD GRATIS! 20 SOAL BARU TIAP HARI</b><small>MENUJU TKA SD APRIL 2027 · TERBIT SETIAP PAGI</small></div><span class="promo-go" aria-hidden="true">${IC.chev}</span><span class="visually-hidden" style="position:absolute;left:-9999px">Buka halaman persiapan TKA SD</span></a></div>` : "";
   renderSticker();
 }
 
@@ -1119,6 +1139,7 @@ function viewRapor(){
       ${weak.length?`<div class="stack">${weak.map(([k,s])=>{ const p=Math.round(s.b/s.n*100); return `<div class="hbar"><span class="small">${esc(k)}</span><span class="tr"><span style="width:${Math.max(p,2)}%;background:${p>=75?"var(--good)":p>=50?"var(--accent)":"var(--bad)"}"></span></span><span class="num small" style="text-align:right">${p}%</span></div>`; }).join("")}</div>`:`<div class="empty">Kerjakan soal untuk melihat analisis topik.</div>`}
     </div>
   </section>
+  ${window.FX?FX.rekomBlock():""}
   ${historyTable(tr.slice().reverse(),"Riwayat tryout")}`;
 }
 
