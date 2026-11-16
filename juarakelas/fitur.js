@@ -1,4 +1,4 @@
-/* SiapTKA — fitur tambahan ala bimbel online:
+/* JuaraKelas — fitur tambahan ala bimbel online:
    Mega Tryout serentak, Belajar per bab (rangkuman + latihan bertingkat), Liga XP & lencana,
    pantauan orang tua, Tanya Soal (AI + verifikasi guru), dan Paket Premium.
    Dimuat SEBELUM skrip utama; semua akses ke fungsi/variabel utama (S, render, esc, …) terjadi saat dipanggil. */
@@ -278,7 +278,7 @@ const FX = (() => {
 
   /* ====================== AKUN, LENCANA, ORANG TUA ====================== */
   function viewAkun(){
-    if(!S.uid) return `<section class="card stack" style="align-items:center;text-align:center;padding:36px 20px"><div style="font-size:44px">👋</div><h1>Akun SiapTKA</h1><p class="muted" style="max-width:44ch">Masuk dengan Google untuk menyimpan nilai, mengumpulkan XP dan lencana, ikut Mega Tryout, dan menghubungkan akun orang tua.</p><button class="cta" style="padding:12px 22px" data-act="login">Masuk dengan Google</button></section>`;
+    if(!S.uid) return `<section class="card stack" style="align-items:center;text-align:center;padding:36px 20px"><div style="font-size:44px">👋</div><h1>Akun JuaraKelas</h1><p class="muted" style="max-width:44ch">Masuk dengan Google untuk menyimpan nilai, mengumpulkan XP dan lencana, ikut Mega Tryout, dan menghubungkan akun orang tua.</p><button class="cta" style="padding:12px 22px" data-act="login">Masuk dengan Google</button></section>`;
     const sc=computeMyScore(); const L=ligaOf(sc.poin); const lc=lencana(sc);
     const kids=st.links.filter(l=>l.parent===S.uid), parents=st.links.filter(l=>l.child===S.uid);
     return `
@@ -294,7 +294,7 @@ const FX = (() => {
     </section>
     <section class="grid g2">
       <div class="card stack"><h2>Hubungkan orang tua</h2>
-        <p class="small muted">Buat kode pantau, lalu minta orang tua masuk ke SiapTKA dengan akun Google mereka dan memasukkan kode ini di bagian “Saya orang tua”. Kode berlaku 24 jam.</p>
+        <p class="small muted">Buat kode pantau, lalu minta orang tua masuk ke JuaraKelas dengan akun Google mereka dan memasukkan kode ini di bagian “Saya orang tua”. Kode berlaku 24 jam.</p>
         ${st.code?`<div class="code-box num">${esc(st.code)}</div>`:""}
         <button class="btn primary" data-act="fx-code">${st.code?"Buat kode baru":"Buat kode pantau"}</button>
         ${parents.length?`<p class="small">Dipantau oleh: ${parents.map(p=>`<b>${esc(S.names[p.parent]||"Orang tua")}</b> <button class="btn sm danger" data-act="fx-unlink" data-p="${p.parent}" data-c="${p.child}">Putuskan</button>`).join(" ")}</p>`:""}
@@ -349,7 +349,7 @@ const FX = (() => {
     <div class="stack" style="gap:4px"><h1>Paket Belajar</h1><p class="muted">Semua fitur dasar gratis. Premium membuka tryout tanpa batas, Mega Tryout Premium, dan lebih banyak Tanya Soal.</p></div>
     ${isPremium()?`<div class="banner info">⭐ Akunmu Premium sampai <b>${esc(new Date(st.sub.until).toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"}))}</b>.</div>`:""}
     <section class="pgrid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr))">${(st.paket.length?st.paket:[]).map(p=>`
-      <article class="pcard" style="--t:${p.populer?"#f2a36b":"#5aa9f0"}"><div class="pc-top">${p.populer?`<span class="pbadge">⭐ Paling hemat</span>`:""}<span class="pc-kick">SiapTKA Premium</span><h3>${esc(p.nama)}</h3><p class="small">${esc(p.keterangan||"")}</p></div>
+      <article class="pcard" style="--t:${p.populer?"#f2a36b":"#5aa9f0"}"><div class="pc-top">${p.populer?`<span class="pbadge">⭐ Paling hemat</span>`:""}<span class="pc-kick">JuaraKelas Premium</span><h3>${esc(p.nama)}</h3><p class="small">${esc(p.keterangan||"")}</p></div>
       <div class="pc-body">${p.harga_coret?`<div class="pc-lbl"><s>${rupiah(p.harga_coret)}</s> <span class="pc-tag">${Math.round((1-p.harga/p.harga_coret)*100)}%</span></div>`:""}<div class="pc-big">${rupiah(p.harga)}</div>
       <button class="cta" data-act="fx-buy" data-p="${esc(p.id)}" ${st.busy?"disabled":""}>Beli Paket</button></div></article>`).join("")||`<div class="empty">Paket belum diatur oleh pemilik situs.</div>`}</section>
     <section class="card"><div class="tablewrap"><table class="t"><thead><tr><th>Fitur</th><th>Gratis</th><th>Premium</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td><b>${r[2]}</b></td></tr>`).join("")}</tbody></table></div></section>
@@ -373,13 +373,13 @@ const FX = (() => {
     const used=st.tanya.filter(t=>(t.created_at||"").slice(0,10)===today).length;
     const A=st.lastAnswer;
     return `
-    <div class="stack" style="gap:4px"><h1>Tanya Soal</h1><p class="muted">Foto atau ketik soal yang bikin bingung. Kak Siap (AI) menjelaskan langkah demi langkah, lalu guru memeriksa jawabannya.</p></div>
+    <div class="stack" style="gap:4px"><h1>Tanya Soal</h1><p class="muted">Foto atau ketik soal yang bikin bingung. Kak Juara (AI) menjelaskan langkah demi langkah, lalu guru memeriksa jawabannya.</p></div>
     <section class="card stack">
       <div class="field"><label for="tqM">Mata pelajaran</label><select id="tqM" class="input" style="max-width:260px">${Object.keys(MAPEL).map(k=>`<option value="${k}">${esc(MAPEL[k].nama)}</option>`).join("")}<option value="lain">Lainnya</option></select></div>
       <div class="field"><label for="tqT">Tulis soalnya</label><textarea id="tqT" class="input" maxlength="2000" placeholder="Contoh: KPK dari 12 dan 18 berapa? Bagaimana caranya?"></textarea></div>
       <div class="row"><label class="btn" for="tqF">📷 Foto soal</label><input id="tqF" type="file" accept="image/*" capture="environment" hidden data-act="fx-foto"><span id="tqFn" class="small muted">${st.foto?"1 foto dipilih":""}</span></div>
       ${st.foto?`<img src="${st.foto}" alt="Foto soal" style="max-width:240px;border-radius:10px;border:1px solid var(--line)">`:""}
-      <div class="spread"><span class="small muted num">${S.uid?`Sisa hari ini: ${Math.max(0,lim-used)} dari ${lim}`:"Masuk untuk bertanya"}</span><button class="cta" style="padding:11px 22px" data-act="fx-ask" ${st.busy?"disabled":""}>${st.busy?"Kak Siap sedang berpikir…":"Tanyakan"}</button></div>
+      <div class="spread"><span class="small muted num">${S.uid?`Sisa hari ini: ${Math.max(0,lim-used)} dari ${lim}`:"Masuk untuk bertanya"}</span><button class="cta" style="padding:11px 22px" data-act="fx-ask" ${st.busy?"disabled":""}>${st.busy?"Kak Juara sedang berpikir…":"Tanyakan"}</button></div>
     </section>
     ${A?`<section class="card stack"><div class="card-h" style="margin:0"><h2>Jawaban</h2><span class="pill">Belum diperiksa guru</span></div><div class="q-text">${md(A.jawaban)}</div></section>`:""}
     <section class="card stack"><div class="card-h" style="margin:0"><h2>Cari soal serupa</h2><span class="small muted">Dari pertanyaan yang sudah diverifikasi guru</span></div>

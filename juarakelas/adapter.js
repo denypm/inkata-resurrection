@@ -1,4 +1,4 @@
-/* SiapTKA × Supabase
+/* JuaraKelas × Supabase
    Menyediakan window.claude.use("db"|"user") dengan API yang sama seperti runtime artifact claude.ai
    (collection/doc, get/set/update/delete, onSnapshot), sehingga kode aplikasi tidak perlu berubah.
    Peta path → tabel:

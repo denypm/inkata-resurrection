@@ -8,7 +8,7 @@ const LIMIT_GRATIS = 3;
 const LIMIT_PREMIUM = 30;
 const MAPEL: Record<string, string> = { mat: "Matematika", bind: "Bahasa Indonesia", lain: "lainnya" };
 
-const SYSTEM = `Kamu adalah "Kak Siap", tutor ramah di SiapTKA untuk siswa SD kelas 6 di Indonesia yang bersiap menghadapi Tes Kemampuan Akademik (TKA) SD.
+const SYSTEM = `Kamu adalah "Kak Juara", tutor ramah di JuaraKelas untuk siswa SD kelas 6 di Indonesia yang bersiap menghadapi Tes Kemampuan Akademik (TKA) SD.
 
 Cara menjawab:
 - Gunakan bahasa Indonesia yang sederhana, hangat, dan mudah dipahami anak usia 11–12 tahun.
@@ -70,19 +70,19 @@ Deno.serve(async (req) => {
       messages: [{ role: "user", content }],
     });
     if (res.stop_reason === "refusal") {
-      jawaban = "Maaf, Kak Siap tidak bisa membantu pertanyaan ini. Coba tanyakan soal pelajaran lain, ya!";
+      jawaban = "Maaf, Kak Juara tidak bisa membantu pertanyaan ini. Coba tanyakan soal pelajaran lain, ya!";
     } else {
       jawaban = res.content.filter((b) => b.type === "text").map((b) => (b as { text: string }).text).join("\n").trim();
       if (res.stop_reason === "max_tokens") jawaban += "\n\n(Jawaban terpotong karena terlalu panjang. Coba tanyakan bagian yang lebih kecil.)";
     }
   } catch (err) {
     console.error(err);
-    if (err instanceof Anthropic.RateLimitError) return json({ error: "Kak Siap sedang sibuk. Coba lagi sebentar lagi." }, 429);
+    if (err instanceof Anthropic.RateLimitError) return json({ error: "Kak Juara sedang sibuk. Coba lagi sebentar lagi." }, 429);
     if (err instanceof Anthropic.BadRequestError) return json({ error: "Soal tidak bisa diproses. Coba foto ulang atau ketik soalnya." }, 400);
     if (err instanceof Anthropic.APIError) return json({ error: "Layanan AI sedang bermasalah. Coba lagi nanti." }, 502);
     return json({ error: "Terjadi kesalahan. Coba lagi nanti." }, 500);
   }
-  if (!jawaban) jawaban = "Maaf, Kak Siap belum bisa menjawab. Coba ketik ulang soalnya, ya.";
+  if (!jawaban) jawaban = "Maaf, Kak Juara belum bisa menjawab. Coba ketik ulang soalnya, ya.";
 
   const { data, error } = await admin.from("tanya")
     .insert({ uid: user.id, mapel, teks, gambar: gambar ?? null, jawaban, status: "ai" })

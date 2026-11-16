@@ -1,4 +1,4 @@
--- SiapTKA × Supabase — jalankan sekali di Supabase: SQL Editor → New query → Run.
+-- JuaraKelas × Supabase — jalankan sekali di Supabase: SQL Editor → New query → Run.
 -- Aman dijalankan ulang.
 
 -- 1) Tabel
