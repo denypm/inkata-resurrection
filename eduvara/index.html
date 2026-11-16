@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JuaraKelas SD Tryout — Tryout TKA SD Online Gratis</title>
+<title>Eduvara SD Tryout — Tryout TKA SD Online Gratis</title>
 <meta name="description" content="Tryout TKA SD online gratis: simulasi CBT Matematika dan Bahasa Indonesia sesuai format TKA SD 2026, 20 soal latihan baru setiap hari, pembahasan, ranking, dan rapor.">
-<meta property="og:title" content="JuaraKelas SD Tryout">
+<meta property="og:title" content="Eduvara SD Tryout">
 <meta property="og:description" content="Tryout TKA SD online gratis dengan soal baru setiap hari.">
 <meta name="theme-color" content="#1767c2">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231767c2'/%3E%3Ctext x='16' y='22.5' text-anchor='middle' font-family='Arial' font-weight='700' font-size='18' fill='white'%3EJ%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231767c2'/%3E%3Ctext x='16' y='22.5' text-anchor='middle' font-family='Arial' font-weight='700' font-size='18' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -381,7 +381,7 @@ textarea.input{min-height:90px;resize:vertical;font-family:var(--f-body)}
 <div id="promo"></div>
 <header class="topbar">
   <div class="topbar-in">
-    <a class="logo" href="#beranda"><span class="logo-mark">J</span>JuaraKelas<small>SD</small></a>
+    <a class="logo" href="#beranda"><span class="logo-mark">E</span>Eduvara<small>SD</small></a>
     <nav class="nav" id="nav"></nav>
     <span class="who" id="who"></span>
     <span id="authbox"></span>
@@ -389,7 +389,7 @@ textarea.input{min-height:90px;resize:vertical;font-family:var(--f-body)}
   </div>
 </header>
 <main id="app">
-  <div class="card"><p class="muted">Memuat JuaraKelas…</p></div>
+  <div class="card"><p class="muted">Memuat Eduvara…</p></div>
 </main>
 <nav class="bottomnav" id="bnav"></nav>
 <div id="layer"></div>
@@ -668,7 +668,7 @@ function viewBeranda(){
   </section>
 
   <section class="card">
-    <div class="card-h"><h2>Format TKA SD 2026</h2><span class="muted small">Acuan simulasi di JuaraKelas</span></div>
+    <div class="card-h"><h2>Format TKA SD 2026</h2><span class="muted small">Acuan simulasi di Eduvara</span></div>
     <div class="tablewrap"><table class="t">
       <thead><tr><th>Mata pelajaran</th><th>Materi</th><th style="text-align:right">Soal</th><th style="text-align:right">Waktu</th><th style="text-align:right">Tersedia di bank</th></tr></thead>
       <tbody>
@@ -737,7 +737,7 @@ function homeTop(sc,tgl,hs,doneN,first){
     </div>
   </section>
   <section class="svc">
-    <h2>Semua kebutuhan latihan TKA ada di JuaraKelas</h2>
+    <h2>Semua kebutuhan latihan TKA ada di Eduvara</h2>
     <div class="svc-row svc8">
       <a href="#tryout"><span class="svc-ic" style="--t:#e2352b">${SVC_IC.mega}<em>SERENTAK</em></span>Mega Tryout</a>
       <a href="#tryout"><span class="svc-ic" style="--t:#1767c2">${SVC_IC.tryout}<em>TKA 2026</em></span>Tryout CBT</a>
@@ -788,11 +788,11 @@ function openJenjang(){
   const lv=[["sd","SD",1],["smp","SMP",0],["sma","SMA",0]];
   $("#layer").insertAdjacentHTML("beforeend",`<div class="sheet-bg" id="jmdl" data-act="jbg"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="jT">
     <button class="sheet-x" data-act="jclose" aria-label="Tutup">×</button>
-    <h2 id="jT">Selamat datang di JuaraKelas!</h2><p class="sub">Mau latihan untuk jenjang apa?</p>
+    <h2 id="jT">Selamat datang di Eduvara!</h2><p class="sub">Mau latihan untuk jenjang apa?</p>
     <div class="chips">${lv.map(l=>`<button class="chip ${j.j===l[0]?"on":""}" ${l[2]?`data-act="jpick" data-j="${l[0]}"`:"disabled"}>${l[1]}${l[2]?"":"<em>Segera hadir</em>"}</button>`).join("")}</div>
     <h3>Pilih kelas</h3>
     <div class="chips" style="margin-top:14px">${[4,5,6].map(k=>`<button class="chip ${(j.k||6)===k?"on":""}" data-act="jkelas" data-k="${k}">Kelas ${k}</button>`).join("")}</div>
-    <p class="note">Soal di JuaraKelas disusun untuk TKA SD kelas 6. Siswa kelas 4–5 tetap bisa ikut sebagai latihan pengayaan.</p>
+    <p class="note">Soal di Eduvara disusun untuk TKA SD kelas 6. Siswa kelas 4–5 tetap bisa ikut sebagai latihan pengayaan.</p>
   </div></div>`);
   const b=$("#jmdl .chip.on")||$("#jmdl .chip"); if(b) b.focus();
 }
@@ -1145,13 +1145,13 @@ function viewAdmin(){
     <div class="row"><button class="btn primary" data-act="aadd">Simpan soal</button><span class="small muted">Tag yang boleh dipakai: &lt;b&gt;, &lt;i&gt;, &lt;sup&gt;, &lt;sub&gt;, &lt;br&gt;, tabel sederhana.</span></div>
   </section>
   <section class="card stack"><h2>Impor JSON</h2>
-    <p class="small muted">Tempel isi file cadangan JuaraKelas, atau array soal dengan field: mapel, topik, tipe (pg/pgk/bs), teks, stimulus, opsi[], kunci, pembahasan.</p>
+    <p class="small muted">Tempel isi file cadangan Eduvara, atau array soal dengan field: mapel, topik, tipe (pg/pgk/bs), teks, stimulus, opsi[], kunci, pembahasan.</p>
     <textarea id="aJ" class="input" style="min-height:120px;font-family:ui-monospace,monospace;font-size:13px" placeholder='[{"mapel":"mat","topik":"Peluang","tipe":"pg","teks":"…","opsi":["…","…"],"kunci":1,"pembahasan":"…"}]'></textarea>
     <div><button class="btn" data-act="aimport">Impor</button></div>
   </section>
   ${window.FX?FX.adminBlock():""}
   <section class="card stack"><h2>Cadangan bank soal</h2>
-    <p class="small muted">Unduh semua paket soal sebagai satu file JSON. File ini bisa dipulihkan lewat kotak Impor JSON di atas (di situs ini atau situs JuaraKelas lain).</p>
+    <p class="small muted">Unduh semua paket soal sebagai satu file JSON. File ini bisa dipulihkan lewat kotak Impor JSON di atas (di situs ini atau situs Eduvara lain).</p>
     <div><button class="btn" data-act="abackup">Unduh cadangan (JSON)</button></div>
   </section>
   <section class="card"><div class="card-h"><h2>Paket di database</h2></div>

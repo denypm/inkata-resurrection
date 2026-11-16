@@ -1,4 +1,4 @@
-# JuaraKelas SD Tryout — versi website publik
+# Eduvara SD Tryout — versi website publik
 
 Website tryout TKA SD (kelas 6): simulasi CBT Matematika & Bahasa Indonesia, latihan harian,
 bank soal, ranking, dan rapor. Satu halaman HTML statis + Supabase (database & login Google).
@@ -27,11 +27,11 @@ nilainya tersimpan dan ikut ranking. Nama siswa dan ranking hanya terlihat oleh 
 
 ### 2. Aktifkan login Google
 1. Google Cloud Console → **APIs & Services → Credentials → Create credentials → OAuth client ID**
-   (tipe *Web application*). Jika diminta, isi dulu *OAuth consent screen* (External, nama aplikasi "JuaraKelas").
+   (tipe *Web application*). Jika diminta, isi dulu *OAuth consent screen* (External, nama aplikasi "Eduvara").
 2. Di **Authorized redirect URIs** isi: `https://PROJECT-ANDA.supabase.co/auth/v1/callback`
 3. Supabase → **Authentication → Sign In / Providers → Google**: aktifkan, tempel Client ID & Client Secret.
 4. Supabase → **Authentication → URL Configuration**:
-   - *Site URL*: alamat situs Anda, mis. `https://juarakelas.netlify.app`
+   - *Site URL*: alamat situs Anda, mis. `https://eduvara.netlify.app`
    - *Redirect URLs*: tambahkan alamat yang sama (dan `http://localhost:8000` jika ingin uji lokal).
 
 ### 3. Isi `config.js`
@@ -39,9 +39,9 @@ Supabase → **Project Settings → API**: salin *Project URL* dan *anon public 
 Anon key aman untuk publik (akses diatur RLS). **Jangan** pernah menaruh *service_role key* di situs.
 
 ### 4. Deploy (pilih salah satu)
-- **Vercel**: Add New → Project → impor repo ini → *Root Directory* = `juarakelas`, *Framework Preset* = Other,
+- **Vercel**: Add New → Project → impor repo ini → *Root Directory* = `eduvara`, *Framework Preset* = Other,
   tanpa build command → Deploy. (Proyek Vercel terpisah dari Inkata.)
-- **Netlify / Cloudflare Pages**: base directory `juarakelas`, tanpa build command.
+- **Netlify / Cloudflare Pages**: base directory `eduvara`, tanpa build command.
 - **GitHub Pages**: salin isi folder ini ke repo/branch Pages.
 
 Setelah mendapat alamat situs, masukkan alamat itu ke langkah 2.4.
@@ -64,7 +64,7 @@ Setelah mendapat alamat situs, masukkan alamat itu ke langkah 2.4.
 | Ranking & rapor | `#ranking`, `#rapor` | |
 
 ## Edge Functions (Tanya Soal & pembayaran)
-Butuh [Supabase CLI](https://supabase.com/docs/guides/cli). Dari folder `juarakelas/`:
+Butuh [Supabase CLI](https://supabase.com/docs/guides/cli). Dari folder `eduvara/`:
 
 ```
 supabase login
@@ -85,7 +85,7 @@ supabase functions deploy midtrans-webhook --no-verify-jwt
 - Ubah harga/paket langsung di tabel `paket` (Table Editor). Harga diambil server, bukan dari browser.
 
 ## Soal harian otomatis
-Tugas terjadwal "Bank Soal Harian JuaraKelas SD" saat ini menulis ke database artifact claude.ai.
+Tugas terjadwal "Bank Soal Harian Eduvara SD" saat ini menulis ke database artifact claude.ai.
 Supaya soal baru masuk ke situs ini, tugas itu perlu diubah agar menyimpan ke tabel `bank` lewat
 REST API Supabase:
 
@@ -109,6 +109,6 @@ masih bisa mengubah poinnya. Untuk kompetisi resmi, hitung ulang poin di server 
 
 ## Uji lokal
 ```
-cd juarakelas && python3 -m http.server 8000
+cd eduvara && python3 -m http.server 8000
 ```
 Buka http://localhost:8000 (tambahkan alamat ini ke Redirect URLs Supabase agar login berfungsi).

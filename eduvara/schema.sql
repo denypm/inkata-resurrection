@@ -1,4 +1,4 @@
--- JuaraKelas × Supabase — jalankan sekali di Supabase: SQL Editor → New query → Run.
+-- Eduvara × Supabase — jalankan sekali di Supabase: SQL Editor → New query → Run.
 -- Aman dijalankan ulang.
 
 -- 1) Tabel

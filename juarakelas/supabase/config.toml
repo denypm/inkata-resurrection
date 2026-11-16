@@ -1,3 +1,0 @@
-# Konfigurasi minimal untuk `supabase functions deploy` dari folder juarakelas/
-[functions.midtrans-webhook]
-verify_jwt = false
