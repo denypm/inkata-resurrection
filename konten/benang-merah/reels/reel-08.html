@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600;700&family=Instrument+Serif&display=block" rel="stylesheet">
+<script src="lib.js"></script><script src="rhino.js"></script>
+<style>html,body{margin:0}#post{width:1080px;height:1920px;position:relative;overflow:hidden;background:#F6F1E7;font-family:Jost;color:#1E1E1E}
+svg{position:absolute;inset:0}.a{position:absolute}.lb b{display:block;font-weight:600;font-size:17px;letter-spacing:3px;color:#1E1E1E}.lb p{margin:0 0 18px}</style></head><body>
+<div id="post"><svg id="s" viewBox="0 0 1080 1920" width="1080" height="1920"></svg>
+<div class="a" style="left:80px;top:250px;font:400 36px/1.05 'Instrument Serif';color:#555">Kabar<br>Benang Merah</div>
+<div class="a" style="right:64px;top:250px;writing-mode:vertical-rl;font-weight:600;font-size:32px;line-height:1.5;letter-spacing:7px">CATATAN REDAKSI<span style="display:block;font-weight:400;color:#555">TENTANG RUMAH</span></div>
+<div class="a" id="sq" style="right:80px;top:1000px;width:48px;height:48px;background:#C8321E"></div>
+<div class="a" style="left:0;right:0;top:1060px;text-align:center;font-weight:600;font-size:54px;letter-spacing:6px">BADAK JAWA</div>
+<div class="a" style="left:0;right:0;top:1130px;text-align:center;font-weight:300;font-style:italic;font-size:28px;color:#555">Rhinoceros sondaicus</div>
+<div class="a" style="left:80px;top:1230px;display:flex;align-items:baseline;gap:10px"><small style="font-weight:600;font-size:34px">Habitat.</small><b style="font-weight:700;font-size:170px;line-height:1;letter-spacing:-5px">01</b></div>
+<div class="a" style="left:84px;top:1430px;width:430px;font-weight:300;font-size:24px;line-height:1.5;color:#333">Satu-satunya rumah badak jawa liar di dunia. Setiap makhluk punya rumah, dan setiap kisah layak dicatat.</div>
+<div class="a lb" style="left:620px;top:1250px;width:400px;font-weight:300;font-size:24px;line-height:1.45;color:#333">
+<p><b>HABITAT LIAR</b>Taman Nasional Ujung Kulon, Banten</p><p><b>POPULASI</b>Tinggal puluhan ekor</p><p><b>CIRI</b>Bercula satu, kulit berlipat</p></div>
+<div class="a" style="left:84px;top:1640px;font-weight:600;font-size:20px;line-height:1.5;letter-spacing:2px">REDAKSI<br>BENANG MERAH</div>
+<div class="a" style="right:130px;top:1655px;font-size:20px;letter-spacing:2px;color:#555">@PENERBITBENANGMERAH</div>
+<div class="a" style="right:80px;top:1652px;width:30px;height:30px;background:#8A9A7E"></div>
+</div><script>
+const L=10,W0=2*Math.PI/L,mod=(a,b)=>((a%b)+b)%b;const s=document.getElementById('s');
+s.innerHTML=DEFS+`<g id="art"></g><g id="rh"></g><rect width="1080" height="1920" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".22"/>`;
+seed=17;P=document.getElementById('art');
+el('line',{x1:760,y1:470,x2:830,y2:410,stroke:'#9A958C','stroke-width':2});const t=el('text',{x:770,y:400,'font-family':'Jost','font-size':32,fill:'#9A958C'});t.textContent='BM';
+P=el('g',{filter:'url(#rough)'},document.getElementById('art'));
+paint('M540 520a270 270 0 1 0 .1 0Z','#E9E2D3',['#E2DACB','#EFE8DA'],60,[8,20],[40,120],0);
+el('clipPath',{id:'cc'});el('circle',{cx:540,cy:790,r:268},P.lastChild);const CC=el('g',{'clip-path':'url(#cc)'});P=CC;
+paint('M260 860C420 830 640 850 820 830V1070H260Z',C.dgreen,GR,60,[5,12],[30,90],0);
+P=document.getElementById('art');el('circle',{cx:540,cy:790,r:282,fill:'none',stroke:C.red,'stroke-width':4,'stroke-dasharray':'12 10'});
+const R1=drawRhino(document.getElementById('rh'));
+window.render=function(t){t=mod(t,L);R1.anim(t,W0,575,800,.95);document.getElementById('sq').style.transform=`scale(${(1+Math.sin(W0*2*t)*.06).toFixed(3)})`;};
+render(0);
+</script></body></html>

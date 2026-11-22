@@ -1,0 +1,47 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Gochi+Hand&family=Inter:wght@600;800&display=block" rel="stylesheet">
+<script src="lib.js"></script><script src="rhino.js"></script>
+<style>html,body{margin:0}#post{width:1080px;height:1920px;position:relative;overflow:hidden;background:#152A3A}
+svg{position:absolute;inset:0}.ln{position:absolute;left:60px;right:60px;text-align:center;opacity:0;text-shadow:0 4px 18px rgba(0,0,0,.35)}
+.gh{font-family:'Gochi Hand'}.px{font-family:'Press Start 2P';font-size:50px;color:#F7C65A;text-shadow:5px 5px 0 #C8321E}
+.hl{color:#F7C65A;background:#C8321E;padding:0 16px;border-radius:8px;text-shadow:none}.hd{font:800 32px Inter;color:#F7C65A;margin-top:22px;letter-spacing:1px}</style>
+</head><body><div id="post"><svg id="s" viewBox="0 0 1080 1920" width="1080" height="1920"></svg>
+<div class="ln gh" id="l1" style="top:260px;font-size:76px;line-height:1.05;color:#F1E6D2">Setiap makhluk<br>punya <span class="hl">rumah.</span></div>
+<div class="ln gh" id="l2" style="top:270px;font-size:76px;line-height:1.05;color:#F1E6D2">rumah adalah tempat<br>sebuah kisah bermula.</div>
+<div class="ln gh" id="l3" style="top:260px;font-size:76px;line-height:1.05;color:#F1E6D2">catat, ceritakan,<br>jaga.<div class="hd">@penerbitbenangmerah</div></div>
+</div><script>
+const L=10,W0=2*Math.PI/L;const cl=x=>Math.max(0,Math.min(1,x));
+const pn=(t,ks,ph)=>{let v=0,a=0;ks.forEach((k,i)=>{const w=1/(i+1);v+=Math.sin(W0*k*t+ph+i*1.7)*w;a+=w});return v/a};
+const mod=(a,b)=>((a%b)+b)%b;
+const seg=(t,a,b)=>cl(Math.min((t-a)/.4,(b-t)/.4));
+
+const s=document.getElementById('s');
+s.innerHTML=DEFS+`<g id="bg" filter="url(#rough)"></g><g id="stars"></g><g id="land" filter="url(#rough)"></g><g id="rh"></g><g id="front" filter="url(#rough)"></g><g id="thr"></g><g id="sul"></g><g id="fire"></g>
+<rect width="1080" height="1920" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".3"/>`;
+seed=14;P=document.getElementById('bg');paint('M-30 -30H1110V1950H-30Z',C.teal,TE,400,[10,30],[60,170],0.1);
+paint('M820 620a90 90 0 1 0 .1 0Z',C.yellow,['#F3B84A','#FAD77E'],40,[4,9],[12,35]);
+const ST=[];P=document.getElementById('stars');for(let i=0;i<45;i++){const x=rr(20,1060),y=rr(180,1000);star(x,y,rr(4,10),R()<.3?C.orange:C.cream);ST.push([P.lastChild,Math.round(rr(1,4)),rr(0,6)])}
+P=document.getElementById('land');
+paint('M-30 1060C200 980 420 1000 600 1030S900 990 1110 1010V1960H-30Z',C.dgreen,GR,240,[5,14],[30,90],-.1);
+paint('M-30 1290C250 1270 600 1290 1110 1260V1480C700 1500 300 1470 -30 1490Z','#3E6E8C',['#4E7E9C','#2E5E7C','#5E8EAC'],140,[5,14],[60,160],0);paint('M-30 1470C300 1450 700 1490 1110 1460V1960H-30Z',C.dgreen,GR,200,[5,14],[30,90],0);
+for(let i=0;i<60;i++){const x=rr(0,1080),y=rr(1040,1270);el('path',{d:`M${x} ${y}q${rr(-6,6)} ${-rr(14,30)} ${rr(-10,10)} ${-rr(30,60)}`,stroke:R()<.5?'#3E7C5A':'#2F6B4F','stroke-width':rr(3,5),fill:'none'})}
+const MOON=[];P=document.getElementById('land');for(let i=0;i<6;i++)MOON.push(el('path',{d:`M${760+i*14} ${1300+i*30}h${80-i*8}`,stroke:'#F7C65A','stroke-width':6,'stroke-linecap':'round',opacity:.5}));
+const R1=drawRhino(document.getElementById('rh'));
+P=document.getElementById('front');for(let i=0;i<70;i++){const x=rr(0,1080),y=rr(1520,1920);el('path',{d:`M${x} ${y}q${rr(-8,8)} ${-rr(30,60)} ${rr(-14,14)} ${-rr(60,110)}`,stroke:R()<.5?'#2F6B4F':'#24573F','stroke-width':rr(5,8),fill:'none'})}
+// Sulam bottom-left with open notebook
+P=document.getElementById('sul');const SU=el('g',{});const si=el('g',{transform:'translate(-40 1290) scale(1.35)',filter:'url(#wob)'},SU);seed=9;sulam(si,'tenang');
+P=SU;paint('M260 1800L380 1780L380 1860L260 1880Z',C.cream,['#E7D8BD'],10,[3,6],[20,60],0);paint('M380 1780L500 1800L500 1880L380 1860Z',C.cream,['#E7D8BD'],10,[3,6],[20,60],0);
+for(let i=0;i<4;i++){el('path',{d:`M275 ${1808+i*14}l90 -14M395 ${1794+i*14}l90 14`,stroke:'#9A8A72','stroke-width':3})}
+// red thread from book to rhino
+P=document.getElementById('thr');const TH=el('path',{stroke:C.red,'stroke-width':6,fill:'none','stroke-linecap':'round'});
+window.render=function(t){t=mod(t,L);
+ for(const [e,k,ph] of ST)e.setAttribute('opacity',(.35+.5*Math.abs(Math.sin(W0*k*t+ph))).toFixed(2));
+ MOON.forEach((m,i)=>m.setAttribute('transform',`translate(${(Math.sin(W0*3*t+i)*10).toFixed(1)} 0)`));
+ R1.anim(t,W0,640,1180,1.05);
+ SU.setAttribute('transform',`translate(0 ${(Math.sin(W0*3*t)*4).toFixed(1)})`);
+ const w=Math.sin(W0*2*t)*20;TH.setAttribute('d',`M380 1790C420 ${1620+w} 520 ${1500-w} 460 1400S360 ${1260+w} 395 1170`);
+ document.getElementById('l1').style.opacity=seg(t,0,3.3);document.getElementById('l2').style.opacity=seg(t,3.4,6.7);document.getElementById('l3').style.opacity=seg(t,6.8,10);
+};
+
+render(0);
+</script></body></html>
