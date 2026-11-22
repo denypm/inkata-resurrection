@@ -118,3 +118,40 @@ Contoh: `feed/00-pratinjau-feed-9.png`
 - Set 1: Kamu tim yang mana? → Siklus hidup sebuah naskah → Cover reveal
 - Set 2: Menulis adalah cara paling pelan… → Writer's block? → Pembukaan Naskah Gel. 01
 - Set 3: Setiap cerita punya ujung benangnya… → Hai, aku Utas → Halo, aku Sulam
+
+---
+
+## PEDOMAN CAPTION (WAJIB)
+
+### Masalah caption lama
+- Terlalu pendek dan puitis, sehingga terasa seperti akun pribadi, bukan perusahaan.
+- Tidak ada **definisi/penjelasan**: istilah (editing, ISBN, tata letak) dianggap sudah dipahami.
+- Tidak ada **instruksi** yang jelas: pembaca tidak tahu langkah berikutnya.
+- Tidak ada **identitas pengirim** (Redaksi) dan blok informasi resmi.
+- Bahasa campur santai ("yuk", "beneran") pada konten resmi.
+
+### Struktur baku: rumus **B-E-N-A-N-G**
+| Huruf | Bagian | Isi | Panjang |
+|---|---|---|---|
+| **B** | **Buka** | Kalimat pembuka yang kuat (pertanyaan/pernyataan). Wajib selesai sebelum terpotong "…selengkapnya" (±125 karakter). | 1–2 baris |
+| **E** | **Esensi** | Definisi atau konteks: apa yang sedang dibahas, istilah dijelaskan dengan bahasa sederhana. | 1 paragraf |
+| **N** | **Nilai** | Isi utama: penjelasan, manfaat, alasan, atau cerita. | 1–3 paragraf |
+| **A** | **Arahan** | Instruksi bertahap bernomor: apa yang harus dilakukan pembaca. | 3–6 poin |
+| **N** | **Nota** | Blok informasi resmi: syarat, tanggal, kontak, tautan. | Daftar ringkas |
+| **G** | **Garis penutup** | Ajakan interaksi (komentar/simpan/bagikan) + tanda tangan **— Redaksi Benang Merah** + tagar. | 3–5 baris |
+
+### Aturan penulisan
+- **Panjang:** 800–2.000 karakter (batas Instagram 2.200).
+- **Bahasa:** Bahasa Indonesia baku (EYD/PUEBI), sapaan **"Anda"** untuk Style 3; **"kamu"** boleh untuk Style 1 dan 2, tetapi tanpa bahasa gaul.
+- **Format:** paragraf pendek (2–4 baris), baris kosong antarparagraf, judul bagian huruf kapital (mis. **APA ITU…**, **CARA…**), daftar bernomor untuk langkah, simbol ✶ untuk butir informasi.
+- **Emoji:** maksimal 1 per bagian, hanya sebagai penanda (📩 🔗 🔖 ✶), bukan hiasan.
+- **Tagar:** 8–12, di baris paling akhir. Selalu: #PenerbitBenangMerah + tagar seri + 3 tagar industri (#PenerbitBuku #TerbitkanBuku #PenerbitIndonesia) + 3–5 tagar topik.
+- **Klaim:** hanya layanan/angka yang benar-benar tersedia. Data belum pasti ditulis [dalam kurung siku] dan wajib diisi sebelum unggah.
+- **Tanda tangan:** setiap caption diakhiri **— Redaksi Benang Merah** (Style 3) atau **— Utas & Sulam, Benang Merah** (Style 2) atau **— Benang Merah** (Style 1).
+
+### Nada per style
+| Style | Nada | Penekanan B-E-N-A-N-G |
+|---|---|---|
+| 1 · Untaian Pikiran | Reflektif, hangat, tetap tertata | **Buka + Nilai** kuat, Arahan berupa ajakan refleksi/komentar |
+| 2 · Ruang Naskah | Edukatif, jelas, ramah | **Esensi + Arahan** kuat: definisi istilah dan langkah bernomor |
+| 3 · Kabar | Formal, lengkap, meyakinkan | **Nota** paling lengkap: layanan, syarat, kontak, tautan |
