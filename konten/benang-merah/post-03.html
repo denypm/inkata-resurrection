@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@600;800&display=block" rel="stylesheet">
+<style>
+html,body{margin:0}
+#post{width:1080px;height:1350px;position:relative;overflow:hidden;background:#1E4640}
+svg{position:absolute;inset:0}
+.t{position:absolute;left:70px;top:86px;font:400 92px/1.02 'Gochi Hand';color:#F1E6D2;transform:rotate(-2deg)}
+.t span{color:#E8743B}
+.h{position:absolute;left:72px;bottom:56px;font:600 24px Inter;color:#F1E6D2;opacity:.9}
+.lg{position:absolute;right:70px;bottom:44px;width:62px;height:72px;border:3px solid #F1E6D2;color:#F1E6D2;display:flex;align-items:center;justify-content:center;font:800 28px Inter}
+.sub{position:absolute;right:70px;top:400px;font:400 54px 'Gochi Hand';color:#E8743B;transform:rotate(-4deg)}
+.panel{position:absolute;left:0;right:0;bottom:0;height:250px;padding:34px 70px 0;box-sizing:border-box;color:#1A1A1A}
+.k{font:800 50px/1 Inter;letter-spacing:-.5px;color:#C8321E}
+.svc{font:600 27px/1 Inter;margin-top:20px}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.cta{font:400 44px/1 'Gochi Hand'}
+.lg2{width:56px;height:64px;background:#1A1A1A;color:#F1E6D2;display:flex;align-items:center;justify-content:center;font:800 26px Inter;margin-top:-10px}
+.hh{font:600 20px Inter;opacity:.7;margin-top:2px}
+</style></head><body>
+<div id="post">
+<svg id="s" viewBox="0 0 1080 1350" width="1080" height="1350">
+<defs>
+  <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="3"/>
+    <feDisplacementMap in="SourceGraphic" scale="9"/>
+  </filter>
+  <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="4" seed="8"/>
+    <feDiffuseLighting lighting-color="#fff" surfaceScale="2.2"><feDistantLight azimuth="45" elevation="55"/></feDiffuseLighting></filter>
+  <filter id="speck"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="2"/>
+    <feColorMatrix values="0 0 0 0 1  0 0 0 0 .95  0 0 0 0 .85  0 0 0 9 -6.2"/></filter>
+</defs>
+<g id="scene" filter="url(#rough)"></g>
+<rect width="1080" height="1350" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".42"/>
+<rect width="1080" height="1350" filter="url(#speck)" opacity=".35"/>
+</svg>
+<div class="t" style="font-size:84px;top:80px">Naskahmu sudah<br>terlalu lama<br>di dalam <span>laci.</span></div>
+<div class="sub">saatnya jadi buku ✶</div>
+<div class="panel">
+  <div class="k">TERBITKAN BUKUMU DI SINI</div>
+  <div class="svc">Penyuntingan · Desain sampul · Cetak · Pemasaran</div>
+  <div class="row"><div class="cta">Kirim naskahmu → link di bio</div><div class="lg2">BM</div></div>
+  <div class="hh">@penerbitbenangmerah · #UntaianPikiran</div>
+</div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg',scene=document.getElementById('scene');
+let seed=7;const R=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
+const rr=(a,b)=>a+R()*(b-a);
+function el(tag,a,p=scene){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+let cid=0;
+// painted shape: base fill + brush strokes clipped inside
+function paint(d,base,tones,n=90,w=[4,14],len=[20,70],ang=0){
+  const id='c'+(cid++);const cp=el('clipPath',{id});el('path',{d},cp);
+  el('path',{d,fill:base});
+  const g=el('g',{'clip-path':`url(#${id})`});
+  const bb=g.parentNode.lastChild; const tmp=el('path',{d,fill:'none'});const b=tmp.getBBox();tmp.remove();
+  for(let i=0;i<n;i++){const x=rr(b.x,b.x+b.width),y=rr(b.y,b.y+b.height),L=rr(...len),a=ang+rr(-.35,.35);
+    el('path',{d:`M${x} ${y} q${L/2*Math.cos(a)+rr(-6,6)} ${L/2*Math.sin(a)+rr(-6,6)} ${L*Math.cos(a)} ${L*Math.sin(a)}`,
+      stroke:tones[i%tones.length],'stroke-width':rr(...w),'stroke-linecap':'round',fill:'none',opacity:rr(.25,.6)},g)}
+}
+const cream='#F1E6D2',orange='#E8743B',red='#C8321E',teal='#1E4640',dteal='#123230',green='#2F6B4F',dgreen='#1D4A36',navy='#152A3A';
+
+paint('M-30 -30H1110V1100H-30Z',teal,['#24534B','#183B37','#2A5C52'],260,[10,30],[60,160],0.1);
+for(let i=0;i<40;i++){const x=rr(30,1050),y=rr(40,620);if(x<700&&y<380)continue;if(x>620&&y>380&&y<470)continue;const s=rr(4,12),c=R()<.25?orange:cream;
+  el('path',{d:`M${x} ${y-s}Q${x} ${y} ${x+s} ${y}Q${x} ${y} ${x} ${y+s}Q${x} ${y} ${x-s} ${y}Q${x} ${y} ${x} ${y-s}Z`,fill:c,opacity:rr(.7,1)})}
+paint('M930 110a60 60 0 1 0 .1 0Z','#F7C65A',['#F3B84A','#FAD77E'],50,[4,9],[12,35]);
+// hills
+paint('M-30 800C200 740 360 770 520 790S860 720 1110 760V1390H-30Z',dgreen,['#24573F','#163B2B','#2A6248'],200,[5,14],[30,90],-.1);
+paint('M-30 960C240 910 470 940 640 950S920 900 1110 930V1390H-30Z',orange,['#F08A4B','#D9622E','#F3A066','#E06A33'],260,[5,15],[30,100],-.05);
+for(let i=0;i<70;i++){const x=rr(0,1080),y=rr(940,1090);
+  el('path',{d:`M${x} ${y}q${rr(-6,6)} ${-rr(10,22)} ${rr(-10,10)} ${-rr(20,38)}`,stroke:R()<.5?'#B9502A':'#F3A066','stroke-width':rr(2,4),fill:'none','stroke-linecap':'round'});
+  if(R()<.3)el('circle',{cx:x+rr(-8,8),cy:y-rr(26,40),r:rr(3,6),fill:R()<.5?cream:'#F7C65A'})}
+// drawer chest (left)
+paint('M90 820H360V1010H90Z','#B87A45',['#C98A52','#9C6435','#A86F3D'],60,[4,10],[40,120],0);
+paint('M70 800H380V830H70Z','#9C6435',['#B87A45'],20,[4,8],[30,80],0);
+el('path',{d:'M90 915H360',stroke:'#7A4B26','stroke-width':4});
+el('circle',{cx:225,cy:968,r:8,fill:'#7A4B26'});
+// open drawer pulled out
+paint('M110 860H400V912H110Z','#D9A066',['#E6B27A','#C48B52'],25,[4,8],[30,80],0);
+el('circle',{cx:255,cy:888,r:7,fill:'#7A4B26'});
+// papers inside / spilling
+const paper=(x,y,r,w=70,h=90)=>{const g=el('g',{transform:`translate(${x} ${y}) rotate(${r})`});
+  el('rect',{x:-w/2,y:-h/2,width:w,height:h,fill:cream},g);
+  for(let k=0;k<5;k++)el('path',{d:`M${-w/2+10} ${-h/2+16+k*14}h${w-20-(k==4?20:0)}`,stroke:'#9A8A72','stroke-width':2.5},g)};
+paper(160,850,-12);paper(230,842,6);paper(320,848,-4);
+paper(380,700,18,58,74);paper(300,610,-20,50,64);paper(440,560,10,44,56);
+// thread: from drawer papers -> girl hands -> stitching book
+el('path',{d:'M300 860C330 780 420 820 470 860',stroke:red,'stroke-width':6,fill:'none','stroke-linecap':'round'});
+el('path',{d:'M612 858C680 830 700 760 760 745',stroke:red,'stroke-width':6,fill:'none','stroke-linecap':'round'});
+// big book (right), standing
+paint('M760 640L980 660L980 960L760 940Z',red,['#A82818','#D84530','#B52D1B'],120,[4,9],[30,90],1.57);
+paint('M980 660L1010 640L1010 940L980 960Z',cream,['#E7D8BD'],15,[2,4],[20,60],1.57);
+paint('M760 640L790 620L1010 640L980 660Z',cream,['#E7D8BD'],10,[2,4],[20,60],0);
+// stitches along spine
+for(let k=0;k<7;k++){const y=665+k*40;el('path',{d:`M752 ${y}l18 6`,stroke:cream,'stroke-width':4,'stroke-linecap':'round'})}
+el('path',{d:'M760 745C752 760 752 800 762 815',stroke:red,'stroke-width':5,fill:'none'});
+// book title
+const tt=el('text',{x:870,y:780,'text-anchor':'middle',fill:cream,'font-family':'Gochi Hand','font-size':40,transform:'rotate(4 870 780)'});tt.textContent='bukumu';
+el('path',{d:'M815 800q55 10 110 6',stroke:orange,'stroke-width':4,fill:'none','stroke-linecap':'round'});
+// girl standing pulling thread
+paint('M505 700C495 760 505 800 495 830C530 822 580 822 612 830C600 800 610 760 600 700C585 660 520 660 505 700Z',orange,['#F08A4B','#D9622E','#F3A066'],60,[3,7],[30,70],1.5);
+paint('M510 800C505 850 500 900 502 950H610C612 900 608 850 600 800C580 775 530 775 510 800Z',navy,['#1D3A4F','#0E1F2C'],60,[4,10],[20,60],1.4);
+paint('M520 945H548V1010H520Z',navy,[],0);paint('M566 945H594V1010H566Z',navy,[],0);
+el('path',{d:'M512 1012h40M560 1012h40',stroke:red,'stroke-width':10,'stroke-linecap':'round'});
+paint('M531 692a24 30 0 1 0 48 0a24 30 0 1 0 -48 0Z','#F3D9BC',['#EBCBA8'],10,[3,6],[8,20]);
+paint('M518 680C528 650 584 645 596 680C578 670 543 670 518 680Z',orange,['#F08A4B','#D9622E'],20,[3,6],[10,30]);
+el('path',{d:'M545 700q6 4 12 0M563 700q6 4 12 0',stroke:'#3A2418','stroke-width':2.5,fill:'none'});
+el('path',{d:'M549 718q6 5 12 0',stroke:'#3A2418','stroke-width':2.5,fill:'none'});
+el('circle',{cx:541,cy:712,r:6,fill:'#E8A08A',opacity:.7});el('circle',{cx:580,cy:712,r:6,fill:'#E8A08A',opacity:.7});
+// arms
+el('path',{d:'M515 815C495 840 480 855 470 860',stroke:navy,'stroke-width':20,'stroke-linecap':'round',fill:'none'});
+el('path',{d:'M598 815C610 835 612 850 612 858',stroke:navy,'stroke-width':20,'stroke-linecap':'round',fill:'none'});
+el('circle',{cx:468,cy:861,r:10,fill:'#F3D9BC'});el('circle',{cx:612,cy:860,r:10,fill:'#F3D9BC'});
+// bottom cream panel
+paint('M-30 1100C300 1085 700 1110 1110 1092V1390H-30Z',cream,['#E7D8BD','#F7EEDD','#E9DCC4'],200,[6,16],[60,160],0);
+</script>
+</body></html>
