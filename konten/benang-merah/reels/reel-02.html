@@ -7,6 +7,7 @@ svg{position:absolute;inset:0}.a{position:absolute}.ps{font-family:'Press Start 
 #end{position:absolute;inset:0;background:#F1E6D2;opacity:0}
 .it{font:400 60px 'Gochi Hand';color:#1C1A1A;opacity:0;margin:14px 0;display:flex;gap:22px;align-items:center}
 .it b{color:#C8321E;font-size:46px}
+.bt{height:104px;padding:0 26px;border-radius:56px;display:flex;align-items:center;gap:14px;font:400 26px "Press Start 2P";white-space:nowrap}.bt span{font-family:Inter;font-weight:800;font-size:40px}
 </style></head><body><div id="post">
 <svg id="s" viewBox="0 0 1080 1920" width="1080" height="1920"></svg>
 <div class="ln ps" id="l1" style="font-size:88px;color:#F7C65A;text-shadow:6px 6px 0 #C8321E;top:300px">SELAMAT!</div>
@@ -30,7 +31,11 @@ svg{position:absolute;inset:0}.a{position:absolute}.ps{font-family:'Press Start 
  <div class="a ps" style="left:0;right:0;top:250px;text-align:center;font-size:30px;color:#C8321E;letter-spacing:2px">LEVEL 01 SELESAI</div>
  <div class="a" style="left:60px;right:60px;top:320px;text-align:center;font:400 112px/0.95 'Instrument Serif';letter-spacing:-3px;color:#1C1A1A">Sampai jumpa di<br><i style="color:#C8321E">level berikutnya!</i></div>
  <div class="a" style="left:0;right:0;top:1440px;text-align:center;font:400 52px 'Gochi Hand';color:#1C1A1A">jaga nyala naskahmu, ya.</div>
- <div class="a" id="btn" style="left:270px;width:540px;top:1540px;height:110px;border-radius:60px;background:#C8321E;display:flex;align-items:center;justify-content:center;font:400 40px 'Press Start 2P';color:#F1E6D2">IKUTI ▶</div>
+ <div class="a" style="left:60px;right:60px;top:1540px;display:flex;gap:24px;justify-content:center">
+  <div class="bt" id="b1" style="background:#fff;color:#1C1A1A;border:4px solid #1C1A1A"><span id="heart" style="color:#1C1A1A">♡</span>SUKA</div>
+  <div class="bt" id="b2" style="background:#fff;color:#1C1A1A;border:4px solid #1C1A1A"><span>➤</span>BAGIKAN</div>
+  <div class="bt" id="b3" style="background:#C8321E;color:#F1E6D2;border:4px solid #C8321E"><span id="fl3">＋</span><b id="ft3" style="font-weight:400">IKUTI</b></div>
+ </div>
  <div class="a" style="left:0;right:0;top:1680px;text-align:center;font:800 34px Inter;color:#1C1A1A;letter-spacing:1px">@penerbitbenangmerah</div>
 </div>
 </div>
@@ -43,7 +48,7 @@ s.innerHTML=DEFS+`<defs>
 <g id="bg" filter="url(#rough)"></g><g id="stars"></g>
 <g id="sul"></g>
 <circle id="facelight" cx="540" cy="1150" r="620" fill="url(#glow)" style="mix-blend-mode:screen"/>
-<g id="candle"></g><g id="hands" filter="url(#wob)"></g>
+<g id="candle"></g><g id="hands" ></g>
 <circle id="glowc" cx="540" cy="1460" r="300" fill="url(#glow)"/>
 <g id="flame"><path id="fo" fill="#E8743B" filter="url(#soft)" opacity=".95"/><path id="fm" fill="#F7C65A" filter="url(#soft2)"/><path id="fc" fill="#FFF6DC" filter="url(#soft2)"/><ellipse id="fb" rx="12" ry="9" fill="#7FB2E5" opacity=".55" filter="url(#soft2)"/></g>
 <rect id="dark" width="1080" height="1920" fill="#05090D" opacity=".85"/>
@@ -60,8 +65,15 @@ P=document.getElementById('candle');paint('M478 1560H602V1960H478Z',C.cream,['#E
 el('path',{d:'M478 1572q24 16 30 54q6 -36 22 -42',fill:'#F7EEDD'});el('path',{d:'M540 1560v-30',stroke:'#2A1A14','stroke-width':7,'stroke-linecap':'round'});
 // hands
 P=document.getElementById('hands');
-const HL=el('g',{id:'hl'});P=HL;paint('M0 0C-60 -14 -90 44 -60 92C-30 120 30 106 40 60C46 30 30 6 0 0Z',C.skin,SK,16,[4,8],[10,30]);
-P=document.getElementById('hands');const HR=el('g',{id:'hr'});P=HR;paint('M0 0C60 -14 90 44 60 92C30 120 -30 106 -40 60C-46 30 -30 6 0 0Z',C.skin,SK,16,[4,8],[10,30]);
+const HAND='M-30 0C-36 -30 -38 -60 -36 -110Q-36 -126 -27 -126Q-19 -126 -19 -112Q-19 -140 -10 -140Q-1 -140 -1 -126Q-1 -138 8 -138Q17 -138 17 -122Q17 -120 24 -118Q32 -116 31 -102C30 -80 30 -70 30 -62C42 -70 56 -86 60 -78C64 -70 52 -50 34 -36C28 -24 26 -10 24 0Z';
+function hand(id,mir){const g=el('g',{id});const inner=el('g',{transform:`scale(${mir?-1.35:1.35} 1.35)`},g);P=inner;
+ paint(HAND,C.skin,['#F5DCC2','#E8C4A2','#EFCBAE'],30,[3,6],[10,30],1.5);
+ el('path',{d:HAND,fill:'none',stroke:'#B5785A','stroke-width':2.2,'stroke-linejoin':'round'});
+ el('path',{d:'M-19 -112L-20 -80M-1 -126L-1 -84M17 -122L15 -86',stroke:'#C98E70','stroke-width':2,'stroke-linecap':'round',fill:'none'});
+ el('path',{d:'M-26 -124q4 -3 8 0M-6 -138q4 -3 8 0M12 -136q4 -3 8 0M26 -116q3 -2 6 1',stroke:'#E8C4A2','stroke-width':2.5,fill:'none'});
+ el('ellipse',{cx:-4,cy:-40,rx:16,ry:10,fill:'#EE8F6A',opacity:.25});
+ P=document.getElementById('hands');return g}
+P=document.getElementById('hands');hand('hl',false);hand('hr',true);
 const cl=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=cl(x);return x*x*(3-2*x)};
 const n=(t,a,b,c)=>Math.sin(t*a)*.5+Math.sin(t*b+1.7)*.3+Math.sin(t*c+4.1)*.2;
 function fpath(w,h,dx){return `M0 0C${-w} ${-h*.12} ${-w*.75+dx*.3} ${-h*.62} ${dx} ${-h}C${w*.75+dx*.3} ${-h*.62} ${w} ${-h*.12} 0 0Z`}
@@ -84,10 +96,10 @@ window.render=function(t){
   // Sulam breathing
   const br=Math.sin(t*1.6)*4;document.getElementById('sulg').setAttribute('transform',`translate(0 ${br.toFixed(1)})`);
   // hands drift in
-  const hx=(1-guard)*360, hy=(1-guard)*260;
+  const hx=(1-guard)*380, hy=(1-guard)*320;
   document.getElementById('hands').setAttribute('opacity',ease((t-4.6)/.5).toFixed(2));
-  document.getElementById('hl').setAttribute('transform',`translate(${(440-hx).toFixed(1)} ${(1460+hy).toFixed(1)})`);
-  document.getElementById('hr').setAttribute('transform',`translate(${(640+hx).toFixed(1)} ${(1460+hy).toFixed(1)})`);
+  document.getElementById('hl').setAttribute('transform',`translate(${(430-hx).toFixed(1)} ${(1640+hy).toFixed(1)}) rotate(${(14-guard*4).toFixed(1)})`);
+  document.getElementById('hr').setAttribute('transform',`translate(${(650+hx).toFixed(1)} ${(1640+hy).toFixed(1)}) rotate(${(-14+guard*4).toFixed(1)})`);
   // text lines (simple fade swaps)
   const seg=(a,b)=>cl(Math.min((t-a)/.35,(b-t)/.35));
   document.getElementById('l1').style.opacity=seg(.6,2.3);
@@ -114,7 +126,10 @@ const _r=window.render;window.render=function(t){_r(t);
  const sw=n(t,1.3,2.9,5.7)*6,h=90*(1+n(t,7.1,11.3,17.9)*.08);
  document.getElementById('cfl').setAttribute('d',fpath(24,h,sw));document.getElementById('cfl').setAttribute('transform','translate(540 1318)');
  document.getElementById('csul').setAttribute('transform',`translate(0 ${(Math.sin(t*1.6)*4).toFixed(1)})`);
- const b=document.getElementById('btn');const pulse=1+Math.max(0,Math.sin((t-13.4)*5))*.05*(t>13.4);b.style.transform=`scale(${pulse.toFixed(3)})`;
+ const tap=(id,at)=>{const p=t-at;const k=p>0&&p<.35?1+Math.sin(p/.35*Math.PI)*.12:1;document.getElementById(id).style.transform=`scale(${k.toFixed(3)})`;return p>.15};
+ if(tap('b1',13.3)){const h=document.getElementById('heart');h.textContent='♥';h.style.color='#C8321E';}else{const h=document.getElementById('heart');h.textContent='♡';h.style.color='#1C1A1A';}
+ tap('b2',13.9);
+ if(tap('b3',14.5)){document.getElementById('ft3').textContent='DIIKUTI';document.getElementById('fl3').textContent='✓';}else{document.getElementById('ft3').textContent='IKUTI';document.getElementById('fl3').textContent='＋';}
 };
 render(0);
 </script></body></html>
