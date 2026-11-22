@@ -16,32 +16,30 @@ Orang mencari "penerbit buku" / "terbit buku", bukan nama brand. Pasang kata kun
 - **Pilihan utama:** `Penerbit Buku | Benang Merah` (28)
 - Alternatif: `Terbit Buku · Benang Merah` (26)
 
-## TAHAP 3 — Bio (maks. 150 karakter) — versi MENJUAL
-Rumus: **hasil yang didapat → layanan → untuk siapa → ajakan**.
+## TAHAP 3 — Bio (maks. 150 karakter) — pola penerbit besar
+Pola akun penerbit yang sudah besar: **1 baris slogan berisi 3 janji** + **daftar berikon** (layanan, bukti resmi, toko, ajakan).
 
-**Pilihan A (disarankan, jual hasil):** 141 karakter
+**Pilihan A (disarankan):** 139 karakter
 ```
-Dari naskah jadi buku ber-ISBN, siap dijual 📚
-Esai · Puisi · Cerpen · Novel
-Editor mendampingimu dari awal sampai terbit
-✶ Terbitkan bukumu ↓
+Naskah Rapi, Terbit Resmi, Siap Dijual 🧵
+✍️ Didampingi editor dari awal
+📚 Penerbit Buku Ber-ISBN
+🎁 Paket terbit mulai Rp___
+👇 Daftar & Info
 ```
-**Pilihan B (jual alur yang jelas):** 140 karakter
+**Pilihan B:** 145 karakter
 ```
-Penerbit indie profesional 🧵
-Naskah → Editing → Sampul → ISBN → Cetak → Jual
-Untuk penulis pemula & berpengalaman
-📩 Daftar terbit sekarang ↓
+Terbit Tenang, Didampingi Editor, Siap Jual 🧵
+📚 Penerbit Buku Ber-ISBN
+✍️ Esai · Puisi · Cerpen · Novel
+🛍️ Beli buku di link bawah
+👇 Kirim Naskah
 ```
-**Pilihan C (jual kelengkapan layanan):** 131 karakter
-```
-Jasa penerbitan buku lengkap 📚
-Editing · Desain sampul · ISBN · Cetak · Pemasaran
-Bukumu, kualitas toko buku.
-✶ Konsultasi gratis ↓
-```
-⚠️ Cantumkan hanya layanan yang benar-benar tersedia (ISBN, cetak, pemasaran, konsultasi gratis).
-Setelah ada bukti, tambahkan angka: "✶ 20+ buku terbit" / "✶ 50+ penulis" — angka adalah alat jual terkuat.
+⚠️ Isi "Rp___" dengan harga paket termurah, atau hapus barisnya bila belum ada paket.
+⚠️ Cantumkan "Ber-ISBN" hanya bila memang mengurus ISBN.
+Setelah ada bukti, ganti satu baris dengan angka: "🏆 20+ buku terbit".
+
+**Highlight bergaya layanan** (pola penerbit besar): tambahkan sorotan *Promo*, *Paket Terbit*, *Royalti*, *Testimoni* di depan sorotan yang sudah ada.
 
 ## TAHAP 4 — Tautan di bio
 Instagram mengizinkan hingga 5 tautan. Urutan yang disarankan:
