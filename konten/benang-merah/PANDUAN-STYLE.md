@@ -96,3 +96,25 @@ Contoh: `post-06.png`
 **Pengikat ketiganya:** benang merah #C8321E, palet hangat (hijau tua, oranye, sage, krem), tekstur kertas, logo BM, @penerbitbenangmerah.
 
 **Alur kampanye satu program:** Style 1 (memancing keinginan) → Style 3 (pengumuman lengkap) → Style 2 (Utas menjawab pertanyaan) → Style 3 + Story (pengingat tenggat).
+
+---
+
+## SISTEM GRID FEED (DITETAPKAN)
+Contoh: `feed/00-pratinjau-feed-9.png`
+
+| Kolom kiri | Kolom tengah | Kolom kanan |
+|---|---|---|
+| STYLE 1 · #UntaianPikiran | STYLE 2 · #RuangNaskah | STYLE 3 · #KabarBenangMerah |
+| Ilustrasi gouache, latar gelap-hangat | Krem + Utas (dan Sulam sebagai penjawab) | Krem terang, editorial, Sulam / sampul buku |
+
+**Aturan wajib:**
+1. Selalu unggah dalam **set berisi 3 postingan**, urutan: Style 1 → Style 2 → Style 3. Satu postingan "nyelip" menggeser semua kolom.
+2. Postingan terbaru tampil di kiri atas, jadi set yang ingin tampil paling atas diunggah paling akhir.
+3. Pengumuman mendadak → lewat **Story**, bukan feed, sampai satu set siap.
+4. Porsi feed menjadi rata: 1/3 per style (menggantikan rencana 50/30/20).
+5. Ritme yang disarankan: 1 set (3 postingan) per 2–3 hari.
+
+**Set pembuka (urutan unggah):**
+- Set 1: Kamu tim yang mana? → Siklus hidup sebuah naskah → Cover reveal
+- Set 2: Menulis adalah cara paling pelan… → Writer's block? → Pembukaan Naskah Gel. 01
+- Set 3: Setiap cerita punya ujung benangnya… → Hai, aku Utas → Halo, aku Sulam
