@@ -57,3 +57,25 @@ Contoh: `post-06.png`
 | 1 · Untaian Pikiran | ±50% | 3×/minggu |
 | 2 · Ruang Naskah (Utas) | ±30% | 2×/minggu |
 | 3 · Kabar (Editorial Redaksi) | ±20% | 1–2×/minggu |
+
+---
+
+## SIMPULAN KONTEN (PEDOMAN TETAP)
+
+| | STYLE 1 | STYLE 2 | STYLE 3 |
+|---|---|---|---|
+| **Tagar seri** | #UntaianPikiran | #RuangNaskah | #KabarBenangMerah |
+| **Nama gaya** | Ilustrasi gouache kasar | Maskot Utas | Editorial redaksi bersih |
+| **Fungsi** | Menyentuh emosi, membangun kedekatan | Mengedukasi, menghibur, membangun kepercayaan | Mengumumkan dan menjual secara resmi |
+| **Isi** | Kutipan, renungan, relatable, interaktif (A/B/C/D, "tim mana"), momen/hari besar | Tips menulis, "Tahukah Kamu?", kamus penerbitan, komik Utas, FAQ program | Pembukaan naskah, info program, harga & syarat, rilis buku, cover reveal, profil penulis, promo |
+| **Target respons** | Komentar, share, tag teman | Save, share | Klik link bio, DM, daftar/beli |
+| **Ajakan (CTA)** | "jawab di komentar", "kirim ke temanmu" | "simpan untuk nanti", "geser →" | "daftar lewat link di bio", "DM untuk info" |
+| **Format** | Postingan tunggal, carousel cerita, Reels animasi | Carousel 5–7 slide, komik 4 panel, stiker Story | Carousel info, postingan tunggal, Story hitung mundur |
+| **Latar** | Hijau tua / oranye, ilustrasi penuh | Krem #EFE8DC, Utas + lengkungan bata | Krem terang #F6F1E7, banyak ruang kosong |
+| **Huruf** | Tulisan tangan (Gochi Hand) | Serif ramping (Instrument Serif) + tulisan tangan | Geometris kapital (Jost) + serif kecil |
+| **Porsi feed** | ±50% · 3×/minggu | ±30% · 2×/minggu | ±20% · 1–2×/minggu |
+| **Angka utama** | Komentar & share | Save | Klik & pendaftar |
+
+**Pengikat ketiganya:** benang merah #C8321E, palet hangat (hijau tua, oranye, sage, krem), tekstur kertas, logo BM, @penerbitbenangmerah.
+
+**Alur kampanye satu program:** Style 1 (memancing keinginan) → Style 3 (pengumuman lengkap) → Style 2 (Utas menjawab pertanyaan) → Style 3 + Story (pengingat tenggat).
