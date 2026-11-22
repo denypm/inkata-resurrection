@@ -1,0 +1,74 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Gochi+Hand&family=Inter:wght@600;800&display=block" rel="stylesheet">
+<script src="lib.js"></script>
+<style>html,body{margin:0}#post{width:1080px;height:1920px;position:relative;overflow:hidden;background:#152A3A}
+svg{position:absolute;inset:0}.ln{position:absolute;left:60px;right:60px;text-align:center;opacity:0;text-shadow:0 4px 18px rgba(0,0,0,.35)}
+.gh{font-family:'Gochi Hand'}.px{font-family:'Press Start 2P';font-size:50px;color:#F7C65A;text-shadow:5px 5px 0 #C8321E}
+.hl{color:#F7C65A;background:#C8321E;padding:0 16px;border-radius:8px;text-shadow:none}.hd{font:800 32px Inter;color:#F7C65A;margin-top:22px;letter-spacing:1px}</style>
+</head><body><div id="post"><svg id="s" viewBox="0 0 1080 1920" width="1080" height="1920"></svg>
+<div class="ln gh" id="l1" style="top:250px;font-size:76px;line-height:1.05;color:#F1E6D2"><span class="px">SATU BAB,</span><br><span style="display:inline-block;margin-top:16px">satu lompatan.</span></div>
+<div class="ln gh" id="l2" style="top:280px;font-size:76px;line-height:1.05;color:#F1E6D2">jangan berhenti<br>sampai jadi <span class="hl">buku.</span></div>
+<div class="ln gh" id="l3" style="top:250px;font-size:76px;line-height:1.05;color:#F1E6D2">ikuti, dan kejar<br>bukumu bersama kami.<div class="hd">@penerbitbenangmerah</div></div>
+</div><script>
+const L=10,W0=2*Math.PI/L;const cl=x=>Math.max(0,Math.min(1,x));
+const pn=(t,ks,ph)=>{let v=0,a=0;ks.forEach((k,i)=>{const w=1/(i+1);v+=Math.sin(W0*k*t+ph+i*1.7)*w;a+=w});return v/a};
+const mod=(a,b)=>((a%b)+b)%b;
+const seg=(t,a,b)=>cl(Math.min((t-a)/.4,(b-t)/.4));
+
+const s=document.getElementById('s');
+s.innerHTML=DEFS+`<g id="bg" filter="url(#rough)"></g><g id="stars"></g><g id="hills"></g><g id="ground"></g><g id="obs"></g><g id="col"></g><g id="chars"></g>
+<rect width="1080" height="1920" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".28"/>`;
+const V=360,D=3600,GY=1540;
+seed=4;P=document.getElementById('bg');paint('M-30 -30H1110V1950H-30Z','#152A3A',['#1D3A4F','#0E1F2C','#1E4640'],380,[10,30],[60,170],0.1);
+paint('M880 700a80 80 0 1 0 .1 0Z',C.yellow,['#F3B84A','#FAD77E'],40,[4,9],[12,35]);paint('M905 712a64 64 0 1 0 .1 0Z','#152A3A',['#1D3A4F'],20,[5,10],[15,40]);
+const ST=[];P=document.getElementById('stars');for(let i=0;i<40;i++){const x=rr(20,1060),y=rr(200,1250);star(x,y,rr(4,10),R()<.3?C.orange:C.cream);ST.push([P.lastChild,Math.round(rr(1,4)),rr(0,6)])}
+// hills parallax tile (1080, seamless ends)
+P=document.getElementById('hills');const HG=el('g',{id:'hg',filter:'url(#rough)'});P=HG;
+for(const ox of [0,1080]){paint(`M${ox} 1540V1300C${ox+200} 1180 ${ox+380} 1220 ${ox+540} 1280S${ox+880} 1210 ${ox+1080} 1300V1500Z`,C.dgreen,GR,90,[5,14],[30,90],-.1);}
+// ground tile (3600) x2
+P=document.getElementById('ground');const GG=el('g',{id:'gg'});P=el('g',{filter:'url(#rough)'},GG);seed=21;
+for(const ox of [0,3600]){paint(`M${ox-10} ${GY}H${ox+3610}V1960H${ox-10}Z`,C.teal,TE,260,[6,16],[40,120],0);
+ paint(`M${ox-10} ${GY-14}H${ox+3610}V${GY+40}H${ox-10}Z`,C.orange,OR,200,[5,12],[30,90],0);}
+seed=33;const GR2=[];for(let i=0;i<120;i++)GR2.push([rr(0,3600),rr(GY+60,1900),rr(-6,6),rr(18,40),R()]);
+for(const ox of [0,3600])for(const [x,y,dx,h,r] of GR2){el('path',{d:`M${ox+x} ${y}q${dx} ${-h/2} ${dx*2} ${-h}`,stroke:r<.5?'#3E7C5A':'#2F6B4F','stroke-width':3,fill:'none'});if(r<.2)el('circle',{cx:ox+x+dx*2,cy:y-h,r:4,fill:r<.1?C.cream:C.orange})}
+// obstacles
+const OB=[{p:900,k:'books'},{p:1750,k:'ink'},{p:2550,k:'paper'},{p:3250,k:'thread'}];
+P=document.getElementById('obs');
+for(const o of OB){const g=el('g',{});o.g=g;P=el('g',{filter:'url(#rough)'},g);
+ if(o.k=='books'){const cols=[C.red,C.sage,C.yellow];cols.forEach((c,i)=>{paint(`M${-60+i*6} ${-36*(i+1)}h${120-i*12}v34h${-(120-i*12)}Z`,c,[c],8,[3,6],[20,60],0);el('path',{d:`M${-50+i*6} ${-36*(i+1)+17}h${100-i*12}`,stroke:'#F1E6D2','stroke-width':3})});o.h=110}
+ if(o.k=='ink'){paint('M-90 -4C-80 -22 -40 -18 -10 -24C30 -30 70 -20 90 -6C96 4 -96 6 -90 -4Z','#0E0D0D',['#1C1A1A'],10,[3,6],[20,50],0);for(const [x,y] of [[-60,-34],[40,-40],[0,-52]])el('circle',{cx:x,cy:y,r:7,fill:'#0E0D0D'});o.h=40}
+ if(o.k=='paper'){for(const [x,r] of [[-40,34],[30,42]]){paint(`M${x} ${-r}a${r} ${r} 0 1 0 .1 0Z`,C.cream,['#E7D8BD','#D8CBB0'],14,[3,6],[10,30]);el('path',{d:`M${x-r*.6} ${-r}l${r*.5} ${r*.3}l${r*.3} ${-r*.4}l${r*.4} ${r*.5}`,stroke:'#9A8A72','stroke-width':3,fill:'none'})}o.h=84}
+ if(o.k=='thread'){for(const x of [-60,60])paint(`M${x-8} -150h16v150h-16Z`,'#B87A45',['#9C6435'],6,[3,5],[10,30],1.57);el('path',{d:'M-60 -130C-20 -110 20 -150 60 -130',stroke:C.red,'stroke-width':8,fill:'none','stroke-linecap':'round'});o.h=150}
+ P=document.getElementById('obs');}
+// collectibles (above each obstacle)
+P=document.getElementById('col');for(const o of OB){const g=el('g',{});o.c=g;el('circle',{r:34,fill:C.yellow,opacity:.25},g);el('path',{d:'M0 -26L7 -7L26 0L7 7L0 26L-7 7L-26 0L-7 -7Z',fill:C.yellow},g);}
+// characters
+P=document.getElementById('chars');
+function legs(g,pants,shoe){const L1=el('path',{stroke:pants,'stroke-width':34,'stroke-linecap':'round',fill:'none'},g);const L2=el('path',{stroke:pants,'stroke-width':34,'stroke-linecap':'round',fill:'none'},g);
+ const S1=el('ellipse',{rx:26,ry:14,fill:shoe},g),S2=el('ellipse',{rx:26,ry:14,fill:shoe},g);return [L1,L2,S1,S2]}
+const SC=1.1;
+const UT=el('g',{});const ul=legs(UT,'#A9C6CC','#C8321E');const ub=el('g',{filter:'url(#wob)'},UT);seed=9;utas2(ub,'fokus');P=document.getElementById('chars');
+const stack=el('g',{},UT);P=stack;[[C.red,0],[C.sage,1],[C.yellow,2],[C.cream,3]].forEach(([c,i])=>{paint(`M${96+(i%2)*10} ${404-i*30}h${148-(i%2)*14}v28h${-(148-(i%2)*14)}Z`,c,[c],6,[3,6],[20,60],0);el('path',{d:`M${106+(i%2)*10} ${418-i*30}h${126-(i%2)*14}`,stroke:i==3?'#9A8A72':'#F1E6D2','stroke-width':3})});
+for(const x of [90,250])el('ellipse',{cx:x,cy:396,rx:20,ry:24,fill:C.skin},stack);
+P=document.getElementById('chars');const SU=el('g',{});const sl=legs(SU,'#1C1A1A','#C8321E');const sb=el('g',{filter:'url(#wob)'},SU);seed=9;sulam(sb,'mengedip');P=document.getElementById('chars');
+const UX=280,SX=790,R0=V*.42,JH=280;
+function jump(xc,t){let h=0;for(const o of OB){const X=mod(o.p-V*t,D)-200;const d=X-xc;if(Math.abs(d)<R0){const u=(R0-d)/(2*R0);h=Math.max(h,JH*4*u*(1-u))}}return h}
+function setChar(G,lg,xc,t,ph){const h=jump(xc,t);const air=h>4;const st=W0*25*t+ph;const bob=air?0:Math.abs(Math.sin(st))*10;
+ const top=GY-(432+60)*SC-h-bob;G.setAttribute('transform',`translate(${(xc-170*SC).toFixed(1)} ${top.toFixed(1)}) scale(${SC})`);
+ const a=air?.6:Math.sin(st),b=air?-.4:-Math.sin(st);
+ const leg=(Lp,S,x,sw)=>{const fx=x+sw*34,fy=432+56-(air?20:Math.max(0,-sw)*8);Lp.setAttribute('d',`M${x} 420L${fx.toFixed(1)} ${fy.toFixed(1)}`);S.setAttribute('cx',(fx+8).toFixed(1));S.setAttribute('cy',(fy+12).toFixed(1))};
+ leg(lg[0],lg[2],140,a);leg(lg[1],lg[3],200,b);return h}
+window.render=function(t){t=mod(t,L);
+ for(const [e,k,ph] of ST)e.setAttribute('opacity',(.35+.5*Math.abs(Math.sin(W0*k*t+ph))).toFixed(2));
+ document.getElementById('hg').setAttribute('transform',`translate(${(-mod(V*.3*t,1080)).toFixed(1)} 0)`);
+ document.getElementById('gg').setAttribute('transform',`translate(${(-mod(V*t,D)).toFixed(1)} 0)`);
+ for(const o of OB){const X=mod(o.p-V*t,D)-200;o.g.setAttribute('transform',`translate(${X.toFixed(1)} ${GY})`);
+  const got=X<UX;const bob=Math.sin(W0*20*t+o.p)*8;o.c.setAttribute('transform',`translate(${X.toFixed(1)} ${(GY-o.h-170+bob).toFixed(1)}) scale(${got?0:1})`);}
+ setChar(SU,sl,SX,t,1.3);const h=setChar(UT,ul,UX,t,0);
+ stack.setAttribute('transform',`rotate(${(Math.sin(W0*25*t)*2.5+(h>4?-3:0)).toFixed(2)} 170 400)`);
+ document.getElementById('l1').style.opacity=seg(t,0,3.3);document.getElementById('l2').style.opacity=seg(t,3.4,6.7);document.getElementById('l3').style.opacity=seg(t,6.8,10);
+};
+window.EVENTS=()=>{const ev=[];for(const o of OB){for(const [xc,kind] of [[UX,'U'],[SX,'S']]){const tc=mod((o.p-200-xc)/V,L);ev.push([mod(tc-.4,L),'jump'+kind]);if(kind=='U')ev.push([tc,'coin'])}}return ev};
+
+render(0);
+</script></body></html>
