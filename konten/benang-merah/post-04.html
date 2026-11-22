@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@600;800&display=block" rel="stylesheet">
+<style>
+html,body{margin:0}
+#post{width:1080px;height:1350px;position:relative;overflow:hidden;background:#1E4640}
+svg{position:absolute;inset:0}
+.t{position:absolute;left:70px;top:86px;font:400 92px/1.02 'Gochi Hand';color:#F1E6D2;transform:rotate(-2deg)}
+.t span{color:#E8743B}
+.h{position:absolute;left:72px;bottom:56px;font:600 24px Inter;color:#F1E6D2;opacity:.9}
+.lg{position:absolute;right:70px;bottom:44px;width:62px;height:72px;border:3px solid #F1E6D2;color:#F1E6D2;display:flex;align-items:center;justify-content:center;font:800 28px Inter}
+.title{position:absolute;left:0;right:0;top:70px;text-align:center;font:400 66px/1 'Gochi Hand';color:#F1E6D2}
+.title span{color:#E8743B}
+.st{position:absolute;left:0;right:0;top:160px;text-align:center;font:600 26px Inter;color:#F1E6D2;opacity:.85}
+.lab{position:absolute;font:400 72px/1 'Gochi Hand';color:#F1E6D2}
+.cap{position:absolute;font:400 38px/1 'Gochi Hand';color:#F1E6D2;width:440px;text-align:center}
+.dark{color:#1A1A1A}
+.bot{position:absolute;left:0;right:0;bottom:84px;text-align:center;font:400 64px/1 'Gochi Hand';color:#F1E6D2}
+.bot span{background:#C8321E;padding:2px 18px;border-radius:6px}
+.ft{position:absolute;left:0;right:0;bottom:30px;text-align:center;font:600 20px Inter;color:#F1E6D2;opacity:.75}
+</style></head><body>
+<div id="post">
+<svg id="s" viewBox="0 0 1080 1350" width="1080" height="1350">
+<defs>
+  <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="3"/>
+    <feDisplacementMap in="SourceGraphic" scale="9"/></filter>
+  <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="4" seed="8"/>
+    <feDiffuseLighting lighting-color="#fff" surfaceScale="2.2"><feDistantLight azimuth="45" elevation="55"/></feDiffuseLighting></filter>
+  <filter id="speck"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="2"/>
+    <feColorMatrix values="0 0 0 0 1  0 0 0 0 .95  0 0 0 0 .85  0 0 0 9 -6.2"/></filter>
+</defs>
+<g id="scene" filter="url(#rough)"></g>
+<rect width="1080" height="1350" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".42"/>
+<rect width="1080" height="1350" filter="url(#speck)" opacity=".35"/>
+</svg>
+<div class="title">Naskahmu sekarang ada <span>di mana?</span></div>
+<div class="st">jujur aja, kami nggak akan menghakimi 🙈</div>
+<div class="lab" style="left:92px;top:262px">A</div>
+<div class="lab" style="left:582px;top:262px">B</div>
+<div class="lab" style="left:92px;top:682px">C</div>
+<div class="lab dark" style="left:582px;top:682px">D</div>
+<div class="cap" style="left:75px;top:606px">di laci, berdebu</div>
+<div class="cap" style="left:565px;top:606px">di folder laptop</div>
+<div class="cap" style="left:75px;top:1026px">di notes HP</div>
+<div class="cap dark" style="left:565px;top:1026px">masih di kepala</div>
+<div class="bot"><span>A, B, C, atau D?</span><br><span style="background:none;font-size:46px">jawab di komentar 👇</span></div>
+<div class="ft">@penerbitbenangmerah · semua jawaban bisa jadi buku</div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg',scene=document.getElementById('scene');let P=scene;
+let seed=11;const R=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
+const rr=(a,b)=>a+R()*(b-a);
+function el(tag,a,p=P){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+let cid=0;
+function paint(d,base,tones,n=90,w=[4,14],len=[20,70],ang=0){
+  const id='c'+(cid++);const cp=el('clipPath',{id},scene);el('path',{d},cp);
+  el('path',{d,fill:base});const g=el('g',{'clip-path':`url(#${id})`});
+  const tmp=el('path',{d,fill:'none'});const b=tmp.getBBox();tmp.remove();
+  for(let i=0;i<n;i++){const x=rr(b.x,b.x+b.width),y=rr(b.y,b.y+b.height),L=rr(...len),a=ang+rr(-.35,.35);
+    el('path',{d:`M${x} ${y} q${L/2*Math.cos(a)+rr(-6,6)} ${L/2*Math.sin(a)+rr(-6,6)} ${L*Math.cos(a)} ${L*Math.sin(a)}`,
+      stroke:tones[i%tones.length],'stroke-width':rr(...w),'stroke-linecap':'round',fill:'none',opacity:rr(.25,.6)},g)}}
+const cream='#F1E6D2',orange='#E8743B',red='#C8321E',teal='#1E4640',navy='#152A3A',green='#2F6B4F',skin='#F3D9BC',wood='#B87A45';
+const OR=['#F08A4B','#D9622E','#F3A066'],GR=['#3A7A5C','#24573F','#356F54'];
+paint('M-30 -30H1110V1380H-30Z',teal,['#24534B','#183B37','#2A5C52'],300,[10,30],[60,160],0.1);
+for(let i=0;i<30;i++){const x=rr(20,1060),y=rr(20,1330);if(x>50&&x<1030&&y>230&&y<1110)continue;if(y<230&&y>50)continue;const s=rr(4,10);
+  el('path',{d:`M${x} ${y-s}Q${x} ${y} ${x+s} ${y}Q${x} ${y} ${x} ${y+s}Q${x} ${y} ${x-s} ${y}Q${x} ${y} ${x} ${y-s}Z`,fill:R()<.3?orange:cream})}
+const card=(x,y,base,tones)=>paint(`M${x} ${y}h440v400h-440Z`,base,tones,160,[6,16],[40,120],0);
+card(70,250,orange,OR);card(560,250,green,GR);card(70,670,green,GR);card(560,670,cream,['#E7D8BD','#F7EEDD']);
+const at=(x,y,f)=>{P=el('g',{transform:`translate(${x} ${y})`},scene);f();P=scene};
+const paper=(x,y,r,w=60,h=76)=>{const g=el('g',{transform:`translate(${x} ${y}) rotate(${r})`});
+  el('rect',{x:-w/2,y:-h/2,width:w,height:h,fill:cream},g);for(let k=0;k<4;k++)el('path',{d:`M${-w/2+9} ${-h/2+14+k*14}h${w-18}`,stroke:'#9A8A72','stroke-width':2.5},g)};
+// A drawer
+at(70,250,()=>{
+  paint('M110 190H330V340H110Z',wood,['#C98A52','#9C6435'],40,[4,9],[30,90],0);
+  paint('M95 175H345V198H95Z','#9C6435',['#B87A45'],10,[3,6],[20,60],0);
+  el('path',{d:'M110 268H330',stroke:'#7A4B26','stroke-width':4});el('circle',{cx:220,cy:305,r:7,fill:'#7A4B26'});
+  paint('M125 215H365V258H125Z','#D9A066',['#E6B27A','#C48B52'],15,[3,6],[20,60],0);
+  paper(175,205,-10);paper(240,200,6);paper(305,205,-3);
+  for(let k=0;k<6;k++)el('circle',{cx:rr(130,340),cy:rr(160,190),r:rr(2,4),fill:'#9A8A72',opacity:.6}); // dust
+  el('path',{d:'M310 186c10-30 40-40 60-30',stroke:'#9A8A72','stroke-width':2,fill:'none','stroke-dasharray':'4 6'});
+});
+// B laptop
+at(560,250,()=>{
+  paint('M100 120H340V285H100Z',navy,['#1D3A4F','#0E1F2C'],40,[4,9],[30,80],0);
+  paint('M114 134H326V272H114Z','#DDE6E0',['#CFDAD3','#EAF0EC'],20,[3,6],[20,60],0);
+  paint('M70 288H370L350 312H90Z','#9AA7A3',['#B4C0BB','#7F8C88'],20,[3,6],[20,60],0);
+  el('path',{d:'M175 168h28l8 8h52v52h-88z',fill:'#F7C65A'});el('path',{d:'M175 184h88v44h-88z',fill:'#E8A93A'});
+  const t=el('text',{x:220,y:256,'text-anchor':'middle','font-family':'Inter','font-weight':600,'font-size':14,fill:'#1A1A1A'});t.textContent='naskah_FINAL_revisi7.docx';
+});
+// C phone
+at(70,670,()=>{
+  paint('M155 70H285V340H155Z',navy,['#1D3A4F','#0E1F2C'],30,[4,8],[30,80],1.57);
+  paint('M166 92H274V318H166Z',cream,['#E7D8BD','#F7EEDD'],20,[3,6],[20,60],0);
+  const t=el('text',{x:176,y:118,'font-family':'Inter','font-weight':800,'font-size':16,fill:'#1A1A1A'});t.textContent='DRAFT!!';
+  for(let k=0;k<9;k++)el('path',{d:`M176 ${138+k*18}h${rr(55,88)}`,stroke:'#9A8A72','stroke-width':3,'stroke-linecap':'round'});
+});
+// D head with tangled thread
+at(560,670,()=>{
+  paint('M150 340C150 300 140 280 120 260C95 230 100 150 160 110C220 75 300 90 320 160C330 190 345 215 340 230C335 240 322 238 320 250C330 262 318 268 316 280C318 300 300 310 280 308L270 340Z',skin,['#EBCBA8','#F7E1C8'],30,[4,9],[20,60]);
+  paint('M120 255C80 200 110 100 180 92C250 82 310 110 320 160C290 140 250 150 230 180C215 200 200 240 175 260C160 270 135 268 120 255Z',orange,OR,50,[3,7],[20,60],1.2);
+  el('circle',{cx:300,cy:192,r:4,fill:'#3A2418'});
+  el('path',{d:'M215 175c25-20 60 0 45 25c-15 25-60 10-48-15c12-25 70-25 66 10c-4 30-62 34-62 0c0-25 45-38 60-12c12 22-20 40-42 26',stroke:red,'stroke-width':5,fill:'none','stroke-linecap':'round'});
+});
+// thread linking all cards
+P=scene;
+el('path',{d:'M840 1075C860 1120 820 1160 760 1170S560 1170 540 1200',stroke:red,'stroke-width':5,fill:'none','stroke-linecap':'round','stroke-dasharray':'0'});
+</script>
+</body></html>
