@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;600;700&family=Inter:wght@600;700;800&display=block" rel="stylesheet">
+<style>html,body{margin:0}#post{width:1080px;height:1350px;position:relative;overflow:hidden}svg#s{position:absolute;inset:0}
+.a{position:absolute}.gh{font-family:'Gochi Hand'}.is{font-family:'Instrument Serif'}.jo{font-family:Jost}.in{font-family:Inter}
+.caps{left:72px;right:72px;bottom:46px;display:flex;justify-content:space-between;font:700 15px Inter;letter-spacing:3px}
+</style><script src="lib.js"></script></head><body><div id="post" style="background:#F6F1E7">
+<svg id="s" viewBox="0 0 1080 1350" width="1080" height="1350"></svg>
+<div class="a is" style="left:0;right:0;top:56px;text-align:center;font-size:104px;letter-spacing:-3px;color:#3B1F14">Hai, aku <i style="color:#C8321E">Sulam.</i></div>
+<div class="a gh" style="left:0;right:0;top:176px;text-align:center;font-size:36px;color:#5A3A2C">editor yang menemani naskahmu di Benang Merah</div>
+<div id="caps"></div>
+<div class="a caps" style="color:#3B1F14"><span>MASKOT</span><span>REDAKSI BENANG MERAH</span><span>@PENERBITBENANGMERAH</span></div></div><script>
+setup(null,.3,0);P=document.getElementById('art');seed=9;
+const cells=[['tenang','tenang, kita rapikan'],['membaca','membaca naskahmu...'],['terkesan','naskah ini bagus!'],['mengernyit','typo lagi, ya?'],['tertawa','revisi ke-7? haha'],['mengedip','percaya sama aku']];
+const caps=document.getElementById('caps');
+cells.forEach(([e,t],i)=>{const x=40+(i%3)*340,y=250+Math.floor(i/3)*520;
+  const g=el('g',{transform:`translate(${x} ${y}) scale(.95) translate(9 0)`,filter:'url(#wob)'});sulam(g,e);
+  const d=document.createElement('div');d.className='a gh';d.style.cssText=`left:${x}px;top:${y+430}px;width:340px;text-align:center;font-size:32px;color:#3B1F14`;d.textContent=t;caps.appendChild(d)});
+</script></body></html>

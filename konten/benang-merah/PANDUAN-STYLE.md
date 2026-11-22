@@ -37,6 +37,23 @@ Contoh: `feed/maskot-02.png` (lembar ekspresi versi final), `feed/03-…png`, `f
 
 ---
 
+## MASKOT KEDUA — "Sulam" (editor / redaksi)
+Contoh: `feed/maskot-sulam.png`
+
+- **Peran:** suara redaksi Benang Merah. Tenang, cerdas, teliti, hangat. Pasangan Utas (si penulis).
+- **Ciri wajib:**
+  - rambut hitam bob dengan poni bergerigi
+  - **baret merah** bertekstur kuas
+  - **jarum sulam tertancap di baret, benang merah menjuntai** dari jarum (tanda pengenal utama)
+  - mata titik kecil, pipi merona, ujung hidung kemerahan
+  - sweater turtleneck hijau tua #1E4640 bertekstur rajut
+- **Teknik:** sama dengan Utas versi final (tanpa garis tepi, tekstur kuas).
+- **Ekspresi baku:** tenang · membaca · terkesan · mengernyit · tertawa · mengedip
+- **Tampil di:** Style 3 (pengumuman, catatan redaksi, info program) dan sebagai penjawab di komik/FAQ Style 2.
+- **Dinamika duo:** Utas bertanya/panik → Sulam menjawab dengan tenang. Utas mewakili pengikut (calon penulis), Sulam mewakili penerbit.
+
+---
+
 ## STYLE 3 — Editorial Redaksi Bersih  ·  #KabarBenangMerah
 Contoh: `post-06.png`
 
