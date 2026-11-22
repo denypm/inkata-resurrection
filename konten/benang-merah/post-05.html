@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@500;700&display=block" rel="stylesheet">
+<style>
+html,body{margin:0}
+#post{width:1080px;height:1350px;position:relative;overflow:hidden;background:#EFE8DC;color:#3B1F14}
+svg{position:absolute;inset:0}
+.kick{position:absolute;left:72px;top:70px;font:700 20px Inter;letter-spacing:3px}
+.kick span{color:#B5462A}
+.no{position:absolute;right:72px;top:62px;font:400 40px 'Instrument Serif'}
+.hl{position:absolute;left:66px;top:130px;font:400 168px/.86 'Instrument Serif';letter-spacing:-6px}
+.hl i{color:#B5462A}
+.lead{position:absolute;left:72px;top:600px;width:420px;font:500 22px/1.45 Inter;color:#4A3227}
+.note{position:absolute;left:84px;top:870px;width:400px;font:italic 400 44px/1.1 'Instrument Serif';transform:rotate(-3deg);color:#3B1F14}
+.note b{font-style:normal;color:#B5462A}
+.caps{position:absolute;left:72px;right:72px;bottom:58px;display:flex;justify-content:space-between;font:700 15px Inter;letter-spacing:3px;color:#3B1F14}
+.swipe{position:absolute;left:72px;bottom:100px;font:italic 400 38px 'Instrument Serif'}
+</style></head><body>
+<div id="post">
+<svg viewBox="0 0 1080 1350" width="1080" height="1350">
+<defs>
+  <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="4" seed="4"/>
+    <feDiffuseLighting lighting-color="#fff" surfaceScale="1.6"><feDistantLight azimuth="45" elevation="60"/></feDiffuseLighting></filter>
+  <filter id="speck"><feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" seed="9"/>
+    <feColorMatrix values="0 0 0 0 .25  0 0 0 0 .15  0 0 0 0 .1  0 0 0 9 -7"/></filter>
+  <filter id="wob"><feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="2" seed="5"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter>
+</defs>
+<!-- rust arch -->
+<path d="M590 1260V850a215 215 0 0 1 430 0V1260Z" fill="#B5462A"/>
+<!-- sage sun circle -->
+<circle cx="930" cy="640" r="62" fill="#8A9A7E"/>
+<!-- torn paper note with tape -->
+<g transform="rotate(-3 290 990)">
+  <path d="M70 860H500V1030l-20 8-18-10-22 9-20-7-22 9-20-8-22 7-20-9-22 8-20-6-22 9-20-8-22 7-20-9-22 8-20-7-22 9-20-8-22 7-20-9-20 8Z" fill="#F8F4EC" stroke="#D8CFC0" stroke-width="2"/>
+</g>
+<rect x="230" y="838" width="120" height="38" fill="#C9B89A" opacity=".75" transform="rotate(4 290 857)"/>
+<!-- red thread -->
+<path d="M760 1010C690 1110 600 1120 560 1060S520 960 470 1000" fill="none" stroke="#C8321E" stroke-width="4" stroke-linecap="round" filter="url(#wob)"/>
+<!-- mascot carrying manuscript stack -->
+<g filter="url(#wob)" stroke="#3B1F14" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+  <!-- legs -->
+  <path d="M760 1040L748 1180H790L800 1060Z" fill="#A9C6CC"/>
+  <path d="M840 1040L856 1180H898L880 1050Z" fill="#A9C6CC"/>
+  <path d="M740 1180h56l4 22h-70c0-12 4-22 10-22Z" fill="#3B1F14"/>
+  <path d="M852 1180h50c10 0 14 10 14 22h-68Z" fill="#3B1F14"/>
+  <!-- body -->
+  <path d="M740 900C740 860 900 860 900 900L905 1060H735Z" fill="#F2D98A"/>
+  <!-- head -->
+  <circle cx="822" cy="790" r="52" fill="#F8F4EC"/>
+  <path d="M772 772C780 730 850 722 872 760C850 748 800 752 772 772Z" fill="#3B1F14"/>
+  <path d="M808 800q6 5 12 0M836 800q6 5 12 0" fill="none"/>
+  <path d="M818 822q10 8 20 0" fill="none"/>
+  <!-- paper stack -->
+  <path d="M700 905h220v26h-220Z" fill="#F8F4EC" transform="rotate(-3 810 918)"/>
+  <path d="M705 930h215v26h-215Z" fill="#F8F4EC" transform="rotate(2 810 943)"/>
+  <path d="M698 955h222v26h-222Z" fill="#F8F4EC" transform="rotate(-1 810 968)"/>
+  <path d="M708 980h210v26h-210Z" fill="#F8F4EC" transform="rotate(3 810 993)"/>
+  <path d="M702 1005h218v30h-218Z" fill="#F8F4EC"/>
+  <!-- hands -->
+  <path d="M700 1000c-18 0-22-26-4-30" fill="#F8F4EC"/>
+  <path d="M920 1000c18 0 22-26 4-30" fill="#F8F4EC"/>
+</g>
+<text x="810" y="1027" text-anchor="middle" font-family="Inter" font-weight="700" font-size="13" letter-spacing="2" fill="#B5462A">NASKAH_FINAL</text>
+<!-- texture -->
+<rect width="1080" height="1350" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".35"/>
+<rect width="1080" height="1350" filter="url(#speck)" opacity=".25"/>
+</svg>
+<div class="kick">RUANG NASKAH <span>✶</span> PENERBIT BENANG MERAH</div>
+<div class="no">No. 01</div>
+<div class="hl">Naskahmu<br>sudah siap<br><i>dikirim?</i></div>
+<div class="lead">Sebelum menekan tombol kirim, cek dulu lima tanda kecil yang sering dilewatkan penulis, bahkan oleh yang sudah berpengalaman.</div>
+<div class="note">5 tanda naskahmu <b>siap</b> bertemu editor.</div>
+<div class="swipe">geser →</div>
+<div class="caps"><span>MENULIS</span><span>MENYUNTING</span><span>MENERBITKAN</span><span>@PENERBITBENANGMERAH</span></div>
+</div></body></html>
