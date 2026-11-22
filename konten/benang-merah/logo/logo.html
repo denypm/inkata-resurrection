@@ -1,0 +1,39 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@400;900&family=Inter:wght@800&display=block" rel="stylesheet">
+<script src="lib.js"></script>
+<style>html,body{margin:0}#post{width:1080px;height:1080px;position:relative;overflow:hidden}</style></head><body>
+<div id="post"><svg id="s" viewBox="0 0 1080 1080" width="1080" height="1080"></svg></div>
+<script>
+const mode=location.hash.slice(1)||'ig';
+const s=document.getElementById('s');
+s.innerHTML=DEFS+`<g id="bg"></g><g id="art" filter="url(#rough)"></g><g id="txt" filter="url(#wob)"></g>
+<rect width="1080" height="1080" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".35"/>`;
+P=document.getElementById('bg');seed=3;
+if(mode==='dark'){paint('M-30 -30H1110V1110H-30Z',C.teal,TE,260,[10,30],[60,160],0.1);}
+else paint('M-30 -30H1110V1110H-30Z','#F1E6D2',['#E7D8BD','#F7EEDD','#EADFCB'],220,[10,30],[60,160],0.05);
+P=document.getElementById('art');
+// geometry: k = scale so whole mark fits circle for ig
+const k = mode==='full'?1:0.88, ox = 540-540*k, oy=540-540*k;
+P=el('g',{transform:`translate(${ox} ${oy}) scale(${k})`});
+// yellow square behind NA
+paint('M440 400H620V700H440Z',C.yellow,['#F3B84A','#FAD77E','#F2C14E'],70,[6,16],[40,120],1.57);
+// sage square bottom-right
+paint('M690 560H880V760H690Z',C.sage,SG,60,[6,16],[40,120],0);
+// teal dot
+paint('M790 540a28 28 0 1 0 .1 0Z',C.teal,TE,10,[4,8],[10,30]);
+// red yarn ball (top-left)
+paint('M215 220a85 85 0 1 0 .1 0Z',C.red,['#A82818','#D84530','#E2614A'],60,[4,10],[20,60]);
+el('clipPath',{id:'yc'});el('circle',{cx:215,cy:305,r:85},P.lastChild);
+const yb=el('g',{'clip-path':'url(#yc)'});
+for(const [a,ry,dy] of [[-35,26,-20],[-35,40,10],[-35,22,40],[40,30,-10],[40,46,20],[95,34,0],[95,18,-30],[140,28,15]])
+  el('ellipse',{cx:215,cy:305+dy,rx:92,ry,transform:`rotate(${a} 215 ${305})`,stroke:'#8E1E12','stroke-width':4,fill:'none',opacity:.55},yb);
+P=document.getElementById('txt');
+const T=el('g',{transform:`translate(${ox} ${oy}) scale(${k})`});
+const ink=mode==='dark'?'#F1E6D2':'#1C1A1A';
+const t0=el('text',{x:450,y:300,'text-anchor':'middle','font-family':'Inter','font-weight':800,'font-size':30,'letter-spacing':3,fill:ink},T);t0.textContent='PENERBIT';
+const t1=el('text',{x:540,y:530,'text-anchor':'middle','font-family':'Londrina Solid','font-weight':900,'font-size':290,'letter-spacing':-4,fill:ink,textLength:660,lengthAdjust:'spacingAndGlyphs'},T);t1.textContent='BENANG';
+const t2=el('text',{x:450,y:770,'text-anchor':'middle','font-family':'Londrina Solid','font-weight':900,'font-size':290,'letter-spacing':-4,fill:ink,textLength:500,lengthAdjust:'spacingAndGlyphs'},T);t2.textContent='MERAH';
+// red thread from yarn ball, looping down, underlining MERAH
+P=T;
+el('path',{d:'M140 300C90 380 120 470 160 560S120 760 210 800C350 850 560 790 700 805C760 812 790 790 780 770C770 750 740 760 752 784C764 806 820 812 860 800',stroke:C.red,'stroke-width':9,fill:'none','stroke-linecap':'round','stroke-linejoin':'round'});
+</script></body></html>
