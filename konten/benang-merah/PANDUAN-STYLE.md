@@ -37,8 +37,17 @@ Contoh: `maskot-01.png` (lembar ekspresi), tata letak pendukung dari `post-05.pn
 
 ---
 
-## STYLE 3 — #KabarBenangMerah
-Belum ditetapkan (pengumuman, rilis buku, promo, profil penulis).
+## STYLE 3 — Editorial Redaksi Bersih  ·  #KabarBenangMerah
+Contoh: `post-06.png`
+
+- **Untuk:** pengumuman resmi, pembukaan naskah, rilis buku & cover reveal, profil penulis, catatan redaksi, promo.
+- **Prinsip:** banyak ruang kosong, satu ilustrasi potret sebagai pusat, teks rapi dan sedikit.
+- **Latar:** krem terang #F6F1E7, tekstur kertas sangat halus.
+- **Ilustrasi:** satu potret wajah bergaya kuas (rambut hitam bertekstur, pipi merona, mata kecil). Satu benda berwarna merah (topi, syal, buku) dan benang merah yang menjuntai.
+- **Huruf:** judul geometris kapital berjarak lebar (Jost SemiBold) · nomor besar tebal ("Gel. 01", "Buku 02") · isi Jost Light kecil · label pojok kiri atas serif (Instrument Serif: "Kabar / Benang Merah").
+- **Elemen tetap:** teks vertikal di kanan (huruf kapital, 2 baris) · kotak warna kecil (merah di tengah, sage di bawah) · monogram "BM /" · "REDAKSI / BENANG MERAH" kiri bawah · @handle kanan bawah.
+- **Info:** blok label + isi (GENRE, PERIODE, PENGIRIMAN, HARGA, dll).
+- **Jangan:** penuh, ramai, atau banyak warna. Merah hanya untuk satu fokus.
 
 ---
 
@@ -47,4 +56,4 @@ Belum ditetapkan (pengumuman, rilis buku, promo, profil penulis).
 |---|---|---|
 | 1 · Untaian Pikiran | ±50% | 3×/minggu |
 | 2 · Ruang Naskah (Utas) | ±30% | 2×/minggu |
-| 3 · Kabar | ±20% | 1–2×/minggu |
+| 3 · Kabar (Editorial Redaksi) | ±20% | 1–2×/minggu |

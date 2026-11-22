@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600;700&family=Instrument+Serif&display=block" rel="stylesheet">
+<style>
+html,body{margin:0}
+#post{width:1080px;height:1350px;position:relative;overflow:hidden;background:#F6F1E7;color:#1E1E1E;font-family:Jost}
+svg{position:absolute;inset:0}
+.tl{position:absolute;left:76px;top:80px;font:400 30px/1.05 'Instrument Serif';color:#555}
+.mono{position:absolute;left:770px;top:150px;font:400 30px Jost;color:#9A958C}
+.vert{position:absolute;right:58px;top:90px;writing-mode:vertical-rl;font:600 30px/1.5 Jost;letter-spacing:7px}
+.vert span{display:block;font-weight:400;color:#555}
+.blk{position:absolute;right:76px;top:760px;width:44px;height:44px;background:#C8321E}
+.title{position:absolute;left:0;right:0;top:800px;text-align:center;font:600 50px Jost;letter-spacing:6px}
+.part{position:absolute;left:76px;top:900px;display:flex;align-items:baseline;gap:8px}
+.part small{font:600 30px Jost}
+.part b{font:700 140px/1 Jost;letter-spacing:-4px}
+.body{position:absolute;left:80px;top:1060px;width:420px;font:300 21px/1.5 Jost;color:#333}
+.det{position:absolute;left:600px;top:930px;width:400px;font:300 21px/1.5 Jost;color:#333}
+.det p{margin:0 0 14px}
+.det b{display:block;font:600 15px Jost;letter-spacing:3px;color:#1E1E1E}
+.foot{position:absolute;left:80px;bottom:60px;font:600 18px/1.5 Jost;letter-spacing:2px}
+.gb{position:absolute;right:76px;bottom:66px;width:26px;height:26px;background:#8A9A7E}
+.handle{position:absolute;right:120px;bottom:64px;font:400 18px Jost;letter-spacing:2px;color:#555}
+</style></head><body>
+<div id="post">
+<svg viewBox="0 0 1080 1350" width="1080" height="1350">
+<defs>
+  <filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="3" seed="6"/><feDisplacementMap in="SourceGraphic" scale="10"/></filter>
+  <filter id="blur"><feGaussianBlur stdDeviation="12"/></filter>
+  <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="4" seed="4"/>
+    <feDiffuseLighting lighting-color="#fff" surfaceScale="1.3"><feDistantLight azimuth="45" elevation="60"/></feDiffuseLighting></filter>
+</defs>
+<g id="art" filter="url(#rough)"></g>
+<line x1="760" y1="240" x2="820" y2="190" stroke="#9A958C" stroke-width="2"/>
+<rect width="1080" height="1350" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".25"/>
+</svg>
+<div class="tl">Kabar<br>Benang Merah</div>
+<div class="mono">BM</div>
+<div class="vert">NASKAH DIBUKA<span>KAMI MENUNGGU CERITAMU</span></div>
+<div class="blk"></div>
+<div class="title">PEMBUKAAN NASKAH</div>
+<div class="part"><small>Gel.</small><b>01</b></div>
+<div class="body">Benang Merah membuka pintu untuk naskah pertama kami. Kami mencari tulisan yang jujur, yang lahir dari kegelisahan, yang tidak takut sederhana.</div>
+<div class="det">
+  <p><b>GENRE</b>Esai, puisi, cerpen, novel</p>
+  <p><b>PERIODE</b>1 – 31 Desember 2026</p>
+  <p><b>PENGIRIMAN</b>Formulir di link bio</p>
+</div>
+<div class="foot">REDAKSI<br>BENANG MERAH</div>
+<div class="handle">@PENERBITBENANGMERAH</div>
+<div class="gb"></div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg',art=document.getElementById('art');let P=art;
+let seed=21;const R=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};const rr=(a,b)=>a+R()*(b-a);
+function el(t,a,p=P){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+let cid=0;
+function paint(d,base,tones,n=90,w=[4,14],len=[20,70],ang=0){
+  const id='c'+(cid++);const cp=el('clipPath',{id});el('path',{d},cp);el('path',{d,fill:base});
+  const g=el('g',{'clip-path':`url(#${id})`});const tmp=el('path',{d,fill:'none'});const b=tmp.getBBox();tmp.remove();
+  for(let i=0;i<n;i++){const x=rr(b.x,b.x+b.width),y=rr(b.y,b.y+b.height),L=rr(...len),a=ang+rr(-.4,.4);
+    el('path',{d:`M${x} ${y} q${L/2*Math.cos(a)+rr(-6,6)} ${L/2*Math.sin(a)+rr(-6,6)} ${L*Math.cos(a)} ${L*Math.sin(a)}`,
+      stroke:tones[i%tones.length],'stroke-width':rr(...w),'stroke-linecap':'round',fill:'none',opacity:rr(.25,.6)},g)}}
+// face
+paint('M412 450C398 560 436 690 540 696C646 698 684 580 672 450C600 470 482 472 412 450Z','#F0D2B4',['#F5DCC2','#E8C4A2'],70,[6,14],[30,80],1.2);
+el('circle',{cx:468,cy:612,r:34,fill:'#EE8F6A',opacity:.6,filter:'url(#blur)'});
+el('circle',{cx:628,cy:612,r:34,fill:'#EE8F6A',opacity:.6,filter:'url(#blur)'});
+// hair sides
+paint('M372 432C340 520 348 610 392 668C404 650 414 640 426 640C410 580 418 510 452 462Z','#1C1A1A',['#2E2A28','#0E0D0D','#3A3330'],60,[3,8],[30,90],1.5);
+paint('M712 432C742 520 736 610 690 668C678 650 668 640 656 640C672 580 664 510 632 462Z','#1C1A1A',['#2E2A28','#0E0D0D','#3A3330'],60,[3,8],[30,90],1.5);
+paint('M404 440C430 500 480 486 500 470C520 500 570 492 590 474C612 496 650 488 680 440Z','#1C1A1A',['#2E2A28','#0E0D0D','#3A3330'],50,[3,8],[20,60],1.4);
+// red beret
+paint('M326 438C312 336 446 272 562 280C696 290 772 362 748 446C706 476 602 456 542 460C450 466 376 478 326 438Z','#C8321E',['#A82818','#D84530','#E2614A','#B52D1B'],220,[5,16],[40,120],-.15);
+el('path',{d:'M556 282q4 -24 18 -30',stroke:'#A82818','stroke-width':9,'stroke-linecap':'round',fill:'none'});
+// eyes looking up
+for(const x of [492,598]){el('ellipse',{cx:x,cy:556,rx:10,ry:13,fill:'#1C1A1A'});el('circle',{cx:x+3,cy:550,r:3.5,fill:'#fff'})}
+el('path',{d:'M472 524q18 -10 36 -2M582 522q18 -8 36 2',stroke:'#1C1A1A','stroke-width':4,'stroke-linecap':'round',fill:'none'});
+el('path',{d:'M546 584q-8 18 6 20',stroke:'#B5785A','stroke-width':4,'stroke-linecap':'round',fill:'none'});
+el('path',{d:'M526 642q18 10 36 -2',stroke:'#7A3B2A','stroke-width':4,'stroke-linecap':'round',fill:'none'});
+// red thread falling from beret
+el('path',{d:'M744 430C800 470 790 560 740 600S700 700 760 730',stroke:'#C8321E','stroke-width':4,fill:'none','stroke-linecap':'round'});
+// sketchy scribble under chin like a signature mark
+
+</script></body></html>
