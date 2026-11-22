@@ -23,6 +23,11 @@ AJAKAN UNTUK KAMU
 
 Terima kasih sudah membaca sampai di sini. Kami senang akhirnya bisa menyapa.
 
+📞 NARAHUBUNG (CP)
+✶ [Nama Admin]: wa.me/62[nomor] (WhatsApp)
+✶ Surel: [alamat email redaksi]
+✶ Jam layanan: [Senin–Jumat, 09.00–17.00 WIB]
+
 — Benang Merah
 
 #PenerbitBenangMerah #UntaianPikiran #PenerbitBuku #TerbitkanBuku #PenerbitIndonesia #PenerbitIndie #MenulisBuku #PenulisIndonesia #DuniaMenulis #Bookstagram
@@ -55,6 +60,11 @@ CARA MEMULAI
 🔖 Simpan postingan ini sebagai panduan saat naskahmu siap.
 👥 Bagikan kepada teman yang naskahnya sudah terlalu lama disimpan.
 
+📞 NARAHUBUNG (CP)
+✶ [Nama Admin]: wa.me/62[nomor] (WhatsApp)
+✶ Surel: [alamat email redaksi]
+✶ Jam layanan: [Senin–Jumat, 09.00–17.00 WIB]
+
 — Utas & Sulam, Benang Merah
 
 #PenerbitBenangMerah #RuangNaskah #UtasDanSulam #PenerbitBuku #TerbitkanBuku #PenerbitIndonesia #CaraMenerbitkanBuku #TipsMenulis #PenulisPemula #NaskahBuku
@@ -86,11 +96,14 @@ PROSEDUR PENGAJUAN NASKAH
 
 INFORMASI
 ✶ Genre: esai, puisi, cerpen, novel
-✶ Konsultasi: DM Instagram atau WhatsApp [nomor]
-✶ Surel: [alamat email redaksi]
 ✶ Tautan pengajuan: link di bio
 
 Kami menantikan naskah terbaik Anda.
+
+📞 NARAHUBUNG (CP)
+✶ [Nama Admin]: wa.me/62[nomor] (WhatsApp)
+✶ Surel: [alamat email redaksi]
+✶ Jam layanan: [Senin–Jumat, 09.00–17.00 WIB]
 
 Hormat kami,
 — Redaksi Benang Merah

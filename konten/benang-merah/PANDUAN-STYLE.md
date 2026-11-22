@@ -138,7 +138,15 @@ Contoh: `feed/00-pratinjau-feed-9.png`
 | **N** | **Nilai** | Isi utama: penjelasan, manfaat, alasan, atau cerita. | 1–3 paragraf |
 | **A** | **Arahan** | Instruksi bertahap bernomor: apa yang harus dilakukan pembaca. | 3–6 poin |
 | **N** | **Nota** | Blok informasi resmi: syarat, tanggal, kontak, tautan. | Daftar ringkas |
-| **G** | **Garis penutup** | Ajakan interaksi (komentar/simpan/bagikan) + tanda tangan **— Redaksi Benang Merah** + tagar. | 3–5 baris |
+| **G** | **Garis penutup** | Ajakan interaksi (komentar/simpan/bagikan) + **blok CP** + tanda tangan **— Redaksi Benang Merah** + tagar. | 6–10 baris |
+
+### Blok CP (wajib di setiap caption, tepat sebelum tanda tangan)
+```
+📞 NARAHUBUNG (CP)
+✶ [Nama Admin]: wa.me/62[nomor] (WhatsApp)
+✶ Surel: [alamat email redaksi]
+✶ Jam layanan: [Senin–Jumat, 09.00–17.00 WIB]
+```
 
 ### Aturan penulisan
 - **Panjang:** 800–2.000 karakter (batas Instagram 2.200).
