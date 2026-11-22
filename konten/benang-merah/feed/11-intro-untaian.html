@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Londrina+Solid:wght@900&family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;600;700&family=Inter:wght@600;700;800&display=block" rel="stylesheet">
+<style>html,body{margin:0}#post{width:1080px;height:1350px;position:relative;overflow:hidden}svg#s{position:absolute;inset:0}
+.a{position:absolute}.gh{font-family:'Gochi Hand'}.is{font-family:'Instrument Serif'}.jo{font-family:Jost}.in{font-family:Inter}
+.caps{left:72px;right:72px;bottom:46px;display:flex;justify-content:space-between;font:700 15px Inter;letter-spacing:3px}
+</style><script src="lib.js"></script></head><body><div id="post" style="background:#1E4640">
+<svg id="s" viewBox="0 0 1080 1350" width="1080" height="1350"></svg>
+<div class="a gh" style="left:70px;top:80px;font-size:84px;line-height:1.04;color:#F1E6D2;transform:rotate(-2deg)">Kami percaya,<br>setiap naskah punya<br><span style="color:#E8743B">benang merahnya.</span></div>
+<div class="a gh" style="left:72px;top:400px;font-size:44px;color:#F1E6D2;opacity:.9">tugas kami: menariknya sampai jadi buku.</div>
+<div class="a in" style="left:72px;bottom:50px;font-weight:600;font-size:22px;color:#F1E6D2;opacity:.9">@penerbitbenangmerah · #UntaianPikiran</div>
+<div class="a in" style="right:70px;bottom:40px;width:58px;height:66px;border:3px solid #F1E6D2;color:#F1E6D2;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:26px">BM</div></div><script>
+setup('rough');seed=51;
+paint('M-30 -30H1110V1100H-30Z',C.teal,TE,320,[10,30],[60,170],0.1);
+for(let i=0;i<40;i++){const x=rr(30,1050),y=rr(40,900);if(x<900&&y<470)continue;star(x,y,rr(4,11),R()<.3?C.orange:C.cream)}
+paint('M880 560a70 70 0 1 0 .1 0Z',C.yellow,['#F3B84A','#FAD77E'],40,[4,9],[12,35]);
+paint('M-30 1010C200 940 420 960 560 980S900 930 1110 960V1390H-30Z',C.dgreen,GR,220,[5,14],[30,90],-.1);
+paint('M-30 1150C300 1110 700 1140 1110 1110V1390H-30Z',C.orange,OR,200,[5,15],[30,100],0);
+for(let i=0;i<70;i++){const x=rr(0,1080),y=rr(1120,1300);el('path',{d:`M${x} ${y}q${rr(-6,6)} ${-rr(10,22)} ${rr(-10,10)} ${-rr(20,38)}`,stroke:R()<.5?'#B9502A':'#F3A066','stroke-width':rr(2,4),fill:'none'});if(R()<.3)el('circle',{cx:x,cy:y-rr(26,40),r:rr(3,6),fill:R()<.5?C.cream:'#F7C65A'})}
+// giant open book on the hill
+paint('M300 1000L540 1040L540 1120L300 1080Z','#B5462A',['#A82818'],20,[3,7],[20,60],0);
+paint('M540 1040L780 1000L780 1080L540 1120Z','#B5462A',['#A82818'],20,[3,7],[20,60],0);
+paint('M310 960C400 930 480 950 540 1010L540 1100C480 1040 400 1030 310 1050Z',C.cream,['#E7D8BD','#F7EEDD'],40,[3,7],[30,90],0.2);
+paint('M770 960C680 930 600 950 540 1010L540 1100C600 1040 680 1030 770 1050Z',C.cream,['#E7D8BD','#F7EEDD'],40,[3,7],[30,90],-0.2);
+for(let i=0;i<5;i++){el('path',{d:`M${340} ${985+i*14}q${80} -24 ${170} 10`,stroke:'#9A8A72','stroke-width':2.5,fill:'none'});el('path',{d:`M${740} ${985+i*14}q${-80} -24 ${-170} 10`,stroke:'#9A8A72','stroke-width':2.5,fill:'none'})}
+// red thread rising from the book's spine like a road into the sky
+el('path',{d:'M540 1010C520 900 640 860 600 780S480 700 560 620S760 560 720 480',stroke:C.red,'stroke-width':7,fill:'none','stroke-linecap':'round'});
+// tiny figure walking on thread
+paint('M588 742C584 716 596 702 606 702C618 702 626 716 622 742Z',C.navy,['#1D3A4F'],8,[3,6],[8,20],1.4);
+paint('M594 686a12 13 0 1 0 24 0a12 13 0 1 0 -24 0Z',C.orange,[],0);
+el('path',{d:'M598 742l-6 22M616 742l8 20',stroke:C.navy,'stroke-width':7,'stroke-linecap':'round'});
+</script></body></html>

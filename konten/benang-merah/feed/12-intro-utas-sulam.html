@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Londrina+Solid:wght@900&family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;600;700&family=Inter:wght@600;700;800&display=block" rel="stylesheet">
+<style>html,body{margin:0}#post{width:1080px;height:1350px;position:relative;overflow:hidden}svg#s{position:absolute;inset:0}
+.a{position:absolute}.gh{font-family:'Gochi Hand'}.is{font-family:'Instrument Serif'}.jo{font-family:Jost}.in{font-family:Inter}
+.caps{left:72px;right:72px;bottom:46px;display:flex;justify-content:space-between;font:700 15px Inter;letter-spacing:3px}
+</style><script src="lib.js"></script></head><body><div id="post" style="background:#EFE8DC">
+<svg id="s" viewBox="0 0 1080 1350" width="1080" height="1350"></svg>
+<div class="a in" style="left:72px;top:70px;font-weight:700;font-size:20px;letter-spacing:3px;color:#3B1F14">RUANG NASKAH <span style="color:#B5462A">✶</span> PERKENALAN</div>
+<div class="a is" style="left:66px;top:118px;font-size:132px;line-height:.9;letter-spacing:-5px;color:#3B1F14">Kami <i style="color:#B5462A">Benang Merah.</i></div>
+<div class="a gh" style="left:72px;top:250px;font-size:42px;color:#5A3A2C">penerbit yang menemanimu dari naskah sampai rak buku</div>
+<div class="a gh" style="left:96px;top:356px;width:330px;font-size:38px;line-height:1.1;color:#3B1F14;text-align:center">"Naskahku beneran bisa jadi buku?"</div>
+<div class="a gh" style="left:640px;top:356px;width:330px;font-size:38px;line-height:1.1;color:#3B1F14;text-align:center">"Bisa. Kami temani sampai terbit."</div>
+<div class="a in" style="left:0;right:0;top:1112px;display:flex;justify-content:center;gap:0;font-weight:700;font-size:17px;letter-spacing:2px;color:#3B1F14">
+<span style="width:170px;text-align:center">NASKAH</span><span style="width:170px;text-align:center">EDITING</span><span style="width:170px;text-align:center">SAMPUL</span><span style="width:170px;text-align:center">CETAK</span><span style="width:170px;text-align:center;color:#B5462A">TERBIT</span></div>
+<div class="a gh" style="left:0;right:0;top:1170px;text-align:center;font-size:40px;color:#3B1F14">kenalan lebih dekat → geser</div>
+<div class="a caps" style="color:#3B1F14"><span>UTAS · SI PENULIS</span><span>SULAM · SI EDITOR</span><span>@PENERBITBENANGMERAH</span></div></div><script>
+setup(null,.32,0);P=document.getElementById('art');seed=33;
+// speech bubbles
+for(const [x,tx] of [[80,200],[625,880]]){paint(`M${x} 340H${x+360}V470H${tx+20}L${tx} 500L${tx-10} 470H${x}Z`,'#F8F4EC',['#EFE8DC'],10,[3,6],[20,60]);}
+el('path',{d:'M80 340H440V470H220L200 500L190 470H80Z',fill:'none',stroke:C.ink,'stroke-width':3,filter:'url(#wob)'});
+el('path',{d:'M625 340H985V470H900L880 500L870 470H625Z',fill:'none',stroke:C.ink,'stroke-width':3,filter:'url(#wob)'});
+el('path',{d:'M100 1060V700a170 170 0 0 1 340 0V1060Z',fill:C.sage});
+el('path',{d:'M640 1060V700a170 170 0 0 1 340 0V1060Z',fill:'#B5462A'});
+const u=el('g',{transform:'translate(92 560) scale(1.05)',filter:'url(#wob)'});utas2(u,'bingung');
+const s=el('g',{transform:'translate(632 560) scale(1.05)',filter:'url(#wob)'});sulam(s,'tenang');
+P=document.getElementById('art');
+el('rect',{x:60,y:1040,width:960,height:30,fill:'#EFE8DC'});
+// process thread with knots
+el('path',{d:'M120 1094C300 1080 500 1104 700 1090S900 1080 960 1094',stroke:C.red,'stroke-width':5,fill:'none','stroke-linecap':'round'});
+for(let i=0;i<5;i++)el('circle',{cx:200+i*170,cy:1092,r:i==4?11:8,fill:i==4?C.red:'#EFE8DC',stroke:C.red,'stroke-width':4});
+</script></body></html>
