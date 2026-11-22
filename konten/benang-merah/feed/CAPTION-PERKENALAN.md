@@ -24,9 +24,10 @@ AJAKAN UNTUK KAMU
 Terima kasih sudah membaca sampai di sini. Kami senang akhirnya bisa menyapa.
 
 📞 NARAHUBUNG (CP)
-✶ [Nama Admin]: wa.me/62[nomor] (WhatsApp)
-✶ Surel: [alamat email redaksi]
-✶ Jam layanan: [Senin–Jumat, 09.00–17.00 WIB]
+✶ Kak Deny: wa.me/6285795732319 (WhatsApp 0857-9573-2319)
+✶ Surel: benangmerah@gmail.com
+✶ Jam layanan: Senin–Sabtu, 08.00–17.00 WIB
+✶ Alamat: Jl. Biodo, Ds. Beton, Kab. Gresik, Jawa Timur
 
 — Benang Merah
 
@@ -61,9 +62,10 @@ CARA MEMULAI
 👥 Bagikan kepada teman yang naskahnya sudah terlalu lama disimpan.
 
 📞 NARAHUBUNG (CP)
-✶ [Nama Admin]: wa.me/62[nomor] (WhatsApp)
-✶ Surel: [alamat email redaksi]
-✶ Jam layanan: [Senin–Jumat, 09.00–17.00 WIB]
+✶ Kak Deny: wa.me/6285795732319 (WhatsApp 0857-9573-2319)
+✶ Surel: benangmerah@gmail.com
+✶ Jam layanan: Senin–Sabtu, 08.00–17.00 WIB
+✶ Alamat: Jl. Biodo, Ds. Beton, Kab. Gresik, Jawa Timur
 
 — Utas & Sulam, Benang Merah
 
@@ -101,9 +103,10 @@ INFORMASI
 Kami menantikan naskah terbaik Anda.
 
 📞 NARAHUBUNG (CP)
-✶ [Nama Admin]: wa.me/62[nomor] (WhatsApp)
-✶ Surel: [alamat email redaksi]
-✶ Jam layanan: [Senin–Jumat, 09.00–17.00 WIB]
+✶ Kak Deny: wa.me/6285795732319 (WhatsApp 0857-9573-2319)
+✶ Surel: benangmerah@gmail.com
+✶ Jam layanan: Senin–Sabtu, 08.00–17.00 WIB
+✶ Alamat: Jl. Biodo, Ds. Beton, Kab. Gresik, Jawa Timur
 
 Hormat kami,
 — Redaksi Benang Merah

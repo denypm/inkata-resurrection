@@ -46,11 +46,11 @@ Instagram mengizinkan hingga 5 tautan. Urutan yang disarankan:
 1. **Kirim Naskah** → formulir (Google Form/Typeform)
 2. **Program & Kelas** → halaman info
 3. **Toko Buku** → marketplace/toko online (setelah buku terbit)
-4. **WhatsApp Redaksi** → wa.me/62xxxxxxxxxx
+4. **WhatsApp Redaksi** → wa.me/6285795732319
 Opsional: satu halaman tautan (Linktree/Beacons/situs sendiri) bergaya krem + merah.
 
 ## TAHAP 5 — Tombol kontak
-Edit profil → Opsi kontak: **Email** (mis. redaksi@…) dan **WhatsApp**. Tombol "Hubungi" akan muncul di profil.
+Edit profil → Opsi kontak: **Email** benangmerah@gmail.com, **WhatsApp** 0857-9573-2319, dan **Alamat** Jl. Biodo, Ds. Beton, Kab. Gresik, Jawa Timur. Tombol "Hubungi" akan muncul di profil.
 
 ## TAHAP 6 — Foto profil
 - Unggah `logo/logo-ig.png` (sudah aman untuk dipotong lingkaran).
