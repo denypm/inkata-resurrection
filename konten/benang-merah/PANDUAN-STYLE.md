@@ -18,7 +18,7 @@ Contoh: `post-02.png`, `post-04.png`
 ---
 
 ## STYLE 2 — Maskot "Utas"  ·  #RuangNaskah
-Contoh: `maskot-01.png` (lembar ekspresi), tata letak pendukung dari `post-05.png`
+Contoh: `feed/maskot-02.png` (lembar ekspresi versi final), `feed/03-…png`, `feed/04-…png`. (`maskot-01.png` = versi lama bergaris tebal, tidak dipakai lagi)
 
 - **Untuk:** tips menulis, edukasi penerbitan, "Tahukah Kamu?", kamus penerbitan, reaksi & humor dunia penulis, stiker Story, komik 4 panel.
 - **Tokoh Utas (wajib konsisten):**
@@ -29,7 +29,7 @@ Contoh: `maskot-01.png` (lembar ekspresi), tata letak pendukung dari `post-05.pn
   - pipi merona + bintik-bintik
   - sweater sage #8A9A7E dengan **jahitan benang merah putus-putus** di dada, kerah krem
 - **Ekspresi baku:** senang · bingung · kaget · lelah · dapat ide · fokus (tambah sesuai kebutuhan, ciri di atas tidak boleh hilang)
-- **Garis:** tinta cokelat tua #3B1F14, tebal ±4px, sedikit bergetar.
+- **Teknik gambar (versi final):** TANPA garis tepi. Bidang warna datar bertekstur sapuan kuas, tepi sedikit bergetar. Garis hanya untuk detail wajah (mata, alis, mulut) dan helai rambut tipis. Mata titik hitam kecil dengan titik cahaya; pipi merona besar dan lembut; ujung hidung kemerahan.
 - **Latar:** krem #EFE8DC bertekstur kertas.
 - **Warna pendukung:** bata #B5462A · sage #8A9A7E · krem · cokelat tua.
 - **Huruf:** judul serif ramping (Instrument Serif, italic untuk kata kunci warna bata) · keterangan tulisan tangan (Gochi Hand) · label kecil huruf kapital berjarak lebar (Inter Bold).

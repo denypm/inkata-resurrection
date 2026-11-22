@@ -71,7 +71,7 @@ D['03-utas-writers-block']=dict(BG='#EFE8DC',CSS='',HTML='''
 setup(null,.35,0);P=document.getElementById('art');
 el('path',{d:'M560 1250V760a230 230 0 0 1 460 0V1250Z',fill:'#B5462A'});
 el('circle',{cx:960,cy:520,r:58,fill:C.sage});
-const g=el('g',{transform:'translate(568 692) scale(1.3)',filter:'url(#wob)'});utas(g,'lelah');
+const g=el('g',{transform:'translate(568 692) scale(1.3)',filter:'url(#wob)'});utas2(g,'lelah');
 el('text',{x:900,y:700,'font-family':'Instrument Serif','font-style':'italic','font-size':72,fill:'#3B1F14'}).textContent='zzz';
 el('path',{d:'M560 1150C460 1160 430 1080 360 1110S300 1230 200 1210',stroke:C.red,'stroke-width':4,fill:'none','stroke-linecap':'round'});
 ''')
@@ -87,7 +87,7 @@ D['04-utas-siklus-revisi']=dict(BG='#EFE8DC',CSS='.cap{position:absolute;width:4
 setup(null,.35,0);P=document.getElementById('art');
 const cells=[[60,190,'senang','#F6D9B8'],[550,190,'kaget','#D9E3DC'],[60,730,'fokus','#D9E3DC'],[550,730,'ide','#F6D9B8']];
 for(const [x,y,e,bg] of cells){el('rect',{x,y,width:470,height:520,fill:bg,stroke:C.ink,'stroke-width':4,filter:'url(#wob)'});
-  const g=el('g',{transform:`translate(${x+78} ${y+40}) scale(.95)`,filter:'url(#wob)'});utas(g,e);
+  const g=el('g',{transform:`translate(${x+78} ${y+40}) scale(.95)`,filter:'url(#wob)'});utas2(g,e);
   el('rect',{x,y:y+440,width:470,height:80,fill:'#EFE8DC',opacity:0})}
 el('path',{d:'M530 450H550M530 990H550M295 710V730M785 710V730',stroke:C.red,'stroke-width':5,'stroke-linecap':'round'});
 ''')
