@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;600;700&family=Inter:wght@600;700;800&display=block" rel="stylesheet">
+<style>html,body{margin:0}#post{width:1080px;height:1920px;position:relative;overflow:hidden}svg#s{position:absolute;inset:0}
+.a{position:absolute}.gh{font-family:'Gochi Hand'}.is{font-family:'Instrument Serif'}.jo{font-family:Jost}.in{font-family:Inter}</style>
+<script src="lib.js"></script><script>
+function setupS(filter,paperOp=.4,speck=.3){const s=document.getElementById('s');s.innerHTML=DEFS+`<g id="art" ${filter?`filter="url(#${filter})"`:''}></g>
+<rect width="1080" height="1920" filter="url(#paper)" style="mix-blend-mode:multiply" opacity="${paperOp}"/>`+(speck?`<rect width="1080" height="1920" filter="url(#speck)" opacity="${speck}"/>`:'');P=document.getElementById('art');}
+</script></head><body><div id="post" style="background:#E8743B">
+<svg id="s" viewBox="0 0 1080 1920" width="1080" height="1920"></svg>
+<div class="a in" style="left:0;right:0;top:260px;text-align:center;font-weight:700;font-size:22px;letter-spacing:4px;color:#152A3A">#UNTAIANPIKIRAN</div>
+<div class="a gh" style="left:80px;right:80px;top:320px;text-align:center;font-size:100px;line-height:1.05;color:#152A3A">kamu tim<br>yang <span style="color:#F1E6D2">mana?</span></div><div class="a in" style="left:0;right:0;bottom:230px;text-align:center;font-weight:600;font-size:22px;letter-spacing:1px;color:#F1E6D2;opacity:.85">@penerbitbenangmerah</div></div><script>
+setupS('rough');seed=8;
+paint('M-30 -30H1110V1300H-30Z',C.orange,OR,360,[10,30],[60,170],0.05);
+paint('M540 1180a110 110 0 1 0 .1 0Z',C.yellow,['#F3B84A','#FAD77E'],60,[5,12],[15,45]);
+for(let i=0;i<16;i++)star(rr(60,1020),rr(560,1150),rr(4,9),C.cream);
+paint('M-30 1380C200 1260 420 1240 560 1270S880 1380 1110 1340V1950H-30Z',C.dgreen,GR,300,[5,15],[30,100],-.1);
+paint('M-30 1560C300 1500 700 1550 1110 1510V1950H-30Z',C.teal,TE,240,[6,16],[30,100],0);
+for(let i=0;i<90;i++){const x=rr(0,1080),y=rr(1320,1880);el('path',{d:`M${x} ${y}q${rr(-6,6)} ${-rr(10,22)} ${rr(-10,10)} ${-rr(20,40)}`,stroke:R()<.5?'#3E7C5A':'#2F6B4F','stroke-width':rr(2,4),fill:'none'});if(R()<.25)el('circle',{cx:x,cy:y-rr(28,40),r:rr(3,6),fill:R()<.5?C.cream:C.orange})}
+// two figures on hill joined by thread
+for(const [x,c] of [[400,'#1C1A1A'],[680,C.orange]]){paint(`M${x-22} 1282C${x-28} 1240 ${x-10} 1222 ${x} 1222C${x+12} 1222 ${x+28} 1240 ${x+22} 1282Z`,C.navy,['#1D3A4F'],10,[3,6],[10,30],1.4);
+ paint(`M${x-18} 1200a18 20 0 1 0 36 0a18 20 0 1 0 -36 0Z`,c,[],0)}
+el('path',{d:'M420 1250C480 1200 600 1300 660 1250',stroke:C.red,'stroke-width':5,fill:'none','stroke-linecap':'round'});
+</script></body></html>

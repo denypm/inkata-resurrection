@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;600;700&family=Inter:wght@600;700;800&display=block" rel="stylesheet">
+<style>html,body{margin:0}#post{width:1080px;height:1920px;position:relative;overflow:hidden}svg#s{position:absolute;inset:0}
+.a{position:absolute}.gh{font-family:'Gochi Hand'}.is{font-family:'Instrument Serif'}.jo{font-family:Jost}.in{font-family:Inter}</style>
+<script src="lib.js"></script><script>
+function setupS(filter,paperOp=.4,speck=.3){const s=document.getElementById('s');s.innerHTML=DEFS+`<g id="art" ${filter?`filter="url(#${filter})"`:''}></g>
+<rect width="1080" height="1920" filter="url(#paper)" style="mix-blend-mode:multiply" opacity="${paperOp}"/>`+(speck?`<rect width="1080" height="1920" filter="url(#speck)" opacity="${speck}"/>`:'');P=document.getElementById('art');}
+</script></head><body><div id="post" style="background:#F6F1E7">
+<svg id="s" viewBox="0 0 1080 1920" width="1080" height="1920"></svg>
+<div class="a is" style="left:90px;top:260px;font-size:34px;line-height:1.05;color:#555">Jawaban<br>Sulam</div>
+<div class="a jo" style="right:70px;top:260px;writing-mode:vertical-rl;font-weight:600;font-size:28px;letter-spacing:7px;color:#1E1E1E">TANYA REDAKSI</div>
+<div class="a jo" style="left:90px;top:420px;font-weight:600;font-size:18px;letter-spacing:4px;color:#C8321E">PERTANYAAN</div>
+<div class="a jo" style="left:90px;top:960px;font-weight:600;font-size:18px;letter-spacing:4px;color:#C8321E">JAWABAN</div>
+<div class="a jo" style="left:90px;bottom:300px;font-weight:600;font-size:18px;line-height:1.5;letter-spacing:2px;color:#1E1E1E">REDAKSI<br>BENANG MERAH</div></div><script>
+setupS(null,.22,0);seed=6;
+el('rect',{x:90,y:460,width:830,height:420,fill:'#EDE6D8',rx:6});
+el('path',{d:'M90 1000H920',stroke:'#D8CFC0','stroke-width':2});
+el('rect',{x:910,y:1320,width:40,height:40,fill:C.red});
+el('clipPath',{id:'cut'});el('rect',{x:0,y:0,width:1080,height:1680},P.lastChild);
+const w=el('g',{'clip-path':'url(#cut)'});const g=el('g',{transform:'translate(560 1240) scale(1.1)',filter:'url(#wob)'},w);sulam(g,'tenang');
+</script></body></html>

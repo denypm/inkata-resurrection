@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;600;700&family=Inter:wght@600;700;800&display=block" rel="stylesheet">
+<style>html,body{margin:0}#post{width:1080px;height:1080px;position:relative;overflow:hidden}svg#s{position:absolute;inset:0}
+.a{position:absolute}.gh{font-family:'Gochi Hand'}.is{font-family:'Instrument Serif'}.jo{font-family:Jost}.in{font-family:Inter}</style>
+<script src="lib.js"></script><script>
+function setupS(filter,paperOp=.4,speck=.3){const s=document.getElementById('s');s.innerHTML=DEFS+`<g id="art" ${filter?`filter="url(#${filter})"`:''}></g>
+<rect width="1080" height="1920" filter="url(#paper)" style="mix-blend-mode:multiply" opacity="${paperOp}"/>`+(speck?`<rect width="1080" height="1920" filter="url(#speck)" opacity="${speck}"/>`:'');P=document.getElementById('art');}
+</script></head><body><div id="post" style="background:#EFE8DC">
+<svg id="s" viewBox="0 0 1080 1080" width="1080" height="1080"></svg></div><script>setupS(null,.25,0);P=document.getElementById('art');seed=2;P=el('g',{transform:'scale(3.6)'});paint('M150 0a150 150 0 1 0 .1 0Z','#EFE8DC',['#E7D8BD','#F7EEDD'],60,[6,14],[30,80],0);el('text',{x:150,y:205,'text-anchor':'middle','font-family':'Gochi Hand','font-size':170,fill:C.red}).textContent='?';</script></body></html>
