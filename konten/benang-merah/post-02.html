@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@600;800&display=block" rel="stylesheet">
+<style>
+html,body{margin:0}
+#post{width:1080px;height:1350px;position:relative;overflow:hidden;background:#1E4640}
+svg{position:absolute;inset:0}
+.t{position:absolute;left:70px;top:86px;font:400 92px/1.02 'Gochi Hand';color:#F1E6D2;transform:rotate(-2deg)}
+.t span{color:#E8743B}
+.h{position:absolute;left:72px;bottom:56px;font:600 24px Inter;color:#F1E6D2;opacity:.9}
+.lg{position:absolute;right:70px;bottom:44px;width:62px;height:72px;border:3px solid #F1E6D2;color:#F1E6D2;display:flex;align-items:center;justify-content:center;font:800 28px Inter}
+</style></head><body>
+<div id="post">
+<svg id="s" viewBox="0 0 1080 1350" width="1080" height="1350">
+<defs>
+  <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="3"/>
+    <feDisplacementMap in="SourceGraphic" scale="9"/>
+  </filter>
+  <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="4" seed="8"/>
+    <feDiffuseLighting lighting-color="#fff" surfaceScale="2.2"><feDistantLight azimuth="45" elevation="55"/></feDiffuseLighting></filter>
+  <filter id="speck"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="2"/>
+    <feColorMatrix values="0 0 0 0 1  0 0 0 0 .95  0 0 0 0 .85  0 0 0 9 -6.2"/></filter>
+</defs>
+<g id="scene" filter="url(#rough)"></g>
+<rect width="1080" height="1350" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".42"/>
+<rect width="1080" height="1350" filter="url(#speck)" opacity=".35"/>
+</svg>
+<div class="t">Setiap cerita<br>punya ujung<br><span>benangnya</span> sendiri.</div>
+<div class="h">@penerbitbenangmerah · #UntaianPikiran</div>
+<div class="lg">BM</div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg',scene=document.getElementById('scene');
+let seed=7;const R=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
+const rr=(a,b)=>a+R()*(b-a);
+function el(tag,a,p=scene){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+let cid=0;
+// painted shape: base fill + brush strokes clipped inside
+function paint(d,base,tones,n=90,w=[4,14],len=[20,70],ang=0){
+  const id='c'+(cid++);const cp=el('clipPath',{id});el('path',{d},cp);
+  el('path',{d,fill:base});
+  const g=el('g',{'clip-path':`url(#${id})`});
+  const bb=g.parentNode.lastChild; const tmp=el('path',{d,fill:'none'});const b=tmp.getBBox();tmp.remove();
+  for(let i=0;i<n;i++){const x=rr(b.x,b.x+b.width),y=rr(b.y,b.y+b.height),L=rr(...len),a=ang+rr(-.35,.35);
+    el('path',{d:`M${x} ${y} q${L/2*Math.cos(a)+rr(-6,6)} ${L/2*Math.sin(a)+rr(-6,6)} ${L*Math.cos(a)} ${L*Math.sin(a)}`,
+      stroke:tones[i%tones.length],'stroke-width':rr(...w),'stroke-linecap':'round',fill:'none',opacity:rr(.25,.6)},g)}
+}
+const cream='#F1E6D2',orange='#E8743B',red='#C8321E',teal='#1E4640',dteal='#123230',green='#2F6B4F',dgreen='#1D4A36',navy='#152A3A';
+// sky strokes
+paint('M0 0H1080V900H0Z',teal,['#24534B','#183B37','#2A5C52'],260,[10,30],[60,160],0.1);
+// stars
+for(let i=0;i<46;i++){const x=rr(30,1050),y=rr(40,700);if(x<640&&y<460&&R()<.8)continue;const s=rr(4,13),c=R()<.25?orange:cream;
+  el('path',{d:`M${x} ${y-s}Q${x} ${y} ${x+s} ${y}Q${x} ${y} ${x} ${y+s}Q${x} ${y} ${x-s} ${y}Q${x} ${y} ${x} ${y-s}Z`,fill:c,opacity:rr(.7,1)})}
+// moon
+paint('M940 365a105 105 0 1 0 .1 0Z',orange,['#F08A4B','#D9622E','#F3A066'],120,[5,12],[15,45]);
+paint('M970 380a80 80 0 1 0 .1 0Z',teal,['#24534B','#183B37'],40,[6,14],[20,50]); // crescent cut
+// far hills
+paint('M0 760C160 690 300 720 430 750S720 640 860 660 1040 700 1080 690V1350H0Z',dgreen,['#24573F','#163B2B','#2A6248'],220,[5,14],[30,90],-.15);
+// house on hill
+paint('M845 670h80v58h-80Z',cream,['#E7D8BD','#FFF4E2'],30,[4,8],[10,30]);
+paint('M835 674l50-46 50 46Z',red,['#A82818','#D84530'],25,[4,8],[10,30]);
+el('rect',{x:872,y:688,width:22,height:22,fill:'#F7C65A'});
+// mid hill orange
+paint('M0 900C180 830 380 860 560 880S880 800 1080 840V1350H0Z',orange,['#F08A4B','#D9622E','#F3A066','#E06A33'],320,[5,15],[30,100],-.05);
+// foreground
+paint('M0 1060C220 1020 520 1050 760 1030S1000 1010 1080 1030V1350H0Z',dteal,['#1A403B','#0E2726','#245049'],260,[6,16],[30,100],0);
+// grass + flowers
+for(let i=0;i<120;i++){const x=rr(0,1080),y=rr(880,1300);const fg=y>1050;const c=fg?(R()<.5?'#2F6B4F':'#3E7C5A'):(R()<.5?'#B9502A':'#F3A066');
+  el('path',{d:`M${x} ${y}q${rr(-6,6)} ${-rr(10,26)} ${rr(-10,10)} ${-rr(22,44)}`,stroke:c,'stroke-width':rr(2,4),fill:'none','stroke-linecap':'round'});
+  if(R()<.3)el('circle',{cx:x+rr(-8,8),cy:y-rr(30,46),r:rr(3,7),fill:R()<.5?cream:(fg?orange:'#F7C65A')})}
+// thread from spool to house
+el('path',{d:'M690 1085C820 1110 960 1060 900 990S700 960 760 880 960 800 900 720',stroke:red,'stroke-width':6,fill:'none','stroke-linecap':'round'});
+// spool
+paint('M380 1170a190 42 0 1 0 380 0a190 42 0 1 0 -380 0Z','#B87A45',['#C98A52','#9C6435'],40,[4,9],[20,60]);
+paint('M400 935H740V1160H400Z',red,['#A82818','#D84530','#B52D1B','#E05A40'],170,[3,7],[80,200],0);
+paint('M380 938a190 40 0 1 0 380 0a190 40 0 1 0 -380 0Z','#D9A066',['#E6B27A','#C48B52'],50,[4,9],[20,60]);
+el('ellipse',{cx:570,cy:938,rx:22,ry:7,fill:'#7A4B26'});
+// girl sitting on spool
+paint('M500 820C495 870 492 905 494 940H648C650 905 646 870 640 820C620 790 520 790 500 820Z',navy,['#1D3A4F','#0E1F2C'],60,[4,10],[20,60],1.4); // torso/coat
+paint('M505 930C500 970 520 1010 560 1015L566 1000C540 990 535 960 545 935Z',navy,['#1D3A4F'],15,[4,8],[10,30]); // leg L
+paint('M590 930C600 975 625 1010 655 1012L660 996C640 990 628 960 632 935Z',navy,['#1D3A4F'],15,[4,8],[10,30]); // leg R
+el('path',{d:'M548 1012c10-6 26-4 30 4l-32 2z',fill:red});el('path',{d:'M644 1010c10-6 26-4 30 4l-32 2z',fill:red});
+paint('M520 720C510 790 515 840 500 870C540 860 610 860 640 868C628 830 632 780 620 720C605 680 535 680 520 720Z',orange,['#F08A4B','#D9622E','#F3A066'],70,[3,7],[30,80],1.5); // hair back
+paint('M548 712a24 30 0 1 0 48 0a24 30 0 1 0 -48 0Z','#F3D9BC',['#EBCBA8'],10,[3,6],[8,20]); // face
+paint('M535 700C545 670 600 665 612 700C595 690 560 690 535 700Z',orange,['#F08A4B','#D9622E'],20,[3,6],[10,30]); // fringe
+el('path',{d:'M560 724q6 4 12 0M580 724q6 4 12 0',stroke:'#3A2418','stroke-width':2.5,fill:'none'}); // closed eyes reading
+el('circle',{cx:558,cy:738,r:6,fill:'#E8A08A',opacity:.7});el('circle',{cx:596,cy:738,r:6,fill:'#E8A08A',opacity:.7});
+// book
+paint('M520 800L574 812L574 868L520 856Z',cream,['#E7D8BD'],12,[3,6],[10,25]);
+paint('M574 812L628 800L628 856L574 868Z',cream,['#E7D8BD'],12,[3,6],[10,25]);
+el('path',{d:'M574 812V868',stroke:red,'stroke-width':4});
+for(let k=0;k<4;k++){el('path',{d:`M530 ${820+k*9}l36 8M584 ${826+k*9}l36 -8`,stroke:'#8C7A63','stroke-width':2,opacity:.7})}
+el('path',{d:'M520 856C540 870 560 870 574 868',stroke:'#F3D9BC','stroke-width':14,'stroke-linecap':'round',fill:'none'}); // hand
+el('path',{d:'M628 856C612 870 592 870 574 868',stroke:'#F3D9BC','stroke-width':14,'stroke-linecap':'round',fill:'none'});
+// loose thread from book into sky (thought)
+el('path',{d:'M600 800C640 740 700 760 690 700S760 600 820 560',stroke:red,'stroke-width':4,fill:'none','stroke-linecap':'round','stroke-dasharray':'2 0'});
+</script>
+</body></html>
