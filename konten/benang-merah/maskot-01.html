@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Gochi+Hand&family=Inter:wght@700&display=block" rel="stylesheet">
+<style>
+html,body{margin:0}
+#post{width:1080px;height:1350px;position:relative;overflow:hidden;background:#EFE8DC;color:#3B1F14}
+svg{position:absolute;inset:0}
+.hl{position:absolute;left:0;right:0;top:60px;text-align:center;font:400 104px/1 'Instrument Serif';letter-spacing:-3px}
+.hl i{color:#B5462A}
+.sub{position:absolute;left:0;right:0;top:178px;text-align:center;font:400 36px 'Gochi Hand';color:#5A3A2C}
+.cap{position:absolute;width:340px;text-align:center;font:400 34px 'Gochi Hand'}
+.caps{position:absolute;left:72px;right:72px;bottom:46px;display:flex;justify-content:space-between;font:700 15px Inter;letter-spacing:3px}
+</style></head><body>
+<div id="post">
+<svg id="s" viewBox="0 0 1080 1350" width="1080" height="1350">
+<defs>
+  <filter id="wob"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="5"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+  <filter id="blur"><feGaussianBlur stdDeviation="7"/></filter>
+  <filter id="brush"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="2"/>
+    <feColorMatrix values="0 0 0 0 .3  0 0 0 0 .15  0 0 0 0 .1  0 0 0 7 -5"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+  <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="4" seed="4"/>
+    <feDiffuseLighting lighting-color="#fff" surfaceScale="1.6"><feDistantLight azimuth="45" elevation="60"/></feDiffuseLighting></filter>
+</defs>
+<g id="art" filter="url(#wob)"></g>
+<rect width="1080" height="1350" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".35"/>
+</svg>
+<div class="hl">Hai, aku <i>Utas.</i></div>
+<div class="sub">teman menulismu di Benang Merah</div>
+<div id="caps"></div>
+<div class="caps"><span>MASKOT</span><span>PENERBIT BENANG MERAH</span><span>@PENERBITBENANGMERAH</span></div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg',art=document.getElementById('art');
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+const ink='#3B1F14',skin='#F2D3B8',skin2='#E6B898',hair='#5A3324',sweater='#8A9A7E',red='#C8321E',cream='#F8F4EC';
+const S={stroke:ink,'stroke-width':4,'stroke-linecap':'round','stroke-linejoin':'round'};
+const P=(g,d,fill,extra={})=>el('path',Object.assign({d,fill},S,extra),g);
+function utas(g,e){
+  // body
+  P(g,'M62 430C62 345 108 308 170 308C232 308 278 345 278 430Z',sweater);
+  el('path',{d:'M62 430C62 345 108 308 170 308C232 308 278 345 278 430Z',fill:'#6F8064',filter:'url(#brush)',opacity:.5},g);
+  P(g,'M95 395Q170 372 245 395','none',{stroke:red,'stroke-width':4,'stroke-dasharray':'12 9'});
+  P(g,'M150 280H190V315H150Z',skin2,{stroke:'none'});
+  P(g,'M132 306Q170 336 208 306',cream,{});
+  // ears
+  P(g,'M78 175a24 28 0 1 0 0 52',skin);P(g,'M262 175a24 28 0 1 1 0 52',skin);
+  P(g,'M70 195q8 -6 12 4','none',{'stroke-width':3});P(g,'M270 195q-8 -6 -12 4','none',{'stroke-width':3});
+  // head
+  P(g,'M74 182C72 100 118 66 170 66C226 66 268 100 266 186C264 256 224 292 170 292C114 292 76 254 74 182Z',skin);
+  el('circle',{cx:110,cy:236,r:24,fill:'#E08A70',opacity:.55,filter:'url(#blur)'},g);
+  el('circle',{cx:230,cy:236,r:24,fill:'#E08A70',opacity:.55,filter:'url(#blur)'},g);
+  for(const [x,y] of [[98,222],[108,214],[116,226],[224,226],[234,214],[242,222],[160,212],[180,212]])el('circle',{cx:x,cy:y,r:2.6,fill:'#B0664E'},g);
+  // hair
+  P(g,'M70 178C56 92 112 46 176 48C246 50 290 98 272 176C262 140 244 122 222 116L212 140L198 118L182 142L166 120L148 138L130 122L114 150L98 138L70 178Z',hair);
+  el('path',{d:'M70 178C56 92 112 46 176 48C246 50 290 98 272 176C262 140 244 122 222 116L212 140L198 118L182 142L166 120L148 138L130 122L114 150L98 138L70 178Z',fill:'#7A4733',filter:'url(#brush)',opacity:.6},g);
+  P(g,'M120 64q-6 -26 14 -34M150 52q2 -22 20 -28M76 120q-18 -4 -24 8M266 116q18 -6 26 6','none',{'stroke-width':4});
+  P(g,'M110 100q20 -12 40 -6M190 84q24 -6 42 10','none',{stroke:'#7A4733','stroke-width':3});
+  // red thread tied in hair
+  P(g,'M212 58c4 -16 24 -18 26 -4c2 14 -18 16 -18 4','none',{stroke:red,'stroke-width':4});
+  P(g,'M232 58c18 6 30 22 34 52','none',{stroke:red,'stroke-width':3.5});
+  // pencil behind ear
+  el('g',{transform:'rotate(-35 285 168)'},g);
+  const pg=g.lastChild;P(pg,'M260 160h50v16h-50Z','#F2C14E',{'stroke-width':3});P(pg,'M310 160l18 8-18 8Z',skin2,{'stroke-width':3});P(pg,'M252 160h8v16h-8Z','#E39A80',{'stroke-width':3});
+  // nose
+  P(g,'M164 204q-8 18 6 22q10 2 10 -6',skin2,{'stroke-width':3});
+  face(g,e);
+}
+function eye(g,x,y,r,px,py,pr){P(g,`M${x-r} ${y}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0Z`,'#fff',{'stroke-width':3.5});
+  el('circle',{cx:x+px,cy:y+py,r:pr,fill:ink},g);el('circle',{cx:x+px+pr*.35,cy:y+py-pr*.4,r:pr*.3,fill:'#fff'},g)}
+function face(g,e){
+  const L=128,R=212,Y=184;
+  if(e==='senang'){P(g,`M${L-22} ${Y+4}q22 -24 44 0M${R-22} ${Y+4}q22 -24 44 0`,'none');
+    P(g,'M136 238q34 40 68 0Z','#7A2E22',{'stroke-width':3.5});P(g,'M150 256q20 10 40 -2','#E07A6A',{stroke:'none'});
+    P(g,`M${L-20} ${Y-36}q20 -10 38 -2M${R-18} ${Y-38}q20 -8 38 2`,'none');}
+  if(e==='bingung'){eye(g,L,Y,24,8,-10,10);eye(g,R,Y,24,8,-10,10);
+    P(g,`M${L-20} ${Y-36}q20 -4 38 2M${R-16} ${Y-46}q20 -14 38 0`,'none');P(g,'M146 250q8 -8 16 0t16 0t16 0','none');
+    el('text',{x:258,y:70,'font-family':'Gochi Hand','font-size':46,fill:red},g).textContent='?';}
+  if(e==='kaget'){eye(g,L,Y,29,0,0,7);eye(g,R,Y,29,0,0,7);
+    P(g,`M${L-22} ${Y-46}q22 -14 42 -2M${R-20} ${Y-48}q22 -12 42 2`,'none');P(g,'M158 250a12 15 0 1 0 24 0a12 15 0 1 0 -24 0Z','#7A2E22',{'stroke-width':3});
+    P(g,'M290 90l10 -24M300 110l22 -12M60 92l-12 -22','none',{stroke:red});}
+  if(e==='lelah'){eye(g,L,Y+2,24,0,8,10);eye(g,R,Y+2,24,0,8,10);
+    P(g,`M${L-24} ${Y+2}a24 24 0 0 1 48 0Z`,skin,{'stroke-width':3.5});P(g,`M${R-24} ${Y+2}a24 24 0 0 1 48 0Z`,skin,{'stroke-width':3.5});
+    P(g,`M${L-16} ${Y+34}q16 8 32 0M${R-16} ${Y+34}q16 8 32 0`,'none',{stroke:'#B0664E','stroke-width':3});
+    P(g,'M150 256q20 -8 40 0','none');
+    el('text',{x:272,y:70,'font-family':'Instrument Serif','font-style':'italic','font-size':56,fill:'#5A3A2C'},g).textContent='zzz';}
+  if(e==='ide'){eye(g,L,Y,25,4,-12,10);eye(g,R,Y,25,4,-12,10);
+    P(g,`M${L-20} ${Y-44}q20 -14 40 -4M${R-18} ${Y-46}q20 -12 40 0`,'none');P(g,'M152 246q18 16 36 0','none');
+    P(g,'M296 40l8 20 20 8-20 8-8 20-8-20-20-8 20-8Z','#F2C14E',{'stroke-width':3});}
+  if(e==='fokus'){eye(g,L,Y+2,23,-2,10,10);eye(g,R,Y+2,23,-2,10,10);
+    P(g,`M${L-20} ${Y-30}l38 10M${R+20} ${Y-30}l-38 10`,'none',{'stroke-width':5});
+    P(g,'M146 250q24 6 46 -2','none');P(g,'M180 250q8 14 16 4q2 -6 -4 -6','#E07A6A',{'stroke-width':3});}
+}
+const cells=[['senang','naskah diterima!'],['bingung','revisi ke-7?'],['kaget','deadline besok?!'],
+             ['lelah','nulis sampai subuh'],['ide','ide datang jam 2 pagi'],['fokus','mode menulis: ON']];
+const caps=document.getElementById('caps');
+cells.forEach(([e,t],i)=>{const x=40+(i%3)*340,y=250+Math.floor(i/3)*520;
+  const g=el('g',{transform:`translate(${x} ${y}) scale(.95) translate(9 0)`},art);utas(g,e);
+  const d=document.createElement('div');d.className='cap';d.style.left=x+'px';d.style.top=(y+430)+'px';d.textContent=t;caps.appendChild(d)});
+</script></body></html>
