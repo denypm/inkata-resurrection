@@ -50,7 +50,7 @@ Instagram mengizinkan hingga 5 tautan. Urutan yang disarankan:
 Opsional: satu halaman tautan (Linktree/Beacons/situs sendiri) bergaya krem + merah.
 
 ## TAHAP 5 — Tombol kontak
-Edit profil → Opsi kontak: **Email** benangmerah@gmail.com, **WhatsApp** 0857-9573-2319, dan **Alamat** Jl. Biodo, Ds. Beton, Kab. Gresik, Jawa Timur. Tombol "Hubungi" akan muncul di profil.
+Edit profil → Opsi kontak: **Email** benangmerah@gmail.com, **WhatsApp** 0857-9573-2319, dan **Lokasi** Gresik, Jawa Timur. Tombol "Hubungi" akan muncul di profil.
 
 ## TAHAP 6 — Foto profil
 - Unggah `logo/logo-ig.png` (sudah aman untuk dipotong lingkaran).

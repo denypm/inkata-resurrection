@@ -146,7 +146,7 @@ Contoh: `feed/00-pratinjau-feed-9.png`
 ✶ Kak Deny: wa.me/6285795732319 (WhatsApp 0857-9573-2319)
 ✶ Surel: benangmerah@gmail.com
 ✶ Jam layanan: Senin–Sabtu, 08.00–17.00 WIB
-✶ Alamat: Jl. Biodo, Ds. Beton, Kab. Gresik, Jawa Timur
+✶ Lokasi: Gresik, Jawa Timur
 ```
 
 ### Aturan penulisan

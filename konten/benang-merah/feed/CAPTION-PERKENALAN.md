@@ -27,7 +27,7 @@ Terima kasih sudah membaca sampai di sini. Kami senang akhirnya bisa menyapa.
 ✶ Kak Deny: wa.me/6285795732319 (WhatsApp 0857-9573-2319)
 ✶ Surel: benangmerah@gmail.com
 ✶ Jam layanan: Senin–Sabtu, 08.00–17.00 WIB
-✶ Alamat: Jl. Biodo, Ds. Beton, Kab. Gresik, Jawa Timur
+✶ Lokasi: Gresik, Jawa Timur
 
 — Benang Merah
 
@@ -51,7 +51,7 @@ Penerbitan buku adalah rangkaian proses mengubah naskah menjadi buku yang layak 
 2. Penyuntingan (editing): editor memeriksa ejaan, tata bahasa, alur, dan kejelasan isi bersama penulis.
 3. Desain sampul: sampul dirancang agar mewakili isi dan karakter buku.
 4. Tata letak dan cetak: isi buku diatur agar nyaman dibaca, lalu dicetak menjadi buku fisik.
-5. Terbit: buku siap dipasarkan dan dibaca. [Tambahkan: pengurusan ISBN, bila tersedia.]
+5. Terbit: buku dipasarkan melalui Shopee, Tokopedia, TikTok Shop, Instagram, dan situs web kami.
 
 CARA MEMULAI
 1. Siapkan naskah dalam format dokumen (.docx atau .pdf).
@@ -65,7 +65,7 @@ CARA MEMULAI
 ✶ Kak Deny: wa.me/6285795732319 (WhatsApp 0857-9573-2319)
 ✶ Surel: benangmerah@gmail.com
 ✶ Jam layanan: Senin–Sabtu, 08.00–17.00 WIB
-✶ Alamat: Jl. Biodo, Ds. Beton, Kab. Gresik, Jawa Timur
+✶ Lokasi: Gresik, Jawa Timur
 
 — Utas & Sulam, Benang Merah
 
@@ -86,13 +86,12 @@ LAYANAN KAMI
 ✶ Desain sampul
 ✶ Tata letak isi buku
 ✶ Pencetakan buku
-✶ [Pengurusan ISBN, bila tersedia]
-✶ [Pemasaran dan distribusi, bila tersedia]
+✶ Pemasaran dan distribusi: Shopee, Tokopedia, TikTok Shop, Instagram, dan situs web
 
 PROSEDUR PENGAJUAN NASKAH
 1. Isi formulir pengajuan melalui tautan di bio.
 2. Lampirkan naskah lengkap, sinopsis, dan biodata singkat.
-3. Redaksi akan meninjau naskah dalam waktu [__ hari kerja].
+3. Redaksi meninjau naskah dalam waktu 7–14 hari kerja.
 4. Penulis menerima hasil kurasi beserta penawaran paket penerbitan.
 5. Proses produksi dimulai setelah kesepakatan disetujui.
 
@@ -106,7 +105,7 @@ Kami menantikan naskah terbaik Anda.
 ✶ Kak Deny: wa.me/6285795732319 (WhatsApp 0857-9573-2319)
 ✶ Surel: benangmerah@gmail.com
 ✶ Jam layanan: Senin–Sabtu, 08.00–17.00 WIB
-✶ Alamat: Jl. Biodo, Ds. Beton, Kab. Gresik, Jawa Timur
+✶ Lokasi: Gresik, Jawa Timur
 
 Hormat kami,
 — Redaksi Benang Merah
