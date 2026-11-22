@@ -12,30 +12,36 @@ Kerjakan berurutan. Centang setiap langkah yang selesai.
   Semua desain memakai @penerbitbenangmerah. Kalau username berbeda, desain perlu diperbarui.
 
 ## TAHAP 2 — Nama (bisa dicari, maks. 30 karakter)
-Kolom "Nama" ikut terbaca di pencarian Instagram, jadi isi dengan kata kunci:
-- **Pilihan utama:** `Penerbit Benang Merah | Buku`
-- Alternatif: `Benang Merah · Penerbit Indie`
+Orang mencari "penerbit buku" / "terbit buku", bukan nama brand. Pasang kata kunci itu:
+- **Pilihan utama:** `Penerbit Buku | Benang Merah` (28)
+- Alternatif: `Terbit Buku · Benang Merah` (26)
 
-## TAHAP 3 — Bio (maks. 150 karakter)
-**Pilihan A (disarankan, seimbang):**
+## TAHAP 3 — Bio (maks. 150 karakter) — versi MENJUAL
+Rumus: **hasil yang didapat → layanan → untuk siapa → ajakan**.
+
+**Pilihan A (disarankan, jual hasil):** 141 karakter
 ```
-Rumah untuk esai, puisi & pikiran yang layak dibaca 🧵
-✶ Kenalan dengan Utas & Sulam
-✶ Naskah dibuka ↓
-```
-**Pilihan B (fokus penulis):**
-```
-Menemani naskahmu dari laci sampai rak buku 🧵
+Dari naskah jadi buku ber-ISBN, siap dijual 📚
 Esai · Puisi · Cerpen · Novel
-📩 Kirim naskah ↓
+Editor mendampingimu dari awal sampai terbit
+✶ Terbitkan bukumu ↓
 ```
-**Pilihan C (puitis):**
+**Pilihan B (jual alur yang jelas):** 140 karakter
 ```
-Di antara yang kusut, selalu ada benang merah.
-Penerbit esai, puisi & cerita 🧵
-✶ Naskah dibuka ↓
+Penerbit indie profesional 🧵
+Naskah → Editing → Sampul → ISBN → Cetak → Jual
+Untuk penulis pemula & berpengalaman
+📩 Daftar terbit sekarang ↓
 ```
-Aturan: baris terakhir selalu ajakan + panah ke tautan.
+**Pilihan C (jual kelengkapan layanan):** 131 karakter
+```
+Jasa penerbitan buku lengkap 📚
+Editing · Desain sampul · ISBN · Cetak · Pemasaran
+Bukumu, kualitas toko buku.
+✶ Konsultasi gratis ↓
+```
+⚠️ Cantumkan hanya layanan yang benar-benar tersedia (ISBN, cetak, pemasaran, konsultasi gratis).
+Setelah ada bukti, tambahkan angka: "✶ 20+ buku terbit" / "✶ 50+ penulis" — angka adalah alat jual terkuat.
 
 ## TAHAP 4 — Tautan di bio
 Instagram mengizinkan hingga 5 tautan. Urutan yang disarankan:
