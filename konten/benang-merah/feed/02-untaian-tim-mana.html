@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;600;700&family=Inter:wght@600;700;800&display=block" rel="stylesheet">
+<style>html,body{margin:0}#post{width:1080px;height:1350px;position:relative;overflow:hidden}svg#s{position:absolute;inset:0}
+.a{position:absolute}.gh{font-family:'Gochi Hand'}.is{font-family:'Instrument Serif'}.jo{font-family:Jost}.in{font-family:Inter}
+.caps{left:72px;right:72px;bottom:46px;display:flex;justify-content:space-between;font:700 15px Inter;letter-spacing:3px}
+</style><script src="lib.js"></script></head><body><div id="post" style="background:#F1E6D2">
+<svg id="s" viewBox="0 0 1080 1350" width="1080" height="1350"></svg>
+<div class="a gh" style="left:0;right:0;top:60px;text-align:center;font-size:92px;color:#152A3A">Kamu tim yang mana?</div>
+<div class="a gh" style="left:60px;width:460px;top:1028px;text-align:center;font-size:48px;color:#F1E6D2">nulis tengah malam</div>
+<div class="a gh" style="left:560px;width:460px;top:1028px;text-align:center;font-size:48px;color:#152A3A">nulis pagi buta</div>
+<div class="a gh" style="left:0;right:0;bottom:80px;text-align:center;font-size:52px;color:#152A3A">jawab 🌙 atau ☀️ di komentar</div>
+<div class="a in" style="left:0;right:0;bottom:36px;text-align:center;font-weight:600;font-size:20px;color:#152A3A;opacity:.7">@penerbitbenangmerah · #UntaianPikiran</div></div><script>
+setup('rough');seed=12;
+paint('M-30 -30H1110V1390H-30Z',C.cream,['#E7D8BD','#F7EEDD'],200,[8,22],[60,160],0);
+paint('M60 200H520V1130H60Z',C.teal,TE,220,[8,22],[50,140],0.1);
+paint('M560 200H1020V1130H560Z',C.orange,OR,220,[8,22],[50,140],0.1);
+for(let i=0;i<22;i++)star(rr(90,490),rr(230,600),rr(4,10),R()<.3?C.orange:C.cream);
+paint('M330 300a70 70 0 1 0 .1 0Z',C.yellow,['#F3B84A','#FAD77E'],40,[4,9],[12,35]);paint('M355 310a58 58 0 1 0 .1 0Z',C.teal,TE,20,[5,10],[15,40]);
+paint('M790 330a90 90 0 1 0 .1 0Z',C.yellow,['#F3B84A','#FAD77E'],60,[4,9],[12,35]);
+for(let i=0;i<10;i++){const a=i/10*Math.PI*2;el('path',{d:`M${790+Math.cos(a)*120} ${420+Math.sin(a)*120}l${Math.cos(a)*36} ${Math.sin(a)*36}`,stroke:C.yellow,'stroke-width':8,'stroke-linecap':'round'})}
+// desk lamp + paper (night)
+paint('M110 860H470V884H110Z','#B87A45',['#C98A52','#9C6435'],20,[3,7],[30,90],0);
+el('circle',{cx:200,cy:740,r:90,fill:C.yellow,opacity:.18,filter:'url(#blur)'});
+paint('M180 760H220V860H180Z',C.cream,['#E7D8BD'],10,[3,6],[10,30],1.57);
+paint('M200 700C214 722 214 742 200 750C186 742 186 722 200 700Z',C.yellow,['#F3B84A'],6,[2,4],[6,14]);
+el('path',{d:'M200 750V760',stroke:C.ink,'stroke-width':3});
+el('g',{transform:'translate(330 832) rotate(-6)'});const pg=P.lastChild;el('rect',{x:-60,y:-30,width:120,height:52,fill:C.cream},pg);for(let i=0;i<3;i++)el('path',{d:`M-48 ${-18+i*14}h${90-i*20}`,stroke:'#9A8A72','stroke-width':3},pg);
+// coffee mug (morning)
+paint('M700 760H860V900C860 930 840 944 780 944S700 930 700 900Z',C.cream,['#E7D8BD'],20,[4,8],[20,60],1.57);
+el('path',{d:'M860 790c50 0 50 70 0 70',stroke:C.cream,'stroke-width':16,fill:'none'});
+el('path',{d:'M740 730c-20 -30 20 -50 0 -80M790 730c-20 -30 20 -50 0 -80',stroke:C.cream,'stroke-width':6,fill:'none','stroke-linecap':'round'});
+el('path',{d:'M712 830H848',stroke:C.red,'stroke-width':8});
+// red thread across both
+el('path',{d:'M90 980C250 940 380 1010 540 960S820 930 990 980',stroke:C.red,'stroke-width':6,fill:'none','stroke-linecap':'round'});
+</script></body></html>
