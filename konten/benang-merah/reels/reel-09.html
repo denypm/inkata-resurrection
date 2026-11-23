@@ -1,0 +1,104 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@800&display=block" rel="stylesheet">
+<script src="lib.js"></script>
+<style>html,body{margin:0}#post{width:1080px;height:1920px;position:relative;overflow:hidden;background:#D9C8A9}
+svg{position:absolute;inset:0}.tx{position:absolute;font-family:'Gochi Hand';color:#2A1A14;text-shadow:0 0 18px #F3EEE4,0 0 6px #F3EEE4}
+.hl{color:#F7C65A;background:#C8321E;padding:0 14px;border-radius:8px;text-shadow:none}</style></head><body>
+<div id="post"><svg id="s" viewBox="0 0 1080 1920" width="1080" height="1920"></svg>
+<div class="tx" style="left:60px;top:250px;font-size:96px;transform:rotate(-4deg)">selamatkan sulam:</div>
+<div class="tx" style="right:60px;top:1450px;font-size:74px;line-height:1.08;text-align:right;transform:rotate(-3deg)">buat puisi dengan<br>awalan kata <span class="hl">jatuh.</span></div>
+<div class="tx" style="right:64px;top:1640px;font:800 26px Inter;letter-spacing:1px;color:#C8321E;text-shadow:0 0 10px #F3EEE4">@penerbitbenangmerah</div>
+</div><script>
+const L=10,W0=2*Math.PI/L,mod=(a,b)=>((a%b)+b)%b;
+const s=document.getElementById('s');
+s.innerHTML=DEFS+`<defs><filter id="mb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="0 7"/></filter></defs>
+<g id="wall" filter="url(#mb)"></g><g id="wind"></g><g id="back"></g><g id="body"></g><g id="front"></g>
+<rect width="1080" height="1920" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".28"/>`;
+// ---------- facade tile (960 high = 4 window rows) ----------
+const WALL=document.getElementById('wall');seed=5;
+const TILE=el('g',{},WALL);P=el('g',{filter:'url(#rough)'},TILE);
+paint('M-20 0H1100V960H-20Z','#D9C8A9',['#CDBB99','#E3D4B8','#D2C09F'],160,[8,20],[60,180],1.57);
+const winC=['#5E8CA8','#4E7C98','#6E9CB8'];
+for(let r=0;r<4;r++)for(const x of [70,425,780]){const y=r*240+44;const lit=((r*3+x)%5)==1;
+ paint(`M${x-10} ${y-10}H${x+240}V${y+166}H${x-10}Z`,'#EFE6D4',['#E7DCC6'],10,[3,6],[20,60],0);
+ paint(`M${x} ${y}H${x+230}V${y+150}H${x}Z`,lit?'#F7C65A':winC[(r+x)%3],lit?['#F3B84A','#FAD77E']:winC,24,[4,10],[20,60],1.57);
+ el('path',{d:`M${x+115} ${y}V${y+150}M${x} ${y+60}H${x+230}`,stroke:'#EFE6D4','stroke-width':8});
+ if((r+x)%3==0){paint(`M${x+4} ${y+4}H${x+40}C${x+34} ${y+60} ${x+44} ${y+110} ${x+36} ${y+146}H${x+4}Z`,'#F1E6D2',['#E7D8BD'],8,[3,6],[20,40],1.57)}
+ if(r%2==1)el('path',{d:`M${x-16} ${y+176}H${x+246}M${x-16} ${y+176}v-30M${x+246} ${y+176}v-30`+[...Array(9).keys()].map(i=>`M${x-16+i*29} ${y+176}v-30`).join(''),stroke:'#2A1A14','stroke-width':4,opacity:.55});
+}
+for(const k of [1,2]){const c=TILE.cloneNode(true);c.setAttribute('transform',`translate(0 ${k*960})`);WALL.appendChild(c)}
+const WG=el('g',{},WALL);WALL.childNodes.forEach(n=>{});
+// wind streaks
+const WN=[];P=document.getElementById('wind');for(let i=0;i<22;i++){const e=el('path',{stroke:'#FFFFFF','stroke-width':rr(2,5),'stroke-linecap':'round',opacity:rr(.25,.6),fill:'none'});WN.push([e,rr(30,1050),rr(120,320),rr(0,1)])}
+// ---------- Sulam falling (screen coords) ----------
+const BACK=document.getElementById('back'),BODY=document.getElementById('body'),FRONT=document.getElementById('front');
+// spool + long thread flying up (behind)
+P=BACK;const THR=el('path',{stroke:C.red,'stroke-width':6,fill:'none','stroke-linecap':'round'});
+const SP=el('g',{});P=SP;paint('M-26 -30H26V-18H-26Z','#B87A45',[],0);paint('M-26 18H26V30H-26Z','#B87A45',[],0);paint('M-20 -18H20V18H-20Z',C.red,['#A82818','#D84530'],16,[2,4],[20,40],0);
+// scarf tails (behind body)
+P=BACK;const SC1=el('path',{fill:'#D9A441',stroke:'#2A1A14','stroke-width':2,opacity:1}),SC2=el('path',{fill:'#C9922F',stroke:'#2A1A14','stroke-width':2});
+// hair strands streaming
+const HAIR=[];for(let i=0;i<7;i++)HAIR.push(el('path',{stroke:'#1C1A1A','stroke-width':rr(5,9),fill:'none','stroke-linecap':'round'}));
+P=BODY;const BG=el('g',{id:'bg2'});P=el('g',{filter:'url(#rough)'},BG);
+// coat flare (from hips, blown up-right)
+const FL=el('g',{id:'flare'});P=FL;
+paint('M752 834C810 780 860 740 920 724L980 870C940 940 880 990 808 1026Z','#1E4640',TE,80,[5,12],[30,90],-.6);
+P=el('g',{filter:'url(#rough)'},BG);
+// legs (tights) + boots — up-right
+for(const [hx,hy,kx,ky,fx,fy] of [[800,930,900,740,1010,640],[840,980,960,800,1060,720]]){
+ el('path',{d:`M${hx} ${hy}L${kx} ${ky}L${fx} ${fy}`,stroke:'#2A2A33','stroke-width':46,'stroke-linecap':'round','stroke-linejoin':'round',fill:'none'});
+ const a=Math.atan2(fy-ky,fx-kx)*180/Math.PI;const g=el('g',{transform:`translate(${fx} ${fy}) rotate(${a})`});const kp=P;P=g;
+ paint('M-10 -26H40C62 -26 70 -10 70 6V26H-10Z','#9E3A22',['#8A2E1A','#B5462A'],14,[3,6],[10,30],0);el('path',{d:'M70 -6V28',stroke:'#4A2016','stroke-width':8});
+ paint('M-34 -24H-6V24H-34Z','#F1E6D2',[],0);el('path',{d:'M-30 -24V24M-18 -24V24',stroke:C.red,'stroke-width':4});P=kp}
+P=el('g',{filter:'url(#rough)'},BG);
+// torso (arched, coat)
+paint('M392 922Q600 820 752 834L808 1026Q640 1060 456 1142Z','#1E4640',TE,140,[5,12],[30,90],-.28);
+for(const t of [.25,.45,.65,.85]){const x=392+(808-392)*t,y=1030-(1030-900)*t-((t*(1-t))*80);el('rect',{x:x-6,y:y-14,width:12,height:28,rx:6,fill:'#E7D8BD',transform:`rotate(-16 ${x} ${y})`})}
+// bag floating above with strap
+P=BODY;const BAG=el('g',{});P=el('g',{filter:'url(#rough)'},BAG);
+paint('M-60 -50H60V40C60 52 -60 52 -60 40Z','#B5462A',['#A23E24','#C8572F'],24,[3,7],[20,60],0);paint('M-62 -52H62V0C30 12 -30 12 -62 0Z','#9E3A22',['#8A2E1A'],10,[3,6],[20,60],0);
+P=BODY;const STRAP=el('path',{stroke:'#7A3420','stroke-width':12,fill:'none','stroke-linecap':'round'});
+// arms flung upward (sleeves) + hands
+const HAND='M-30 0C-36 -30 -38 -60 -36 -110Q-36 -126 -27 -126Q-19 -126 -19 -112Q-19 -140 -10 -140Q-1 -140 -1 -126Q-1 -138 8 -138Q17 -138 17 -122Q17 -120 24 -118Q32 -116 31 -102C30 -80 30 -70 30 -62C42 -70 56 -86 60 -78C64 -70 52 -50 34 -36C28 -24 26 -10 24 0Z';
+const ARMS=[];for(const [sx,sy] of [[410,940],[520,900]]){const g=el('g',{});const sl=el('path',{stroke:'#183B37','stroke-width':70,'stroke-linecap':'round',fill:'none',filter:'url(#rough)'},g);
+ const cf=el('path',{stroke:'#0F2826','stroke-width':74,'stroke-linecap':'butt',fill:'none'},g);const hg=el('g',{filter:'url(#wob)'},g);const kp=P;P=hg;
+ paint(HAND,C.skin,['#F5DCC2','#E8C4A2'],16,[3,6],[10,30],1.5);el('path',{d:HAND,fill:'none',stroke:'#B5785A','stroke-width':3});el('path',{d:'M-19 -112L-20 -80M-1 -126L-1 -84M17 -122L15 -86',stroke:'#C98E70','stroke-width':3,fill:'none'});P=kp;
+ ARMS.push({sl,cf,hg,sx,sy})}
+// head (tilted back, crown down-left)
+P=BODY;const HD=el('g',{});const HI=el('g',{filter:'url(#wob)'},HD);seed=9;sulam(HI,'terkesan');
+// scarf wrap at neck
+P=el('g',{filter:'url(#rough)'},BODY);paint('M380 960C400 930 470 920 500 940L520 1010C490 1030 420 1040 396 1020Z','#D9A441',['#C9922F','#E4B356'],24,[3,7],[20,60],0);
+P=BODY;for(const d of ['M386 975C420 960 470 955 506 965','M392 1000C430 990 480 985 514 992'])el('path',{d,stroke:C.red,'stroke-width':6,fill:'none'});
+// flying papers (front)
+P=FRONT;const PP=[];for(let i=0;i<7;i++){const g=el('g',{});el('rect',{x:-40,y:-52,width:80,height:104,fill:'#F8F4EC',stroke:'#2A1A14','stroke-width':2},g);for(let k=0;k<5;k++)el('path',{d:`M-28 ${-36+k*16}h${k==4?30:56}`,stroke:'#9A8A72','stroke-width':3},g);
+ PP.push([g,rr(80,1000),rr(500,1500),rr(0,6),Math.round(rr(1,3)),rr(.55,.95)])}
+window.render=function(t){t=mod(t,L);
+ const off=mod(960*t,960);WALL.childNodes.forEach((n,i)=>{if(n.tagName==='g'&&i<3)n.setAttribute('transform',`translate(0 ${(i*960-off).toFixed(1)})`)});
+ WN.forEach(([e,x,len,ph])=>{const y=mod(ph*2400-1440*t,2400)-300;e.setAttribute('d',`M${x} ${y.toFixed(1)}v${len}`)});
+ // body float
+ const fy=Math.sin(W0*2*t)*14,rot=Math.sin(W0*t)*2.2;const T=`translate(0 ${fy.toFixed(1)}) rotate(${rot.toFixed(2)} 600 980)`;
+ BODY.setAttribute('transform',T);BACK.setAttribute('transform',T);
+ HD.setAttribute('transform',`translate(300 1095) rotate(${(-118+Math.sin(W0*2*t+1)*3).toFixed(2)}) scale(1.25) translate(-170 -190)`);
+ document.getElementById('flare').setAttribute('transform',`rotate(${(Math.sin(W0*6*t)*3).toFixed(2)} 780 930)`);
+ // arms
+ const tg=[[230,640],[600,610]];ARMS.forEach((a,i)=>{const w=Math.sin(W0*3*t+i*2)*16;const hx=tg[i][0]+w,hy=tg[i][1]+Math.cos(W0*3*t+i)*10;
+  const ex=(a.sx+hx)/2+(i?40:-40),ey=(a.sy+hy)/2+20;a.sl.setAttribute('d',`M${a.sx} ${a.sy}Q${ex} ${ey} ${hx} ${hy}`);
+  const ang=Math.atan2(hy-ey,hx-ex);const cx=hx-Math.cos(ang)*20,cy=hy-Math.sin(ang)*20;a.cf.setAttribute('d',`M${(cx-Math.cos(ang)*14).toFixed(1)} ${(cy-Math.sin(ang)*14).toFixed(1)}L${cx.toFixed(1)} ${cy.toFixed(1)}`);
+  a.hg.setAttribute('transform',`translate(${hx.toFixed(1)} ${hy.toFixed(1)}) rotate(${(ang*180/Math.PI+90+(i?8:-8)).toFixed(1)}) scale(.7)`)});
+ // bag + strap
+ const bx=640+Math.sin(W0*2*t+.5)*14,by=720+Math.cos(W0*2*t)*12;BAG.setAttribute('transform',`translate(${bx.toFixed(1)} ${by.toFixed(1)}) rotate(${(Math.sin(W0*3*t)*8-12).toFixed(1)})`);
+ STRAP.setAttribute('d',`M470 960Q${(560+Math.sin(W0*3*t)*20).toFixed(1)} 820 ${bx.toFixed(1)} ${(by+30).toFixed(1)}`);
+ // spool + thread
+ const sx=760+Math.sin(W0*2*t)*30,sy=470+Math.cos(W0*2*t+1)*20;SP.setAttribute('transform',`translate(${sx.toFixed(1)} ${sy.toFixed(1)}) rotate(${(t*36*4).toFixed(1)})`);
+ const w1=Math.sin(W0*4*t)*60,w2=Math.cos(W0*3*t)*80;THR.setAttribute('d',`M${bx} ${by}C${bx+80+w1} ${by-120} ${sx-120} ${sy+140+w2/2} ${sx} ${sy}S${sx+160+w2} ${sy-260} ${sx+20-w1} ${sy-480}S${sx-200} -200 ${sx-60+w2} -260`);
+ // scarf tails
+ const a=Math.sin(W0*5*t)*30,b=Math.sin(W0*4*t+1)*36;
+ SC1.setAttribute('d',`M440 950C${430+a} 860 ${470-a} 780 ${440+a} 690L${470+a} 684C${500-a} 780 ${460+a} 860 470 950Z`);
+ SC2.setAttribute('d',`M470 955C${480+b} 870 ${520-b} 800 ${500+b} 720L${530+b} 716C${550-b} 800 ${510+b} 870 500 958Z`);
+ // hair
+ HAIR.forEach((h,i)=>{const x0=230+i*14,y0=1000+i*10,w=Math.sin(W0*6*t+i)*20;h.setAttribute('d',`M${x0} ${y0}C${x0-20+w} ${y0-60} ${x0+10-w} ${y0-110} ${x0-10+w} ${y0-170}`)});
+ // papers
+ PP.forEach(([g,x,y,ph,k,sc])=>{const dy=Math.sin(W0*k*t+ph)*40,dx=Math.cos(W0*k*t+ph)*30;g.setAttribute('transform',`translate(${(x+dx).toFixed(1)} ${(y+dy).toFixed(1)}) rotate(${(Math.sin(W0*k*t+ph)*40+ph*30).toFixed(1)}) scale(${sc})`)});
+};
+render(0);
+</script></body></html>
