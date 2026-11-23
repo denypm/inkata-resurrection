@@ -164,3 +164,19 @@ Contoh: `feed/00-pratinjau-feed-9.png`
 | 1 · Untaian Pikiran | Reflektif, hangat, tetap tertata | **Buka + Nilai** kuat, Arahan berupa ajakan refleksi/komentar |
 | 2 · Ruang Naskah | Edukatif, jelas, ramah | **Esensi + Arahan** kuat: definisi istilah dan langkah bernomor |
 | 3 · Kabar | Formal, lengkap, meyakinkan | **Nota** paling lengkap: layanan, syarat, kontak, tautan |
+
+---
+
+## MASKOT VERSI BADAN UTUH (STANDAR TERBARU)
+File: `feed/karakter-*-feed.png` (1080×1350) dan `feed/karakter-*-story.png` (1080×1920). Sumber: `feed/fullbody.js`.
+
+**Proporsi:** jenjang, kepala ±1:5,5 tinggi badan. Teknik gouache + **garis tinta sketsa tipis** di tepi pakaian.
+
+| | Utas (penulis) | Sulam (editor) |
+|---|---|---|
+| Kepala | rambut cokelat berantakan, benang merah di rambut, pensil di telinga | baret merah + jarum sulam + benang menjuntai, rambut bob hitam |
+| Atasan | sweater rajut sage longgar, jahitan merah putus-putus | mantel wol hijau tua selutut (A-line), kancing toggle krem |
+| Aksesoris | tumpukan naskah dipeluk, tas kanvas "BM" berisi kertas | syal kunyit bergaris merah, tas selempang merah bata berisi gulungan benang |
+| Bawahan | celana lebar biru muda, ujung digulung | stoking gelap, kaus kaki krem bergaris merah melorot |
+| Sepatu | sepatu kanvas krem, tali merah | bot pendek bertali merah bata |
+| Ekspresi utama | senang · ide · bingung | tenang · terkesan · mengedip |
