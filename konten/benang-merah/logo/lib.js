@@ -126,5 +126,17 @@ function face3(e){const L=132,R=208,Y=202;
   if(e==='mengernyit'){dot(L,Y);dot(R,Y);L2(`M${L-13} ${Y-18}l26 6M${R-13} ${Y-30}q13 -8 26 0`,3.5);L2('M160 254q10 -4 22 2',3);
     el('text',{x:258,y:330,'font-family':'Instrument Serif','font-style':'italic','font-size':40,fill:C.red}).textContent='hmm';}
   if(e==='tertawa'){L2(`M${L-13} ${Y+2}q13 -12 26 0M${R-13} ${Y+2}q13 -12 26 0`,4.5);brows(-4,-4);el('path',{d:'M144 240q26 34 52 0Z',fill:'#9A3324'});el('path',{d:'M156 258q14 8 28 0',fill:'#E07A6A'});}
+
+  if(e==='menangis'){
+    for(const [x,s] of [[L,1],[R,-1]]){
+      dot(x,Y+6,7,8);el('circle',{cx:x-3*s,cy:Y+9,r:2.2,fill:'#fff',opacity:.9});
+      el('path',{d:`M${x-16} ${Y+2}Q${x} ${Y-2+(s>0?-4:0)} ${x+16} ${Y+2}L${x+16} ${Y-12}L${x-16} ${Y-12}Z`,fill:'#F0D2B4'});
+      L2(`M${x-16*s} ${Y+4}Q${x} ${Y-4} ${x+15*s} ${Y-1}`,3.5);
+      L2(`M${x-15*s} ${Y-22}Q${x-2*s} ${Y-30} ${x+13*s} ${Y-36}`,3);
+      el('path',{d:`M${x-12*s} ${Y+14}C${x-15*s} ${Y+30} ${x-12*s} ${Y+44} ${x-16*s} ${Y+60}`,stroke:'#9FD0F0','stroke-width':5,fill:'none','stroke-linecap':'round',opacity:.85});
+      el('path',{d:`M${x-16*s} ${Y+62}C${x-11*s} ${Y+70} ${x-12*s} ${Y+78} ${x-17*s} ${Y+78}C${x-22*s} ${Y+78} ${x-22*s} ${Y+70} ${x-16*s} ${Y+62}Z`,fill:'#9FD0F0',opacity:.9});}
+    el('path',{d:'M152 258Q170 240 188 258Q178 266 170 264Q162 266 152 258Z',fill:'#9A3324'});
+    L2('M150 259Q170 238 190 259',2.5,'#7A2418');
+    for(const x of [104,236])el('circle',{cx:x,cy:236,r:24,fill:'#E8746A',opacity:.35,filter:'url(#blur)'});}
   if(e==='mengedip'){dot(L,Y);L2(`M${R-13} ${Y+2}q13 -10 26 0`,4.5);brows(0,-2);L2('M152 248q18 14 36 -2',3);
     el('path',{d:'M296 150l4 10 10 4-10 4-4 10-4-10-10-4 10-4Z',fill:'#F2C14E'});}}

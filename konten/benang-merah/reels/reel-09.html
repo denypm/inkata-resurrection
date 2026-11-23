@@ -37,8 +37,16 @@ P=BACK;const THR=el('path',{stroke:C.red,'stroke-width':6,fill:'none','stroke-li
 const SP=el('g',{});P=SP;paint('M-26 -30H26V-18H-26Z','#B87A45',[],0);paint('M-26 18H26V30H-26Z','#B87A45',[],0);paint('M-20 -18H20V18H-20Z',C.red,['#A82818','#D84530'],16,[2,4],[20,40],0);
 // scarf tails (behind body)
 P=BACK;const SC1=el('path',{fill:'#D9A441',stroke:'#2A1A14','stroke-width':2,opacity:1}),SC2=el('path',{fill:'#C9922F',stroke:'#2A1A14','stroke-width':2});
-// hair strands streaming
-const HAIR=[];for(let i=0;i<7;i++)HAIR.push(el('path',{stroke:'#1C1A1A','stroke-width':rr(5,9),fill:'none','stroke-linecap':'round'}));
+// very long hair, streaming upward (behind head & body)
+const HAIRG=el('g',{filter:'url(#wob)'},BACK);const HAIR=[];
+const HC=[300,1095];
+for(let i=0;i<6;i++){const ang=(110+i*20)*Math.PI/180;const ox=HC[0]+Math.cos(ang)*90,oy=HC[1]+Math.sin(ang)*90;HAIR.push({p:el('path',{stroke:'#161414','stroke-width':80,fill:'none','stroke-linecap':'round'},HAIRG),ox,oy,tx:70+i*90,ty:-60,ph:i*1.1+.3})}
+for(let i=0;i<11;i++){const ang=(105+i*11)*Math.PI/180;const ox=HC[0]+Math.cos(ang)*112,oy=HC[1]+Math.sin(ang)*112;
+ const tx=40+i*52,ty=-40-((i*37)%5)*30;HAIR.push({p:el('path',{stroke:i%3?'#1C1A1A':'#2B2726','stroke-width':34-i%4*5,fill:'none','stroke-linecap':'round'},HAIRG),ox,oy,tx,ty,ph:i*.7})}
+for(let i=0;i<8;i++)HAIR.push({p:el('path',{stroke:'#4A403B','stroke-width':4,fill:'none','stroke-linecap':'round',opacity:.6},HAIRG),ox:HC[0]-60+i*6,oy:HC[1]+20-i*12,tx:80+i*60,ty:-20,ph:i*1.3+.4,thin:1});
+// floating tear drops
+P=FRONT;const TEARS=[];for(let i=0;i<8;i++)TEARS.push(el('path',{d:'M0 -14C7 -3 9 5 0 11C-9 5 -7 -3 0 -14Z',fill:'#9FD0F0',opacity:.9,stroke:'#fff','stroke-width':2}));
+P=BACK;
 P=BODY;const BG=el('g',{id:'bg2'});P=el('g',{filter:'url(#rough)'},BG);
 // coat flare (from hips, blown up-right)
 const FL=el('g',{id:'flare'});P=FL;
@@ -65,7 +73,7 @@ const ARMS=[];for(const [sx,sy] of [[410,940],[520,900]]){const g=el('g',{});con
  paint(HAND,C.skin,['#F5DCC2','#E8C4A2'],16,[3,6],[10,30],1.5);el('path',{d:HAND,fill:'none',stroke:'#B5785A','stroke-width':3});el('path',{d:'M-19 -112L-20 -80M-1 -126L-1 -84M17 -122L15 -86',stroke:'#C98E70','stroke-width':3,fill:'none'});P=kp;
  ARMS.push({sl,cf,hg,sx,sy})}
 // head (tilted back, crown down-left)
-P=BODY;const HD=el('g',{});const HI=el('g',{filter:'url(#wob)'},HD);seed=9;sulam(HI,'terkesan');
+P=BODY;const HD=el('g',{});const HI=el('g',{filter:'url(#wob)'},HD);seed=9;sulam(HI,'menangis');
 // scarf wrap at neck
 P=el('g',{filter:'url(#rough)'},BODY);paint('M380 960C400 930 470 920 500 940L520 1010C490 1030 420 1040 396 1020Z','#D9A441',['#C9922F','#E4B356'],24,[3,7],[20,60],0);
 P=BODY;for(const d of ['M386 975C420 960 470 955 506 965','M392 1000C430 990 480 985 514 992'])el('path',{d,stroke:C.red,'stroke-width':6,fill:'none'});
@@ -95,8 +103,12 @@ window.render=function(t){t=mod(t,L);
  const a=Math.sin(W0*5*t)*30,b=Math.sin(W0*4*t+1)*36;
  SC1.setAttribute('d',`M440 950C${430+a} 860 ${470-a} 780 ${440+a} 690L${470+a} 684C${500-a} 780 ${460+a} 860 470 950Z`);
  SC2.setAttribute('d',`M470 955C${480+b} 870 ${520-b} 800 ${500+b} 720L${530+b} 716C${550-b} 800 ${510+b} 870 500 958Z`);
- // hair
- HAIR.forEach((h,i)=>{const x0=230+i*14,y0=1000+i*10,w=Math.sin(W0*6*t+i)*20;h.setAttribute('d',`M${x0} ${y0}C${x0-20+w} ${y0-60} ${x0+10-w} ${y0-110} ${x0-10+w} ${y0-170}`)});
+ // long hair
+ HAIR.forEach(h=>{const w=Math.sin(W0*3*t+h.ph)*50,w2=Math.cos(W0*2*t+h.ph)*70;
+  h.p.setAttribute('d',`M${h.ox.toFixed(1)} ${h.oy.toFixed(1)}C${(h.ox-120+w).toFixed(1)} ${(h.oy-260).toFixed(1)} ${(h.tx+80-w2).toFixed(1)} ${(560+w).toFixed(1)} ${(h.tx+w2*.6).toFixed(1)} ${(320).toFixed(1)}S${(h.tx-60+w).toFixed(1)} ${(h.ty+120).toFixed(1)} ${(h.tx+20-w2*.4).toFixed(1)} ${h.ty}`)});
+ // tears floating up from eyes
+ TEARS.forEach((d,i)=>{const u=mod(t/2.5+i/TEARS.length,1);const src=i%2?[336,1128]:[292,1048];const x=src[0]+Math.sin(i*2.1)*30*u+u*40,y=src[1]-u*520;
+  d.setAttribute('transform',`translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${(1-u*.4).toFixed(2)})`);d.setAttribute('opacity',(u<.85?.9:(1-u)*6).toFixed(2))});
  // papers
  PP.forEach(([g,x,y,ph,k,sc])=>{const dy=Math.sin(W0*k*t+ph)*40,dx=Math.cos(W0*k*t+ph)*30;g.setAttribute('transform',`translate(${(x+dx).toFixed(1)} ${(y+dy).toFixed(1)}) rotate(${(Math.sin(W0*k*t+ph)*40+ph*30).toFixed(1)}) scale(${sc})`)});
 };
