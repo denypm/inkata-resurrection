@@ -1,0 +1,90 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Instrument+Serif:ital@0;1&family=Inter:wght@700&display=block" rel="stylesheet">
+<script src="lib.js"></script>
+<style>html,body{margin:0}#post{width:1080px;height:1350px;position:relative;overflow:hidden;background:#F3EEE4;color:#2A1A14}
+svg{position:absolute;inset:0}.a{position:absolute}.n{position:absolute;font:400 28px/1.05 'Gochi Hand'}</style></head><body>
+<div id="post"><svg id="s" viewBox="0 0 1080 1350" width="1080" height="1350"></svg>
+<div class="a" style="left:60px;top:46px;font:400 112px/0.9 'Instrument Serif';letter-spacing:-4px">Sulam<i style="color:#C8321E">.</i></div>
+<div class="a" style="left:66px;top:156px;font:700 16px Inter;letter-spacing:4px">EDITOR · PENERBIT BENANG MERAH</div>
+<div class="n" style="left:800px;top:375px;width:220px;text-align:center">tenang</div>
+<div class="n" style="left:800px;top:705px;width:220px;text-align:center">terkesan</div>
+<div class="n" style="left:800px;top:1035px;width:220px;text-align:center">mengedip</div>
+<div class="n" style="left:40px;top:470px;width:200px">syal bergaris<br>kunyit & merah</div>
+<div class="n" style="left:40px;top:740px;width:200px">tas selempang<br>berisi benang</div>
+<div class="n" style="left:40px;top:1010px;width:200px">kaus kaki melorot<br>& bot bertali</div>
+<div class="n" style="left:560px;top:640px;width:200px">mantel wol<br>kancing toggle</div>
+<div class="a" style="left:66px;bottom:40px;font:700 15px Inter;letter-spacing:3px">LEMBAR KARAKTER · @PENERBITBENANGMERAH</div>
+</div><script>
+const s=document.getElementById('s');
+s.innerHTML=DEFS+`<g id="bg" filter="url(#rough)"></g><g id="fig"></g><g id="ink" filter="url(#wob)"></g><g id="heads"></g><g id="notes"></g>
+<rect width="1080" height="1350" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".3"/>`;
+seed=4;P=document.getElementById('bg');paint('M-30 -30H1110V1380H-30Z','#F3EEE4',['#EAE2D3','#F7F2EA'],160,[10,30],[60,160],0.05);
+const CX=400;                       // figure centre
+const FIG=document.getElementById('fig');
+const INK=document.getElementById('ink');
+const ink=(d,w=2.6,o=.75)=>{el('path',{d,stroke:'#2A1A14','stroke-width':w,fill:'none','stroke-linecap':'round','stroke-linejoin':'round',opacity:o},INK);el('path',{d,stroke:'#2A1A14','stroke-width':w*.6,fill:'none',opacity:o*.4,transform:'translate(2.5 1.5)'},INK)};
+const tx=(d)=>d.replace(/X(-?\d+(\.\d+)?)/g,(m,v)=>String(CX+parseFloat(v)));   // X-relative coords
+// ground + shadow
+P=FIG;el('ellipse',{cx:CX,cy:1188,rx:150,ry:16,fill:'#2A1A14',opacity:.16,filter:'url(#blur)'});
+ink(tx('MX-300 1192C X-150 1186 X0 1194 X200 1188 S X360 1190 X420 1186'),2,.5);
+// legs (thin, dark tights)
+P=el('g',{filter:'url(#rough)'},FIG);
+paint(tx('MX-32 880HX-10LX-14 1110HX-30Z'),'#2A2A33',['#33333D'],10,[3,6],[20,60],1.57);
+paint(tx('MX12 880HX34LX30 1110HX14Z'),'#2A2A33',['#33333D'],10,[3,6],[20,60],1.57);
+// slouchy striped socks
+for(const ox of [-22,22]){paint(tx(`MX${ox-17} 1060C X${ox-22} 1076 X${ox-14} 1092 X${ox-19} 1112HX${ox+17}C X${ox+21} 1092 X${ox+13} 1076 X${ox+17} 1060Z`),'#F1E6D2',['#E7D8BD'],8,[3,5],[10,20],0);
+ for(const y of [1072,1088,1102])el('path',{d:tx(`MX${ox-18} ${y}q18 4 36 0`),stroke:C.red,'stroke-width':4,fill:'none'})}
+// lace-up ankle boots (rust red)
+for(const [ox,dir] of [[-22,-1],[22,1]]){const x=CX+ox,d=dir;
+ paint(`M${x-19*d} 1104H${x+19*d}V1160C${x+40*d} 1162 ${x+44*d} 1170 ${x+42*d} 1182H${x-20*d}C${x-22*d} 1170 ${x-19*d} 1150 ${x-19*d} 1104Z`,'#9E3A22',['#8A2E1A','#B5462A'],20,[3,6],[10,30],0);
+ el('path',{d:`M${x-20*d} 1182H${x+42*d}`,stroke:'#4A2016','stroke-width':6});
+ for(const y of [1118,1132,1146])el('path',{d:`M${x-10} ${y}L${x+10} ${y+4}M${x-10} ${y+4}L${x+10} ${y}`,stroke:'#F1E6D2','stroke-width':2.5})}
+// coat (A-line, knee length, dark teal wool)
+paint(tx('MX-82 420C X-60 404 X60 404 X82 420LX112 560LX158 900C X60 914 X-60 914 X-158 900LX-112 560Z'),C.teal,TE,220,[5,12],[30,90],1.57);
+// sleeves
+paint(tx('MX-82 424C X-120 450 X-136 560 X-146 760LX-96 770C X-92 640 X-82 540 X-66 470Z'),'#183B37',TE,60,[4,9],[30,80],1.4);
+paint(tx('MX82 424C X120 450 X136 560 X146 760LX96 770C X92 640 X82 540 X66 470Z'),'#183B37',TE,60,[4,9],[30,80],1.4);
+// cuffs
+paint(tx('MX-150 752LX-94 762LX-96 784LX-152 776Z'),'#0F2826',[],0);paint(tx('MX150 752LX94 762LX96 784LX152 776Z'),'#0F2826',[],0);
+// bag strap + bag (crossbody, rust)
+el('path',{d:tx('MX62 426LX-104 760'),stroke:'#7A3420','stroke-width':12,'stroke-linecap':'round'});
+paint(tx('MX-160 740HX-40V840C X-40 852 X-160 852 X-160 840Z'),'#B5462A',['#A23E24','#C8572F'],30,[3,7],[20,60],0);
+paint(tx('MX-162 738HX-38V788C X-70 800 X-130 800 X-162 788Z'),'#9E3A22',['#8A2E1A'],12,[3,6],[20,60],0);
+// spool peeking from bag + trailing thread
+paint(tx('MX-82 712HX-58V744HX-82Z'),C.red,['#A82818','#D84530'],8,[2,4],[10,20],1.57);paint(tx('MX-86 708HX-54V716HX-86Z'),'#B87A45',[],0);
+// scarf (turmeric with red stripes)
+paint(tx('MX-58 392C X-30 380 X30 380 X58 392LX64 440C X30 456 X-30 456 X-64 440Z'),'#D9A441',['#C9922F','#E4B356'],30,[3,7],[20,60],0);
+paint(tx('MX8 440LX42 446LX36 640LX6 636Z'),'#D9A441',['#C9922F','#E4B356'],20,[3,7],[20,60],1.57);
+paint(tx('MX-30 440LX4 444LX-6 590LX-38 586Z'),'#D9A441',['#C9922F','#E4B356'],20,[3,7],[20,60],1.57);
+// hands peeking from cuffs (simple)
+for(const ox of [-122,122]){paint(tx(`MX${ox-14} 780C X${ox-18} 800 X${ox-10} 818 X${ox} 818C X${ox+10} 818 X${ox+16} 800 X${ox+12} 780Z`),C.skin,SK,6,[2,4],[6,14])}
+// HEAD (small → elegant proportion)
+P=FIG;const k=.78,X0=CX-170*k,Y0=200-58*k;const HG=el('g',{transform:`translate(${X0} ${Y0}) scale(${k})`,filter:'url(#wob)'});seed=9;sulam(HG,'tenang');
+// re-cover the bust of sulam() with scarf/coat top drawn above? -> draw scarf again on top
+P=el('g',{filter:'url(#rough)'},FIG);
+paint(tx('MX-60 388C X-30 374 X30 374 X60 388LX66 438C X30 456 X-30 456 X-66 438Z'),'#D9A441',['#C9922F','#E4B356'],30,[3,7],[20,60],0);
+P=FIG;
+for(const y of [400,420])el('path',{d:tx(`MX-60 ${y}C X-20 ${y+10} X20 ${y+10} X60 ${y}`),stroke:C.red,'stroke-width':6,fill:'none'});
+for(const y of [480,520,560,600])el('path',{d:tx(`MX8 ${y}LX40 ${y+4}`),stroke:C.red,'stroke-width':5});
+for(const y of [480,520,560])el('path',{d:tx(`MX-30 ${y}LX2 ${y+3}`),stroke:C.red,'stroke-width':5});
+for(let i=0;i<5;i++)el('path',{d:tx(`MX${10+i*6} 638l${-2+i} 16`).replace(/l(-?\d+) 16/,(m,v)=>`l${v} 16`),stroke:'#C9922F','stroke-width':3});
+// toggles
+for(const y of [560,640,720,800]){el('rect',{x:CX-4-14,y:y-5,width:28,height:10,rx:5,fill:'#E7D8BD'});el('path',{d:tx(`MX-22 ${y}HX22`),stroke:'#0F2826','stroke-width':2.5,opacity:.8})}
+el('path',{d:tx('MX0 456V906'),stroke:'#0F2826','stroke-width':3,opacity:.7});
+// thread trailing from spool to ground
+el('path',{d:tx('MX-70 740C X-210 800 X-150 960 X-230 1050S X-200 1180 X-120 1186'),stroke:C.red,'stroke-width':4,fill:'none','stroke-linecap':'round'});
+// ink sketch outlines
+ink(tx('MX-82 420LX-112 560LX-158 900C X-60 914 X60 914 X158 900LX112 560LX82 420'));
+ink(tx('MX-82 424C X-120 450 X-136 560 X-146 760M X82 424C X120 450 X136 560 X146 760'));
+ink(tx('MX-96 770C X-92 640 X-82 540 X-66 470MX96 770C X92 640 X82 540 X66 470'),2,.5);
+ink(tx('MX-160 740HX-40V840C X-40 852 X-160 852 X-160 840Z'),2.2,.7);
+ink(tx('MX-32 912LX-30 1060MX-10 912LX-14 1060MX12 912LX14 1060MX34 912LX30 1060'),2,.6);
+ink(tx('MX-60 388C X-30 374 X30 374 X60 388LX66 438C X30 456 X-30 456 X-66 438Z'),2,.6);
+// head studies (right column)
+P=document.getElementById('heads');
+[['tenang',60],['terkesan',390],['mengedip',720]].forEach(([e,y])=>{const g=el('g',{transform:`translate(${910-170*.62} ${y}) scale(.62)`,filter:'url(#wob)'});seed=9;sulam(g,e);
+ P=document.getElementById('heads');el('rect',{x:780,y:y+232,width:260,height:60,fill:'#F3EEE4'});});
+// dotted annotation lines
+P=document.getElementById('notes');const ar=d=>el('path',{d,stroke:'#2A1A14','stroke-width':2.2,fill:'none','stroke-dasharray':'2 7','stroke-linecap':'round'});
+ar('M210 520C260 500 300 470 340 440');ar('M210 790C240 790 250 790 270 790');ar('M210 1060C260 1080 330 1090 370 1090');ar('M560 690C540 680 520 660 500 650');
+</script></body></html>
