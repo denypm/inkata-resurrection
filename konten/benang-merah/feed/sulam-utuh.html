@@ -1,0 +1,76 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Instrument+Serif:ital@0;1&family=Inter:wght@700&display=block" rel="stylesheet">
+<script src="lib.js"></script>
+<style>html,body{margin:0}#post{width:1080px;height:1350px;position:relative;overflow:hidden;background:#EFE8DC;color:#3B1F14}
+svg{position:absolute;inset:0}.a{position:absolute}.n{position:absolute;font:400 30px/1.05 'Gochi Hand';color:#3B1F14}</style></head><body>
+<div id="post"><svg id="s" viewBox="0 0 1080 1350" width="1080" height="1350"></svg>
+<div class="a" style="left:64px;top:54px;font:400 120px/0.9 'Instrument Serif';letter-spacing:-4px">Sulam<i style="color:#C8321E">.</i></div>
+<div class="a" style="left:70px;top:172px;font:700 18px Inter;letter-spacing:4px">EDITOR · PENERBIT BENANG MERAH</div>
+<div class="n" style="left:770px;top:150px;width:260px">baret merah,<br>jarum sulam &<br>benang menjuntai</div>
+<div class="n" style="left:790px;top:520px;width:240px">turtleneck<br>rajut hijau tua</div>
+<div class="n" style="left:60px;top:860px;width:220px">buku catatan<br>yang selalu<br>dibawa</div>
+<div class="n" style="left:800px;top:880px;width:230px">rok korduroi<br>warna kunyit</div>
+<div class="n" style="left:790px;top:1150px;width:240px">sepatu merah<br>bertali</div>
+<div class="a" style="left:70px;bottom:46px;font:700 16px Inter;letter-spacing:3px">LEMBAR KARAKTER · @PENERBITBENANGMERAH</div>
+</div><script>
+const s=document.getElementById('s');
+s.innerHTML=DEFS+`<g id="bg" filter="url(#rough)"></g><g id="shadow"></g><g id="head"></g><g id="body" filter="url(#rough)"></g><g id="det"></g><g id="notes"></g>
+<rect width="1080" height="1350" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".32"/>`;
+seed=4;P=document.getElementById('bg');paint('M-30 -30H1110V1380H-30Z','#EFE8DC',['#E7D8BD','#F4ECDC','#E9DEC8'],200,[10,30],[60,160],0.05);
+paint('M540 300a330 330 0 1 0 .1 0Z',C.sage,SG,160,[8,20],[50,140],0.2);
+paint('M540 1230a260 40 0 1 0 .1 0Z','#E2D6BF',[],0);
+P=document.getElementById('shadow');el('ellipse',{cx:540,cy:1262,rx:170,ry:22,fill:'#3B1F14',opacity:.18,filter:'url(#blur)'});
+// head (existing Sulam) — k=1.1
+const k=1.1,X0=540-170*k,Y0=110;
+P=document.getElementById('head');const H=el('g',{transform:`translate(${X0} ${Y0}) scale(${k})`,filter:'url(#wob)'});seed=9;sulam(H,'tenang');
+// body
+P=document.getElementById('body');
+
+// legs (tights)
+paint('M478 1030H512L508 1236H482Z','#2A2A33',['#33333D','#22222A'],12,[3,6],[20,60],1.57);
+paint('M568 1030H602L598 1236H572Z','#2A2A33',['#33333D','#22222A'],12,[3,6],[20,60],1.57);
+// shoes
+paint('M462 1226C462 1214 512 1212 516 1226L520 1250C520 1262 452 1264 448 1250C446 1240 454 1232 462 1226Z',C.red,['#A82818','#D84530'],14,[3,6],[10,30]);
+paint('M564 1226C564 1214 614 1212 618 1226L632 1250C634 1262 566 1264 562 1250C560 1240 560 1232 564 1226Z',C.red,['#A82818','#D84530'],14,[3,6],[10,30]);
+// skirt (corduroy, turmeric)
+paint('M392 800H688L742 1046C640 1062 440 1062 338 1046Z','#D9A441',['#C9922F','#E4B356','#CF9A38'],140,[4,10],[40,120],1.57);
+// torso sweater
+paint('M398 486C430 466 650 466 682 486L712 600L700 820H380L368 600Z',C.teal,TL,160,[5,12],[30,90],1.57);
+// turtleneck
+paint('M474 432H606V492C576 506 504 506 474 492Z','#183B37',TL,30,[3,7],[10,30],1.57);
+// left sleeve (hanging, holds book)
+paint('M400 488C360 520 338 640 330 770L392 780C396 680 410 590 432 520Z',C.teal,TL,60,[5,10],[30,80],1.4);
+// right sleeve (bent, holding spool)
+paint('M680 488C720 520 742 600 744 668C744 720 716 742 676 730L640 718L650 666L690 672C690 620 676 560 650 520Z',C.teal,TL,60,[5,10],[30,80],1.2);
+// book under left hand
+paint('M300 760L404 742L424 888L320 906Z',C.red,['#A82818','#D84530'],24,[3,7],[20,60],1.4);
+paint('M312 772L398 758L414 878L328 892Z','#B5462A',['#A82818'],10,[3,6],[20,60],1.4);
+P=document.getElementById('det');
+// knit ribs & stitch details
+for(let i=0;i<7;i++)el('path',{d:`M${484+i*19} 440v48`,stroke:'#24534B','stroke-width':3});
+el('path',{d:'M392 760Q540 742 690 760',stroke:C.red,'stroke-width':5,'stroke-dasharray':'14 10',fill:'none','stroke-linecap':'round'});
+el('clipPath',{id:'sk'});el('path',{d:'M392 800H688L742 1046C640 1062 440 1062 338 1046Z'},P.lastChild);const SKL=el('g',{'clip-path':'url(#sk)'});for(let i=0;i<14;i++){const x=400+i*22;el('path',{d:`M${x} 806L${x+(x-540)*.35} 1056`,stroke:'#B8862C','stroke-width':3,opacity:.55},SKL)}
+el('path',{d:'M436 520C424 620 414 700 402 776M644 520C652 590 654 640 650 690',stroke:'#0F2826','stroke-width':4,fill:'none',opacity:.55,'stroke-linecap':'round'});
+el('path',{d:'M348 1040C460 1056 620 1056 730 1040',stroke:'#B8862C','stroke-width':4,fill:'none'});
+// shoe straps & shine
+el('path',{d:'M470 1230C482 1222 500 1222 512 1230',stroke:'#7A1E12','stroke-width':5,fill:'none'});el('path',{d:'M572 1230C584 1222 602 1222 614 1230',stroke:'#7A1E12','stroke-width':5,fill:'none'});
+el('circle',{cx:498,cy:1229,r:4,fill:'#F7C65A'});el('circle',{cx:600,cy:1229,r:4,fill:'#F7C65A'});
+el('path',{d:'M462 1244q10 -6 22 -4M566 1244q10 -6 22 -4',stroke:'#fff','stroke-width':3,opacity:.5,fill:'none'});
+// book title line
+el('path',{d:'M330 800l70 -12',stroke:C.cream,'stroke-width':4});
+// hands (detailed)
+const HAND='M-30 0C-36 -30 -38 -60 -36 -110Q-36 -126 -27 -126Q-19 -126 -19 -112Q-19 -140 -10 -140Q-1 -140 -1 -126Q-1 -138 8 -138Q17 -138 17 -122Q17 -120 24 -118Q32 -116 31 -102C30 -80 30 -70 30 -62C42 -70 56 -86 60 -78C64 -70 52 -50 34 -36C28 -24 26 -10 24 0Z';
+function hand(tr){const g=el('g',{transform:tr,filter:'url(#wob)'});const kp=P;P=g;paint(HAND,C.skin,['#F5DCC2','#E8C4A2'],20,[3,6],[10,30],1.5);
+ el('path',{d:HAND,fill:'none',stroke:'#B5785A','stroke-width':3});el('path',{d:'M-19 -112L-20 -80M-1 -126L-1 -84M17 -122L15 -86',stroke:'#C98E70','stroke-width':3,fill:'none','stroke-linecap':'round'});P=kp}
+hand('translate(362 766) rotate(172) scale(.62)');
+// spool of red thread in right hand
+P=el('g',{filter:'url(#rough)'},document.getElementById('det'));
+paint('M612 650H676V666H612Z','#B87A45',[],0);paint('M612 720H676V736H612Z','#B87A45',[],0);paint('M620 666H668V720H620Z',C.red,['#A82818','#D84530','#E2614A'],30,[2,4],[30,60],0);
+P=document.getElementById('det');
+hand('translate(660 742) rotate(-100) scale(.6)');
+el('path',{d:'M622 700C560 760 600 860 560 940S500 1120 600 1180C680 1220 760 1190 790 1240',stroke:C.red,'stroke-width':5,fill:'none','stroke-linecap':'round'});
+// annotation arrows
+P=document.getElementById('notes');const ar=(d)=>el('path',{d,stroke:'#3B1F14','stroke-width':2.5,fill:'none','stroke-dasharray':'2 7','stroke-linecap':'round'});
+ar('M780 210C730 200 700 210 668 236');ar('M800 560C760 560 740 580 712 600');ar('M210 900C250 880 280 860 304 840');ar('M810 920C780 930 760 940 730 960');ar('M800 1180C720 1190 660 1210 630 1230');
+render=()=>{};
+</script></body></html>
