@@ -98,6 +98,15 @@ function face2(e){const L=130,R=210,Y=186;
     L2(`M${L-10} ${Y+24}q10 5 20 0M${R-10} ${Y+24}q10 5 20 0`,2.5,'#B0664E');L2('M154 252q16 -6 32 0',3);}
   if(e==='ide'){dot(L+3,Y-6);dot(R+3,Y-6);L2(`M${L-16} ${Y-38}q16 -12 32 -4M${R-14} ${Y-40}q16 -10 32 0`,3);L2('M154 244q16 14 32 0',3);
     el('path',{d:'M296 34l8 20 20 8-20 8-8 20-8-20-20-8 20-8Z',fill:'#F2C14E'});}
+
+  if(e==='angin'){
+    for(const [x,s] of [[L,1],[R,-1]]){
+      L2(`M${x-17} ${Y-4}Q${x} ${Y+8} ${x+17} ${Y-4}`,5);L2(`M${x-15} ${Y+2}Q${x} ${Y+10} ${x+15} ${Y+2}`,2.5);
+      L2(`M${x-20*s} ${Y-22}L${x+16*s} ${Y-12}`,6);
+      el('path',{d:`M${x-18*s} ${Y-2}C${x-34*s} ${Y-14} ${x-46*s} ${Y-30} ${x-58*s} ${Y-52}`,stroke:'#9FD0F0','stroke-width':4,fill:'none','stroke-linecap':'round',opacity:.85});}
+    el('rect',{x:138,y:238,width:64,height:26,rx:11,fill:'#FFFFFF',stroke:'#2A1A14','stroke-width':3});
+    L2('M138 251H202M154 238V264M170 238V264M186 238V264',2,'#2A1A14');
+    for(const x of [106,234])el('circle',{cx:x,cy:232,r:26,fill:'#EE8F6A',opacity:.45,filter:'url(#blur)'});}
   if(e==='fokus'){dot(L-2,Y+6);dot(R-2,Y+6);L2(`M${L-16} ${Y-24}l30 10M${R+16} ${Y-24}l-30 10`,4.5);L2('M150 248q20 6 40 -2',3);el('path',{d:'M180 248q6 12 14 4q2 -6 -4 -6Z',fill:'#E07A6A'});}}
 /* ---- Sulam: editor, painterly ---- */
 const BK=['#2E2A28','#0E0D0D','#3A3330'],TL=['#24534B','#183B37','#2A5C52'];

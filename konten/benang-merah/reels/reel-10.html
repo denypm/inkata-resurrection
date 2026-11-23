@@ -1,0 +1,56 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@800&display=block" rel="stylesheet">
+<script src="lib.js"></script>
+<style>html,body{margin:0}#post{width:1080px;height:1920px;position:relative;overflow:hidden;background:#D9C8A9}
+svg{position:absolute;inset:0}.tx{position:absolute;font-family:'Gochi Hand';color:#2A1A14;text-shadow:0 0 18px #F3EEE4,0 0 6px #F3EEE4}
+.hl{color:#F7C65A;background:#C8321E;padding:0 14px;border-radius:8px;text-shadow:none}</style></head><body>
+<div id="post"><svg id="s" viewBox="0 0 1080 1920" width="1080" height="1920"></svg>
+<div class="tx" id="t1" style="left:60px;top:250px;font-size:104px;transform:rotate(-5deg)">TUNGGU, SULAM!</div>
+<div class="tx" style="right:60px;top:1470px;font-size:66px;line-height:1.08;text-align:right;transform:rotate(-3deg)">kirim puisimu,<br>bantu Utas <span class="hl">menangkapnya.</span></div>
+<div class="tx" style="right:64px;top:1640px;font:800 26px Inter;letter-spacing:1px;color:#C8321E;text-shadow:0 0 10px #F3EEE4">#SelamatkanSulam · @penerbitbenangmerah</div>
+</div><script>
+const L=10,W0=2*Math.PI/L,mod=(a,b)=>((a%b)+b)%b;
+const s=document.getElementById('s');
+s.innerHTML=DEFS+`<defs><filter id="mb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="0 10"/></filter></defs>
+<g id="cam"><g id="wall" filter="url(#mb)"></g><g id="wind"></g><g id="hairg" filter="url(#wob)"></g><g id="head"></g><g id="hands"></g><g id="fly"></g></g>
+<rect width="1080" height="1920" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".28"/>`;
+// facade (same building) – scrolls up fast
+const WALL=document.getElementById('wall');seed=5;const TILE=el('g',{},WALL);P=el('g',{filter:'url(#rough)'},TILE);
+paint('M-20 0H1100V960H-20Z','#D9C8A9',['#CDBB99','#E3D4B8','#D2C09F'],160,[8,20],[60,180],1.57);
+const winC=['#5E8CA8','#4E7C98','#6E9CB8'];
+for(let r=0;r<4;r++)for(const x of [70,425,780]){const y=r*240+44;const lit=((r*3+x)%5)==1;
+ paint(`M${x-10} ${y-10}H${x+240}V${y+166}H${x-10}Z`,'#EFE6D4',['#E7DCC6'],10,[3,6],[20,60],0);
+ paint(`M${x} ${y}H${x+230}V${y+150}H${x}Z`,lit?'#F7C65A':winC[(r+x)%3],lit?['#F3B84A','#FAD77E']:winC,24,[4,10],[20,60],1.57);
+ el('path',{d:`M${x+115} ${y}V${y+150}M${x} ${y+60}H${x+230}`,stroke:'#EFE6D4','stroke-width':8});}
+for(const k of [1,2]){const c=TILE.cloneNode(true);WALL.appendChild(c)}
+// wind streaks (dense)
+const WN=[];P=document.getElementById('wind');for(let i=0;i<34;i++)WN.push([el('path',{stroke:'#FFFFFF','stroke-width':rr(2,6),'stroke-linecap':'round',opacity:rr(.3,.7),fill:'none'}),rr(20,1060),rr(160,420),rr(0,1)]);
+// hair blown straight up (behind head)
+const HC=[540,700];const HR=[];P=document.getElementById('hairg');
+for(let i=0;i<13;i++){const x0=HC[0]-230+i*38;HR.push({p:el('path',{stroke:i%3?'#5A3324':'#7A4733','stroke-width':i%2?44:30,fill:'none','stroke-linecap':'round'}),x0,ph:i*.8})}
+// head (Utas, wind face) 2.85x close-up, low angle
+P=document.getElementById('head');const HG=el('g',{});const HI=el('g',{filter:'url(#wob)'},HG);seed=9;utas2(HI,'angin');
+// big foreshortened hands reaching toward camera
+const HAND='M-30 0C-36 -30 -38 -60 -36 -110Q-36 -126 -27 -126Q-19 -126 -19 -112Q-19 -140 -10 -140Q-1 -140 -1 -126Q-1 -138 8 -138Q17 -138 17 -122Q17 -120 24 -118Q32 -116 31 -102C30 -80 30 -70 30 -62C42 -70 56 -86 60 -78C64 -70 52 -50 34 -36C28 -24 26 -10 24 0Z';
+const HS=[];for(const [x,y,r,m] of [[170,1560,-28,1],[910,1560,28,-1]]){P=document.getElementById('hands');const g=el('g',{});
+ const sl=el('path',{d:`M${x+m*-40} 1960C${x+m*-30} 1800 ${x} 1720 ${x} 1640L${x+m*120} 1660C${x+m*110} 1760 ${x+m*120} 1860 ${x+m*150} 1960Z`,fill:'#7D8E72',filter:'url(#rough)'},g);
+ const hg=el('g',{filter:'url(#wob)'},g);const kp=P;P=hg;paint(HAND,C.skin,['#F5DCC2','#E8C4A2'],20,[3,6],[10,30],1.5);el('path',{d:HAND,fill:'none',stroke:'#B5785A','stroke-width':3});
+ el('path',{d:'M-19 -112L-20 -80M-1 -126L-1 -84M17 -122L15 -86',stroke:'#C98E70','stroke-width':3,fill:'none'});P=kp;HS.push({hg,x,y,r,m})}
+// flying papers + the pencil (blown off) — move upward fast
+P=document.getElementById('fly');const FL=[];
+for(let i=0;i<6;i++){const g=el('g',{});el('rect',{x:-40,y:-52,width:80,height:104,fill:'#F8F4EC',stroke:'#2A1A14','stroke-width':2},g);for(let k=0;k<5;k++)el('path',{d:`M-28 ${-36+k*16}h${k==4?30:56}`,stroke:'#9A8A72','stroke-width':3},g);FL.push([g,rr(60,1020),rr(0,1),Math.round(rr(1,3)),rr(.6,1.1)])}
+const PEN=el('g',{});el('rect',{x:-60,y:-9,width:110,height:18,fill:'#F2C14E',stroke:'#2A1A14','stroke-width':2},PEN);el('path',{d:'M50 -9L74 0L50 9Z',fill:'#E6B898',stroke:'#2A1A14','stroke-width':2},PEN);el('rect',{x:-72,y:-9,width:12,height:18,fill:'#E39A80'},PEN);
+window.render=function(t){t=mod(t,L);
+ const shx=Math.sin(W0*37*t)*4+Math.sin(W0*23*t)*3,shy=Math.cos(W0*31*t)*4;document.getElementById('cam').setAttribute('transform',`translate(${shx.toFixed(1)} ${shy.toFixed(1)})`);
+ const off=mod(1920*t,960);let i=0;WALL.childNodes.forEach(n=>{if(n.tagName==='g'){n.setAttribute('transform',`translate(0 ${(i*960-off).toFixed(1)})`);i++}});
+ WN.forEach(([e,x,len,ph])=>{const y=mod(ph*2400-2400*t,2400)-400;e.setAttribute('d',`M${x} ${y.toFixed(1)}v${len}`)});
+ // head: big, slight low-angle squash, cheek flutter
+ const fl=1+Math.sin(W0*40*t)*.012;HG.setAttribute('transform',`translate(${540-170*2.85} ${300}) scale(${(2.85*fl).toFixed(4)} ${(2.85*.96).toFixed(4)})`);
+ HR.forEach((h,j)=>{const w=Math.sin(W0*7*t+h.ph)*40,w2=Math.cos(W0*5*t+h.ph)*50;const sp=(h.x0-540)*.9;const top=-120-(j*53%4)*70;h.p.setAttribute('d',`M${h.x0} 600C${h.x0+w+sp*.2} 440 ${h.x0+sp*.5-w2} 300 ${h.x0+sp*.7+w} 140S${h.x0+sp+w2} ${top+120} ${h.x0+sp*1.2-w} ${top}`)});
+ HS.forEach((h,k)=>{const dx=Math.sin(W0*4*t+k)*12,dy=Math.cos(W0*4*t+k)*10;h.hg.setAttribute('transform',`translate(${(h.x+dx).toFixed(1)} ${(h.y+dy).toFixed(1)}) rotate(${h.r}) scale(${2.2*h.m} 2.2)`)});
+ FL.forEach(([g,x,ph,k,sc])=>{const y=mod(ph*2600-1300*t,2600)-300;g.setAttribute('transform',`translate(${(x+Math.sin(W0*k*t+ph*6)*40).toFixed(1)} ${y.toFixed(1)}) rotate(${(t*72*k+ph*360).toFixed(1)}) scale(${sc})`)});
+ const py=mod(.3*2600-1300*t,2600)-300;PEN.setAttribute('transform',`translate(${(860+Math.sin(W0*2*t)*30).toFixed(1)} ${py.toFixed(1)}) rotate(${(t*108).toFixed(1)}) scale(1.4)`);
+ document.getElementById('t1').style.transform=`rotate(-5deg) translate(${(Math.sin(W0*29*t)*3).toFixed(1)}px,0)`;
+};
+render(0);
+</script></body></html>
