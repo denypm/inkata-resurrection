@@ -11,9 +11,19 @@ svg{position:absolute;inset:0}.tx{position:absolute;font-family:'Gochi Hand';col
 </div><script>
 const L=10,W0=2*Math.PI/L,mod=(a,b)=>((a%b)+b)%b;
 const s=document.getElementById('s');
+function fishMap(){const c=document.createElement('canvas');c.width=270;c.height=480;const g=c.getContext('2d');const im=g.createImageData(270,480);
+ for(let y=0;y<480;y++)for(let x=0;x<270;x++){const u=(x-135)/135,v=(y-240)/240*1.78;const r2=(u*u+v*v)/3.2;const dx=-0.2*u*135*4*r2,dy=-0.2*(y-240)*4*r2;
+  const i=(y*270+x)*4;im.data[i]=Math.max(0,Math.min(255,128+dx/400*255));im.data[i+1]=Math.max(0,Math.min(255,128+dy/400*255));im.data[i+2]=128;im.data[i+3]=255}
+ g.putImageData(im,0,0);return c.toDataURL()}
 s.innerHTML=DEFS+`<defs><filter id="mb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="0 10"/></filter></defs>
-<g id="cam"><g id="wall" filter="url(#mb)"></g><g id="wind"></g><g id="hairg" filter="url(#wob)"></g><g id="head"></g><g id="hands"></g><g id="fly"></g></g>
+<defs><filter id="fish" filterUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feImage id="fmap" x="0" y="0" width="1080" height="1920" preserveAspectRatio="none" result="m"/><feDisplacementMap in="SourceGraphic" in2="m" scale="400" xChannelSelector="R" yChannelSelector="G"/></filter>
+<radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#1A120E" stop-opacity=".55"/></radialGradient></defs>
+<rect width="1080" height="1920" fill="#CDBB99"/>
+<g filter="url(#fish)"><g id="cam"><g id="wall" filter="url(#mb)"></g><g id="wind"></g><g id="legs"></g><g id="torso"></g><g id="hairg" filter="url(#wob)"></g><g id="head"></g><g id="hands"></g><g id="fly"></g></g></g>
+<rect width="1080" height="1920" fill="url(#vig)"/>
 <rect width="1080" height="1920" filter="url(#paper)" style="mix-blend-mode:multiply" opacity=".28"/>`;
+document.getElementById('fmap').setAttribute('href',fishMap());
 // facade (same building) – scrolls up fast
 const WALL=document.getElementById('wall');seed=5;const TILE=el('g',{},WALL);P=el('g',{filter:'url(#rough)'},TILE);
 paint('M-20 0H1100V960H-20Z','#D9C8A9',['#CDBB99','#E3D4B8','#D2C09F'],160,[8,20],[60,180],1.57);
@@ -25,17 +35,33 @@ for(let r=0;r<4;r++)for(const x of [70,425,780]){const y=r*240+44;const lit=((r*
 for(const k of [1,2]){const c=TILE.cloneNode(true);WALL.appendChild(c)}
 // wind streaks (dense)
 const WN=[];P=document.getElementById('wind');for(let i=0;i<34;i++)WN.push([el('path',{stroke:'#FFFFFF','stroke-width':rr(2,6),'stroke-linecap':'round',opacity:rr(.3,.7),fill:'none'}),rr(20,1060),rr(160,420),rr(0,1)]);
-// hair blown straight up (behind head)
-const HC=[540,700];const HR=[];P=document.getElementById('hairg');
-for(let i=0;i<13;i++){const x0=HC[0]-230+i*38;HR.push({p:el('path',{stroke:i%3?'#5A3324':'#7A4733','stroke-width':i%2?44:30,fill:'none','stroke-linecap':'round'}),x0,ph:i*.8})}
-// head (Utas, wind face) 2.85x close-up, low angle
+// ---- Utas falling belly-down toward camera (skydiver spread), camera below ----
+const HC=[540,760],HS1=1.6;
+// legs (far → smaller), spread & slightly bent
+P=el('g',{filter:'url(#rough)'},document.getElementById('legs'));
+for(const [hx,kx,ky,fx,fy] of [[490,420,1480,380,1640],[590,660,1480,700,1640]]){
+ el('path',{d:`M${hx} 1330L${kx} ${ky}L${fx} ${fy}`,stroke:'#A9C6CC','stroke-width':64,'stroke-linecap':'round','stroke-linejoin':'round',fill:'none'});
+ paint(`M${fx-30} ${fy-6}H${fx+30}V${fy+14}H${fx-30}Z`,'#C6DDE0',[],0);
+ paint(`M${fx-26} ${fy+14}C${fx-30} ${fy+50} ${fx+30} ${fy+56} ${fx+28} ${fy+14}Z`,'#F1E6D2',['#E7D8BD'],8,[3,6],[8,20]);el('path',{d:`M${fx-12} ${fy+26}h24M${fx-12} ${fy+38}h24`,stroke:C.red,'stroke-width':4})}
+// torso (sweater) under the head
+P=el('g',{filter:'url(#rough)'},document.getElementById('torso'));
+paint('M360 1010C400 980 680 980 720 1010L700 1350H380Z',C.sage,SG,140,[5,12],[30,90],1.57);
+paint('M380 1320H700V1356H380Z','#6F8064',['#7D8E72'],10,[3,6],[20,60],0);
+el('path',{d:'M400 1150Q540 1130 680 1150',stroke:C.red,'stroke-width':6,'stroke-dasharray':'14 10',fill:'none','stroke-linecap':'round'});
+const TOTE=el('g',{});P=TOTE;paint('M-46 -56H46L52 56H-52Z','#E7D8BD',['#DCCCAE'],14,[3,6],[20,40],1.57);
+el('text',{x:0,y:12,'text-anchor':'middle','font-family':'Inter','font-weight':800,'font-size':22,fill:C.red}).textContent='BM';
+el('path',{d:'M-30 -56C-30 -96 30 -96 30 -56',stroke:'#C9B89A','stroke-width':8,fill:'none'});
+// hair spiking outward (wind from the front)
+const HR=[];P=document.getElementById('hairg');
+for(let i=0;i<16;i++){const a=(-170+i*(160/15))*Math.PI/180;HR.push({p:el('path',{stroke:i%3?'#5A3324':'#7A4733','stroke-width':i%2?26:18,fill:'none','stroke-linecap':'round'}),a,ph:i*.7})}
+// head
 P=document.getElementById('head');const HG=el('g',{});const HI=el('g',{filter:'url(#wob)'},HG);seed=9;utas2(HI,'angin');
-// big foreshortened hands reaching toward camera
+// arms spread wide toward camera (near → big hands)
 const HAND='M-30 0C-36 -30 -38 -60 -36 -110Q-36 -126 -27 -126Q-19 -126 -19 -112Q-19 -140 -10 -140Q-1 -140 -1 -126Q-1 -138 8 -138Q17 -138 17 -122Q17 -120 24 -118Q32 -116 31 -102C30 -80 30 -70 30 -62C42 -70 56 -86 60 -78C64 -70 52 -50 34 -36C28 -24 26 -10 24 0Z';
-const HS=[];for(const [x,y,r,m] of [[170,1560,-28,1],[910,1560,28,-1]]){P=document.getElementById('hands');const g=el('g',{});
- const sl=el('path',{d:`M${x+m*-40} 1960C${x+m*-30} 1800 ${x} 1720 ${x} 1640L${x+m*120} 1660C${x+m*110} 1760 ${x+m*120} 1860 ${x+m*150} 1960Z`,fill:'#7D8E72',filter:'url(#rough)'},g);
+const HS=[];for(const [sx,sy,hx,hy,m] of [[400,1040,215,740,1],[680,1040,865,740,-1]]){P=document.getElementById('hands');const g=el('g',{});
+ const sl=el('path',{stroke:'#7D8E72','stroke-linecap':'round',fill:'none',filter:'url(#rough)'},g);const sl2=el('path',{stroke:'#6F8064','stroke-width':6,fill:'none',opacity:.6},g);
  const hg=el('g',{filter:'url(#wob)'},g);const kp=P;P=hg;paint(HAND,C.skin,['#F5DCC2','#E8C4A2'],20,[3,6],[10,30],1.5);el('path',{d:HAND,fill:'none',stroke:'#B5785A','stroke-width':3});
- el('path',{d:'M-19 -112L-20 -80M-1 -126L-1 -84M17 -122L15 -86',stroke:'#C98E70','stroke-width':3,fill:'none'});P=kp;HS.push({hg,x,y,r,m})}
+ el('path',{d:'M-19 -112L-20 -80M-1 -126L-1 -84M17 -122L15 -86',stroke:'#C98E70','stroke-width':3,fill:'none'});P=kp;HS.push({sl,sl2,hg,sx,sy,hx,hy,m})}
 // flying papers + the pencil (blown off) — move upward fast
 P=document.getElementById('fly');const FL=[];
 for(let i=0;i<6;i++){const g=el('g',{});el('rect',{x:-40,y:-52,width:80,height:104,fill:'#F8F4EC',stroke:'#2A1A14','stroke-width':2},g);for(let k=0;k<5;k++)el('path',{d:`M-28 ${-36+k*16}h${k==4?30:56}`,stroke:'#9A8A72','stroke-width':3},g);FL.push([g,rr(60,1020),rr(0,1),Math.round(rr(1,3)),rr(.6,1.1)])}
@@ -44,10 +70,14 @@ window.render=function(t){t=mod(t,L);
  const shx=Math.sin(W0*37*t)*4+Math.sin(W0*23*t)*3,shy=Math.cos(W0*31*t)*4;document.getElementById('cam').setAttribute('transform',`translate(${shx.toFixed(1)} ${shy.toFixed(1)})`);
  const off=mod(1920*t,960);let i=0;WALL.childNodes.forEach(n=>{if(n.tagName==='g'){n.setAttribute('transform',`translate(0 ${(i*960-off).toFixed(1)})`);i++}});
  WN.forEach(([e,x,len,ph])=>{const y=mod(ph*2400-2400*t,2400)-400;e.setAttribute('d',`M${x} ${y.toFixed(1)}v${len}`)});
- // head: big, slight low-angle squash, cheek flutter
- const fl=1+Math.sin(W0*40*t)*.012;HG.setAttribute('transform',`translate(${540-170*2.85} ${300}) scale(${(2.85*fl).toFixed(4)} ${(2.85*.96).toFixed(4)})`);
- HR.forEach((h,j)=>{const w=Math.sin(W0*7*t+h.ph)*40,w2=Math.cos(W0*5*t+h.ph)*50;const sp=(h.x0-540)*.9;const top=-120-(j*53%4)*70;h.p.setAttribute('d',`M${h.x0} 600C${h.x0+w+sp*.2} 440 ${h.x0+sp*.5-w2} 300 ${h.x0+sp*.7+w} 140S${h.x0+sp+w2} ${top+120} ${h.x0+sp*1.2-w} ${top}`)});
- HS.forEach((h,k)=>{const dx=Math.sin(W0*4*t+k)*12,dy=Math.cos(W0*4*t+k)*10;h.hg.setAttribute('transform',`translate(${(h.x+dx).toFixed(1)} ${(h.y+dy).toFixed(1)}) rotate(${h.r}) scale(${2.2*h.m} 2.2)`)});
+ const fl=1+Math.sin(W0*40*t)*.015;HG.setAttribute('transform',`translate(${HC[0]-170*HS1} ${HC[1]-190*HS1}) scale(${(HS1*fl).toFixed(4)} ${HS1})`);
+ HR.forEach(h=>{const w=Math.sin(W0*9*t+h.ph)*.12,r0=150,r1=290+Math.sin(W0*6*t+h.ph)*30;const a1=h.a+w,a2=h.a-w*1.5;
+  h.p.setAttribute('d',`M${(HC[0]+Math.cos(h.a)*r0*.6).toFixed(1)} ${(HC[1]-40+Math.sin(h.a)*r0*.6).toFixed(1)}Q${(HC[0]+Math.cos(a1)*r0*1.3).toFixed(1)} ${(HC[1]-40+Math.sin(a1)*r0*1.3).toFixed(1)} ${(HC[0]+Math.cos(a2)*r1).toFixed(1)} ${(HC[1]-40+Math.sin(a2)*r1).toFixed(1)}`)});
+ HS.forEach((h,k)=>{const dx=Math.sin(W0*4*t+k)*16,dy=Math.cos(W0*4*t+k)*14;const hx=h.hx+dx,hy=h.hy+dy;
+  const mx=(h.sx+hx)/2,my=(h.sy+hy)/2+60;h.sl.setAttribute('d',`M${h.sx} ${h.sy}Q${mx} ${my} ${hx+h.m*20} ${hy+50}`);h.sl.setAttribute('stroke-width',96);
+  h.sl2.setAttribute('d',`M${h.sx} ${h.sy+30}Q${mx} ${my+30} ${hx+h.m*30} ${hy+70}`);
+  h.hg.setAttribute('transform',`translate(${hx.toFixed(1)} ${(hy+40).toFixed(1)}) rotate(${h.m*-35}) scale(${1.9*h.m} 1.9)`)});
+ TOTE.setAttribute('transform',`translate(${(790+Math.sin(W0*3*t)*20).toFixed(1)} ${(1300+Math.cos(W0*3*t)*16).toFixed(1)}) rotate(${(Math.sin(W0*5*t)*16+14).toFixed(1)}) scale(.8)`);
  FL.forEach(([g,x,ph,k,sc])=>{const y=mod(ph*2600-1300*t,2600)-300;g.setAttribute('transform',`translate(${(x+Math.sin(W0*k*t+ph*6)*40).toFixed(1)} ${y.toFixed(1)}) rotate(${(t*72*k+ph*360).toFixed(1)}) scale(${sc})`)});
  const py=mod(.3*2600-1300*t,2600)-300;PEN.setAttribute('transform',`translate(${(860+Math.sin(W0*2*t)*30).toFixed(1)} ${py.toFixed(1)}) rotate(${(t*108).toFixed(1)}) scale(1.4)`);
  document.getElementById('t1').style.transform=`rotate(-5deg) translate(${(Math.sin(W0*29*t)*3).toFixed(1)}px,0)`;
