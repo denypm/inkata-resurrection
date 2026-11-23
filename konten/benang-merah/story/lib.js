@@ -135,8 +135,7 @@ function face3(e){const L=132,R=208,Y=202;
       L2(`M${x-15*s} ${Y-22}Q${x-2*s} ${Y-30} ${x+13*s} ${Y-36}`,3);
       el('path',{d:`M${x-12*s} ${Y+14}C${x-15*s} ${Y+30} ${x-12*s} ${Y+44} ${x-16*s} ${Y+60}`,stroke:'#9FD0F0','stroke-width':5,fill:'none','stroke-linecap':'round',opacity:.85});
       el('path',{d:`M${x-16*s} ${Y+62}C${x-11*s} ${Y+70} ${x-12*s} ${Y+78} ${x-17*s} ${Y+78}C${x-22*s} ${Y+78} ${x-22*s} ${Y+70} ${x-16*s} ${Y+62}Z`,fill:'#9FD0F0',opacity:.9});}
-    el('path',{d:'M152 258Q170 240 188 258Q178 266 170 264Q162 266 152 258Z',fill:'#9A3324'});
-    L2('M150 259Q170 238 190 259',2.5,'#7A2418');
-    for(const x of [104,236])el('circle',{cx:x,cy:236,r:24,fill:'#E8746A',opacity:.35,filter:'url(#blur)'});}
+    L2('M160 258Q165 251 170 254Q175 257 180 251',3,'#2A1A14');
+    for(const x of [104,236])el('circle',{cx:x,cy:236,r:22,fill:'#EE8F6A',opacity:.25,filter:'url(#blur)'});}
   if(e==='mengedip'){dot(L,Y);L2(`M${R-13} ${Y+2}q13 -10 26 0`,4.5);brows(0,-2);L2('M152 248q18 14 36 -2',3);
     el('path',{d:'M296 150l4 10 10 4-10 4-4 10-4-10-10-4 10-4Z',fill:'#F2C14E'});}}
